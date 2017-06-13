@@ -40,6 +40,10 @@ table {
    margin-bottom: 0;
 }
 
+.props {
+  width: 100%;
+}
+
 .props tr td:last-of-type {
   text-align: center;
 }
