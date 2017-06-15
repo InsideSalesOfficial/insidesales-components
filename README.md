@@ -8,4 +8,4 @@ npm install ui-components
 ```
 
 # Docs
-[UI Components Documentation](http://austinknight/ui-components)
+[UI Components Documentation](http://austinknight.net/ui-components/)
