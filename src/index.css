@@ -44,7 +44,7 @@ table {
   width: 100%;
 }
 
-.props tr td:last-of-type {
+.props tr td:nth-child(4) {
   text-align: center;
 }
 
