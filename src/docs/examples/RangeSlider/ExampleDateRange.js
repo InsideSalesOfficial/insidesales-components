@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 
-import { fontSizes } from '../../../shared/theme';
+import { fontSizes } from '../../../styles';
 import RangeSlider from 'ui-components/RangeSlider';
 
 /** Date Range Slider */

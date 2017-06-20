@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { action, storiesOf } from '@storybook/react';
 
 import RangeSlider from './RangeSlider';
-import { fontSizes } from '../../shared/theme';
+import { fontSizes } from '../../styles/theme';
 
 const Hour = styled.span`
   .isdc-ext-wrap & {
@@ -23,12 +23,19 @@ storiesOf('Components', module)
   .addWithChapters(
     'RangeSlider',
     {
-      info: 'Range slider UI element.',
+      info: `
+        Usage
+
+        ~~~
+        import React from 'react';
+        import RangeSlider from 'ui-components/RangeSlider';
+        ~~~
+      `,
       chapters: [
         {
           sections: [
             {
-              title: 'Single Range',
+              title: 'Example: Single Range',
               subtitle: 'A range slider with one value',
               sectionFn: () => (
                 <RangeSlider
@@ -39,7 +46,7 @@ storiesOf('Components', module)
               )
             },
             {
-              title: 'Double Range',
+              title: 'Example: Double Range',
               subtitle: 'A range slider with a min and max value option',
               sectionFn: () => (
                 <RangeSlider
@@ -54,8 +61,20 @@ storiesOf('Components', module)
               )
             },
             {
-              title: 'Date Range',
+              title: 'Example: Date Range',
               subtitle: 'You can easily create a date range by formatting the labels.',
+              info: `
+                RangeSlider has a formatLabel prop which accepts a function where you can access the handle labels to format them
+                
+                ~~~
+                const formatLabel = value => (
+                  <div>
+                    <Hour>{moment().startOf('day').add(value, 'hours').format('h')}</Hour>
+                    <Meridian>{moment().startOf('day').add(value, 'hours').format('A')}</Meridian>
+                  </div>
+                );
+                ~~~
+              `,
               sectionFn: () => {
                 const formatLabel = value => (
                   <div>
@@ -77,7 +96,7 @@ storiesOf('Components', module)
               }
             },
             {
-              title: 'Custom Value Step',
+              title: 'Example: Custom Value Step',
               subtitle: 'A range slider a step value of 10',
               sectionFn: () => <RangeSlider
                               minValue={0}

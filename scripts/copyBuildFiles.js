@@ -3,7 +3,8 @@ var fse = require('fs-extra');
 
 const files = [
   'README.md',
-  'LICENSE'
+  'LICENSE',
+  './src/styles'
 ];
 
 Promise.all(
@@ -56,7 +57,7 @@ function createPackageFile() {
     } = packageData;
 
     const minimalPackage = {
-      name: 'ui-components',
+      name: 'ui-components-test',
       author,
       version,
       description,
