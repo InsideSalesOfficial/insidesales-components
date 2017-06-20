@@ -87,7 +87,7 @@ const Label = styled.label`
   color: ${colors.aluminum};
   display: block;
   font-size: ${fontSizes.xxSmall};
-  font-weight: ${fontWeights.light}
+  font-weight: ${fontWeights.light};
   margin: 0 0 30px 0;
 `;
 
