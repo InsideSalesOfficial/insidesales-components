@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { action, storiesOf } from '@storybook/react';
 
 import RangeSlider from './RangeSlider';
-import { fontSizes } from '../styles/theme';
+import { fontSizes } from '../styles';
 
 const Hour = styled.span`
   .isdc-ext-wrap & {

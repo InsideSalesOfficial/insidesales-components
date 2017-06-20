@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import InputRange from 'react-input-range';
 import '../../../node_modules/react-input-range/lib/css/index.css';
 
-import { colors, fontSizes, fontWeights } from '../styles/theme';
+import { colors, fontSizes, fontWeights } from '../styles';
 
 const RangeSliderWrap = styled.div`  
   .input-range {
