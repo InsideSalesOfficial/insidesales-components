@@ -3,8 +3,7 @@ var fse = require('fs-extra');
 
 const files = [
   'README.md',
-  'LICENSE',
-  './src/styles'
+  'LICENSE'
 ];
 
 Promise.all(
