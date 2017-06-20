@@ -3,6 +3,15 @@ var path = require('path');
 var chalk = require('chalk');
 var parse = require('react-docgen').parse;
 var chokidar = require('chokidar');
+var includes = require('lodash/includes');
+
+/** 
+  Name of a folder in /components to exclude from doc generation.
+  Pretty much excluding anything that's not a react component.
+*/
+const excludedFolders = [
+  'styles'
+];
 
 var paths = {
   examples: path.join(__dirname, '../src', 'docs', 'examples'),
@@ -24,12 +33,20 @@ if (enableWatchMode) {
 function generate(paths) {
   var errors = [];
   var componentData = getDirectories(paths.components).map(function(componentName) {
+    if(includes(excludedFolders, componentName)) {
+      return undefined;
+    }
     try {
       return getComponentData(paths, componentName)
     } catch(error) {
       errors.push('An error occurred while attempting to generate metadata for ' + componentName + '. ' + error);
     }
   });
+  
+  componentData = componentData.filter(function(component) {
+    return component !== undefined;
+  });
+
   writeFile(paths.output, "module.exports = /* eslint-disable */ " + JSON.stringify(errors.length ? errors : componentData));
 }
 
