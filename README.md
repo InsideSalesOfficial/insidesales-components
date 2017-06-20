@@ -34,8 +34,9 @@ To start the project, run `npm start`. This will run the neccesary scripts to bu
 ### Deploying to NPM
 
 1. `npm version major|minor|patch` - Use semantic versioning based on changes to the package
-2. `cd lib`
-3. `npm publish`
+2. `npm run build:lib`
+3. `cd lib`
+4. `npm publish`
 
 ### Deploying the docs
 
