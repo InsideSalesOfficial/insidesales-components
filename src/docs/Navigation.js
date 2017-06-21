@@ -1,19 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const Navigator = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  width: 20%;
+`;
+
+const NavItem = styled.li`
+  text-decoration: none;
+`;
 
 const Navigation = ({components}) => {
   return (
-    <ul className="navigation">
+    <Navigator>
       {
         components.map( name => {
           return (
-            <li key={name}>
+            <NavItem key={name}>
               <a href={`#${name}`}>{name}</a>
-            </li>
+            </NavItem>
           )
         })
       }
-    </ul>
+    </Navigator>
   )
 }
 

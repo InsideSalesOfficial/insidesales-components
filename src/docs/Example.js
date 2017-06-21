@@ -1,6 +1,34 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import PropTypes from 'prop-types';
 import CodeExample from './CodeExample';
+import { colors } from 'styles';
+
+const ExampleWrapper = styled.div`
+  border: 1px solid #E6ECF0;
+  padding: 20px;
+  display: flex;
+  flex: 0 0 100%;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
+const ExampleComponentWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 45px;
+`
+
+const ShowCodeLink = styled.a`
+  border: 1px solid #E6ECF0;
+  border-radius: 1px;
+  color: ${colors.green};
+  padding: 5px;
+  text-decoration: none;
+  width: 100px;
+  text-align: center;
+`;
+
 
 class Example extends React.Component {
   constructor(props) {
@@ -21,19 +49,19 @@ class Example extends React.Component {
     // Must use CommonJS require to dynamically require because ES Modules must be statically analyzable.
     const ExampleComponent = require(`./examples/${this.props.componentName}/${name}`).default;
     return (
-      <div className="example">
+      <ExampleWrapper>
         {description && <h4>{description}</h4> }
 
-        <ExampleComponent />
+        <ExampleComponentWrapper>
+          <ExampleComponent />
+        </ExampleComponentWrapper>
 
-        <p>
-          <a href="" onClick={this.toggleCode}>
-            {showCode ? "Hide" : "Show"} Code
-          </a>
-        </p>
+        <ShowCodeLink href="" onClick={this.toggleCode}>
+          {showCode ? "Hide" : "Show"} Code
+        </ShowCodeLink>
 
         {showCode && <CodeExample>{code}</CodeExample>}
-      </div>
+      </ExampleWrapper>
     )
   }
 }

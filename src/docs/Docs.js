@@ -1,7 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import Navigation from './Navigation';
 import ComponentPage from './ComponentPage';
 import componentData from '../../config/componentData';
+
+const DocsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 export default class Docs extends React.Component {
   constructor(props) {
@@ -22,10 +29,10 @@ export default class Docs extends React.Component {
     const component = route ? componentData.filter( component => component.name === route)[0] : componentData[0];
 
     return (
-      <div>
+      <DocsWrapper>
         <Navigation components={componentData.map(component => component.name)} />
         <ComponentPage component={component} />
-      </div>
+      </DocsWrapper>
     )
   }
 }
