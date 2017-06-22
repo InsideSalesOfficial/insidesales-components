@@ -2,10 +2,10 @@
 
 exports[`RangeSlider Snapshots shows component with a label 1`] = `
 <div
-  className="sc-bdVaJa ituyxo"
+  className="sc-bdVaJa dmABhL"
 >
   <label
-    className="label sc-bwzfXH blRzDa"
+    className="sc-bwzfXH blRzDa"
   >
     label
   </label>
@@ -89,7 +89,7 @@ exports[`RangeSlider Snapshots shows component with a label 1`] = `
 
 exports[`RangeSlider Snapshots shows component without a label 1`] = `
 <div
-  className="sc-bdVaJa ituyxo"
+  className="sc-bdVaJa dmABhL"
 >
   <div
     aria-disabled={false}

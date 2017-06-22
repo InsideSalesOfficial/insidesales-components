@@ -1,0 +1,57 @@
+/* 
+  base.css
+  - This css file is for the user to import as a top-level stylesheet which provides a few of
+    the base styles for insidesales-components, primarily, the font-faces.
+*/
+
+/*
+  @font-face
+  - Provides the Roboto and Roboto Condensed font-faces for the library to use
+  - url paths are relative to output in lib folder
+*/
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Condensed Light'), url(fonts/roboto/condensed/RobotoCondensed-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Condensed'), url(fonts/roboto/condensed/RobotoCondensed-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Condensed Bold'), url(fonts/roboto/condensed/RobotoCondensed-Bold.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Roboto Light'), url(fonts/roboto/regularfonts/Roboto-Light.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Roboto'), url(fonts/roboto/regular/Roboto-Regular.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Roboto Bold'), url(fonts/roboto/regular/Roboto-Bold.ttf) format('truetype');
+}
+
+body {
+  font-family: 'Roboto', 'Open Sans';
+}

@@ -141,6 +141,8 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
+          /\.sass$/,
+          /\.scss$/
         ],
         loader: require.resolve('file-loader'),
         options: {
@@ -177,7 +179,7 @@ module.exports = {
       // use the "style" loader inside the async code so CSS from them won't be
       // in the main CSS file.
       {
-        test: /\.css$/,
+        test: /\.s{0,1}css$/,
         loader: ExtractTextPlugin.extract(
           Object.assign(
             {
@@ -190,6 +192,14 @@ module.exports = {
                     minimize: true,
                     sourceMap: true,
                   },
+                },
+                {
+                  loader: require.resolve('sass-loader'),
+                  options: {
+                    importLoaders: 1,
+                    minimize: true,
+                    sourceMap: true,
+                  }
                 },
                 {
                   loader: require.resolve('postcss-loader'),

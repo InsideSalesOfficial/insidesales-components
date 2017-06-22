@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import InputRange from 'react-input-range';
 import '../../../node_modules/react-input-range/lib/css/index.css';
 
-import { colors, fontSizes, fontWeights } from '../styles';
+import { colors, fontFamilies, fontSizes, fontWeights } from '../styles';
 
 const RangeSliderWrap = styled.div`  
+  font-family: ${fontFamilies.roboto};
   .input-range {
     .input-range__track {
       transition: left 0s, width 0s;

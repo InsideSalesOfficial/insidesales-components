@@ -3,7 +3,8 @@ var fse = require('fs-extra');
 
 const files = [
   'README.md',
-  'LICENSE'
+  'LICENSE',
+  'src/components/styles/fonts'
 ];
 
 Promise.all(
@@ -12,7 +13,12 @@ Promise.all(
 .then(() => createPackageFile());
 
 function copyFile(file) {
-  const libPath = resolveBuildPath(file);
+  let libPath = resolveBuildPath(file);
+
+  if(file === 'src/components/styles/fonts') {
+    libPath = path.resolve(__dirname, '../lib/styles', path.basename(file));
+  }
+
   return new Promise((resolve) => {
     fse.copy(
       file,
