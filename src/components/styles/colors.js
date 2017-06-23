@@ -9,6 +9,7 @@ export const colors = {
   black10: lighten(.90, black),
   black12: lighten(.88, black),
   black20: lighten(.80, black),
+  black30: lighten(.70, black),
   black36: lighten(.46, black),
   black24: lighten(.76, black),
   black40: lighten(.60, black),
