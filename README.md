@@ -29,7 +29,9 @@ Check out the [components Storybook](http://austinknight.net/ui-components/story
 
 Run `npm install` and edit code in the `src/` folder.
 
-To start the project, run `npm start`. This will run the neccesary scripts to build the documentation, storybooks, and start the development server. Running the `start` command will also watch for any changes and update both the documentation and storybooks.
+To start the project, run `npm start`. This will run the neccesary scripts to build storybooks and start the development server on http://localhost:3001. Running this command will also watch for any changes and update storybooks.
+
+To start the project with the custom documentation and storybooks, run `npm startall`. The custom documentation runs on http://localhost:3000 and storybooks on http://localhost:3001. This command also runs the watcher for changes on both documentation and storybooks.
 
 ### Deploying to NPM
 
@@ -38,6 +40,6 @@ To start the project, run `npm start`. This will run the neccesary scripts to bu
 3. `cd lib`
 4. `npm publish`
 
-### Deploying the docs
+### Deploying the docs and/or storybooks
 
 from the root directory run `npm deploy:docs`
