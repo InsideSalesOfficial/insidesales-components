@@ -1,4 +1,4 @@
-# InsideSales.com UI Component Library
+# InsideSales Components &middot; [![Travis CI Status](https://travis-ci.org/InsideSalesOfficial/insidesales-components.svg?branch=master)](https://travis-ci.org/InsideSalesOfficial/insidesales-components) [![npm version](https://badge.fury.io/js/insidesales-components.svg)](https://badge.fury.io/js/insidesales-components) 
 
 A set of UI components built with React and Styled-Components used on products by InsideSales.com.
 

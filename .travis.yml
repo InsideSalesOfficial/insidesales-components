@@ -1,10 +1,22 @@
 language: node_js
-
+cache:
+  directories:
+    - node_modules
+notifications:
+  email: false
 node_js:
-  - stable
-
-install:
-  - npm install
-
+  - '8'
+  - '7'
+  - '6'
+  - '4'
+before_script:
+  - npm prune
 script:
-  - npm test
+  - npm run test
+  - npm run build:lib
+  - cd lib
+after_success:
+  - npm run semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
