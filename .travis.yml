@@ -14,12 +14,11 @@ script:
   - npm run test
   - npm run build:lib
 
-after_script:
-  - cd lib
-
 after_success:
-  - npm run semantic-release
+  - npm i -g semantic-release
+  - cd lib
+  - semantic-release pre && npm publish && semantic-release post
 
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+  only:
+    - master
