@@ -16,6 +16,15 @@
 insidesales-components uses [semantic-release](https://github.com/semantic-release/semantic-release)
 to release new versions automatically.
 
+To help with creating commit messages, you can install the [commitizen](https://github.com/commitizen/cz-cli) command line tools. Once you have the command line tool installed, you can commit your staged changes by running `npm run commit`. This command will trigger the commitizen cli and walk you through creating your commit message for staged changes. Here are a couple of tutorials you can use to check out how this works:
+
+[https://egghead.io/lessons/javascript-writing-conventional-commits-with-commitizen](https://egghead.io/lessons/javascript-writing-conventional-commits-with-commitizen)
+[https://egghead.io/lessons/javascript-committing-a-new-feature-with-commitizen](https://egghead.io/lessons/javascript-committing-a-new-feature-with-commitizen)
+
+If you choose not to use commitizen, please follow the [semantic-release commit message format](https://github.com/semantic-release/semantic-release#default-commit-message-format) so releases will trigger properly.
+
+**Use the following types accordingly:**
+
 *  Commits of type `fix` will trigger bugfix releases, think `0.0.1`
 *  Commits of type `feat` will trigger feature releases, think `0.1.0`
 *  Commits with `BREAKING CHANGE` in body or footer will trigger breaking releases, think `1.0.0`
