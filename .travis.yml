@@ -16,11 +16,8 @@ script:
 
 after_success:
   - npm i -g semantic-release
-  - semantic-release pre
   - cd lib
-  - npm publish
-  - cd ..
-  - semantic-release post
+  - semantic-release pre && npm publish && semantic-release post
 
 branches:
   only:
