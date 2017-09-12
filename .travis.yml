@@ -5,17 +5,15 @@ cache:
 notifications:
   email: false
 node_js:
-  - '8'
-  - '7'
-  - '6'
-  - '4'
+  - 'node'
 before_script:
   - npm prune
 script:
   - npm run test
   - npm run build:lib
-  - cd lib
+
 after_success:
+   - cd lib
   - npm run semantic-release
 branches:
   except:
