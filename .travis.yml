@@ -1,11 +1,15 @@
 language: node_js
+
 cache:
   directories:
     - node_modules
+
 notifications:
   email: false
+
 node_js:
   - 'node'
+
 script:
   - npm run test
   - npm run build:lib
@@ -13,6 +17,7 @@ script:
 after_success:
   - cd lib
   - npm run semantic-release
+
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
