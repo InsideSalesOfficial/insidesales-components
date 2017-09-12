@@ -12,11 +12,11 @@ node_js:
 
 script:
   - npm run test
+  - npm run build:lib
 
 after_success:
   - npm i -g semantic-release
   - semantic-release pre
-  - npm run build:lib
   - cd lib
   - npm publish
   - cd ..
