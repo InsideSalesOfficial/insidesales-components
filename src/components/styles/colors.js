@@ -1,4 +1,4 @@
-import { lighten } from 'polished';
+import { lighten, transparentize } from 'polished';
 
 export const black = '#000000';
 export const white = '#ffffff';
@@ -44,16 +44,17 @@ export const colors = {
   red: '#EA5959',
   red70: '#B24C4E',
   white,
-  white10: lighten(.90, white),
-  white20: lighten(.80, white),
-  white30: lighten(.70, white),
-  white40: lighten(.60, white),
-  white50: lighten(.50, white),
-  white60: lighten(.40, white),
-  white70: lighten(.30, white),
-  white80: lighten(.20, white),
-  white87: lighten(.13, white),
-  white90: lighten(.10, white),
+  white10: transparentize(.90, white),
+  white20: transparentize(.80, white),
+  white30: transparentize(.70, white),
+  white35: transparentize(.65, white),
+  white40: transparentize(.60, white),
+  white50: transparentize(.50, white),
+  white60: transparentize(.40, white),
+  white70: transparentize(.30, white),
+  white80: transparentize(.20, white),
+  white87: transparentize(.13, white),
+  white90: transparentize(.10, white),
   white50green: '#9CDABA',
   white79green: '#D5E6D9',
   white74black: '#BDC9C9',
