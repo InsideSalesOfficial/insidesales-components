@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
 import InputRange from 'react-input-range';
-import '../../../node_modules/react-input-range/lib/css/index.css';
+import './index.css';
 
 import { colors, fontFamilies, fontSizes, fontWeights } from '../styles';
 
