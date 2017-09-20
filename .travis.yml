@@ -10,16 +10,19 @@ notifications:
 node_js:
   - 'node'
 
+before_install:
+  - npm i npm@latest -g
+
+before_script:
+  - npm prune
+
 script:
   - npm run test
   - npm run build:lib
 
 after_success:
-  - npm i -g semantic-release
   - cd lib
-  - semantic-release pre && npm publish
-  - cd ..
-  - semantic-release post
+  - npm run semantic-release
 
 branches:
   only:
