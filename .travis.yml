@@ -10,6 +10,9 @@ notifications:
 node_js:
   - 'node'
 
+before_script:
+  - npm i -g npm@latest
+
 script:
   - npm run test
   - npm run build:lib
