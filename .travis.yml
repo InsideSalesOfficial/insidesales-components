@@ -10,13 +10,6 @@ notifications:
 node_js:
   - 'node'
 
-before_install:
-  - npm i npm@latest -g
-
-before_script:
-  - npm prune
-  - npm install
-
 script:
   - npm run test
   - npm run build:lib
