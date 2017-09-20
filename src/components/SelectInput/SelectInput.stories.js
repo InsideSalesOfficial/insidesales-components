@@ -39,7 +39,7 @@ const genericOptions = [
   { value: '11', label: 'A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string' },
 ];
 
-storiesOf('Components', module)
+storiesOf('Form', module)
 .addWithChapters(
   'SelectInput',
   {

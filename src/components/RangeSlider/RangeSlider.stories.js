@@ -19,7 +19,7 @@ const Meridian = styled.small`
   }
 `;
 
-storiesOf('Components', module)
+storiesOf('Form', module)
   .addWithChapters(
     'RangeSlider',
     {
