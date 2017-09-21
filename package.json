@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/austinknight/insidesales-components.git"
   },
-  "version": "0.0.0-development",
+  "version": "0.0.0-developments",
   "main": "./lib/index.js",
   "private": false,
   "engines": {
