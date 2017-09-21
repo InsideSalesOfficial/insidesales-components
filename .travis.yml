@@ -13,6 +13,7 @@ node_js:
 script:
   - npm run test
   - npm run build:lib
+  - npm run clean:packagejson
 
 after_success:
   - npm run semantic-release
