@@ -10,13 +10,14 @@ notifications:
 node_js:
   - 'node'
 
+before_script:
+  - npm prune
+
 script:
   - npm run test
   - npm run build:lib
 
 after_success:
-  - npm i -g semantic-release
-  - cd lib
   - npm run semantic-release
 
 branches:

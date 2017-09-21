@@ -10,8 +10,6 @@ glob('src/components/**/*.css', {
 }, (er, files) => {
   
   let filesToCopy = [
-    'README.md',
-    'LICENSE',
     'src/components/styles/fonts'
   ];
 
@@ -25,7 +23,6 @@ glob('src/components/**/*.css', {
   Promise.all(
     filesToCopy.map((file) => copyFile(file))
   )
-  .then(() => createPackageFile());
   
   function copyFile(file) {
     let libPath = resolveBuildPath(file);
