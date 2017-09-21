@@ -85,7 +85,7 @@ glob('src/components/**/*.css', {
       } = packageData;
   
       const minimalPackage = {
-        name: 'insidesales-components',
+        name: 'isdc-components-test',
         author,
         version,
         description,

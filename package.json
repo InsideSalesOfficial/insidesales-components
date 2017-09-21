@@ -1,12 +1,12 @@
 {
-  "name": "insidesales-components-dev",
+  "name": "isdc-components-test",
   "description": "A set of UI components built with React and Styled-Components used on products by InsideSales.com.",
   "homepage": "http://insidesalesofficial.github.io/ui-components/storybook/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:InsideSalesOfficial/insidesales-components.git"
+    "url": "https://github.com/austinknight/insidesales-components.git"
   },
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.0-development",
   "main": "./lib/index.js",
   "private": false,
   "engines": {
@@ -15,7 +15,7 @@
   "author": "InsideSales.com <austin.knight@insidesales.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/InsideSalesOfficial/ui-components/issues"
+    "url": "https://github.com/austinknight/insidesales-components/issues"
   },
   "files": [
     "lib"
@@ -93,7 +93,7 @@
     "react-test-renderer": "^15.6.1",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
-    "semantic-release": "^7.0.2",
+    "semantic-release": "^8.0.3",
     "styled-components": "^2.0.1",
     "style-loader": "0.17.0",
     "sw-precache-webpack-plugin": "0.9.1",
