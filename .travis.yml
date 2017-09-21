@@ -10,9 +10,6 @@ notifications:
 node_js:
   - node
 
-before_script:
-  - npm prune
-
 script:
   - npm run test
   - npm run build:lib
