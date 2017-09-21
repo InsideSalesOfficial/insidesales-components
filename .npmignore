@@ -6,5 +6,5 @@ scripts
 src
 .gitignore
 .travis.yml
-CONTRIBUTING.node_modules
+CONTRIBUTING
 
