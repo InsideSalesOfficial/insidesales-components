@@ -28,7 +28,7 @@ storiesOf('Form', module)
 
         ~~~
         import React from 'react';
-        import RangeSlider from 'ui-components/RangeSlider';
+        import {RangeSlider} from 'insidesales-components';
         ~~~
       `,
       chapters: [

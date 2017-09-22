@@ -29,7 +29,7 @@ storiesOf('Form', module)
 
             ~~~
             import React from 'react';
-            import ToggleSlider from 'ui-components/ToggleSlider';
+            import {ToggleSlider} from 'insidesales-components';
             ~~~
             `,
     chapters: [

@@ -48,7 +48,7 @@ storiesOf('Form', module)
 
       ~~~
       import React from 'react';
-      import SelectInput from 'insidesales-components/SelectInput';
+      import {SelectInput} from 'insidesales-components';
       ~~~
     `,
     chapters: [
