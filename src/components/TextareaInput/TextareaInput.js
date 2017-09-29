@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { get } from 'lodash';
 
 import { colors, typography, darkScrollbar } from '../styles';
 
@@ -179,13 +179,13 @@ const TextLabel = styled.label`
   line-height: 16px;
 `;
 
-const TextareaHelper = styled.div`
+export const TextareaHelper = styled.div`
   color: ${colors.black40};
   padding-top: 4px;
   ${typography.caption}
 `;
 
-const TextareaError = styled(TextareaHelper)`
+export const TextareaError = styled(TextareaHelper)`
   color: ${colors.red};
 `;
 
@@ -194,15 +194,16 @@ class TextareaInput extends React.Component {
     super(props);
 
     this.state = {
-      hasValue: false,
       focused: false
     };
   }
 
   componentDidMount() {
-    if (this.props.children) {
+    const {value} = this.props;
+
+    if (value) {
       this.setState({
-        hasValue: true
+        value
       });
     }
   }
@@ -213,26 +214,16 @@ class TextareaInput extends React.Component {
     })
   }
 
-  blurred = (e) => {
-    if (_.get(e, 'target.value', false)) {
-      this.setState({
-        hasValue: true
-      })
-    }
-    else {
-      this.setState({
-        hasValue: false
-      })
-    }
+  blurred = () => {
     this.setState({
       focused: false
     })
   }
 
-  renderHelperText() {
+  renderHelperText = () => {
     const { error, helper, collapsed } = this.props;
 
-    if (collapsed && !this.state.hasValue && !this.state.focused && !error) {
+    if (collapsed && !this.state.value && !this.state.focused && !error) {
       return null;
     }
 
@@ -254,8 +245,22 @@ class TextareaInput extends React.Component {
     }
   }
 
+  onChange = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    this.setState({
+      value: get(e, 'target.value', this.textareaInput.value)
+    }, () => {
+      if (this.props.onChange) {
+        this.props.onChange(this.state.value);
+      }
+    });
+  }
+
   render() {
-    const { label, name, error, disabled, children, collapsed } = this.props;
+    const { label, name, error, disabled, collapsed } = this.props;
     return (
       <TextareaInputWrapper>
         <TextareaBox
@@ -263,19 +268,21 @@ class TextareaInput extends React.Component {
           onClick={this.focusOnTextarea}
           isFocused={this.state.focused}
           error={error}
-          open={this.state.hasValue}
+          open={this.state.value}
           disabled={disabled}
           collapsed={collapsed}>
           <Textarea
             onFocus={this.focused}
             onBlur={this.blurred}
-            id={name} name={name}
+            id={name}
+            name={name}
             disabled={disabled}
             error={error}
-            value={children}
-            ref={(input) => { this.textareaInput = ReactDOM.findDOMNode(input); }}>
+            value={this.state.value}
+            ref={(input) => { this.textareaInput = ReactDOM.findDOMNode(input); }}
+            onChange={this.onChange}>
           </Textarea>
-          <TextLabel isFocused={this.state.focused} open={this.state.hasValue} htmlFor={name} error={error}>{label}</TextLabel>
+          <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
         </TextareaBox>
         {this.renderHelperText()}
       </TextareaInputWrapper>
@@ -294,7 +301,9 @@ TextareaInput.propTypes = {
   helper: PropTypes.string,
   error: PropTypes.string,
   disabled: PropTypes.bool,
-  children: PropTypes.string
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  collapsed: PropTypes.bool
 };
 
 export default TextareaInput;

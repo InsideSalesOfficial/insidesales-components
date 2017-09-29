@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  storiesOf
+  storiesOf,
+  action
 } from '@storybook/react';
 
 import TextareaInput from './TextareaInput';
@@ -26,6 +27,7 @@ storiesOf('Form', module)
                 <TextareaInput
                   label="Label"
                   name="first"
+                  onChange={action('value')}
                 />
               )
             },
@@ -35,9 +37,9 @@ storiesOf('Form', module)
                 <TextareaInput
                   label="Label"
                   name="firstz"
-                >
-                  This text was hardcoded into stories. The structure of this component follows how a `textarea` should look.
-                </TextareaInput>
+                  onChange={action('value')}
+                  value="This text was hardcoded into stories. The structure of this component follows how a `textarea` should look."
+                />
               )
             },
             {
@@ -48,6 +50,7 @@ storiesOf('Form', module)
                   helper="Helper text."
                   error=""
                   name="second"
+                  onChange={action('value')}
                 />
               )
             },
@@ -59,6 +62,7 @@ storiesOf('Form', module)
                   helper="Helper text."
                   error="Errors will override helper text."
                   name="third"
+                  onChange={action('value')}
                 />
               )
             },
@@ -70,6 +74,7 @@ storiesOf('Form', module)
                   helper="Helper text."
                   disabled
                   name="fourth"
+                  onChange={action('value')}
                 />
               )
             },
@@ -80,9 +85,9 @@ storiesOf('Form', module)
                   label="Label"
                   helper="Helper text."
                   disabled
-                  name="fifth">
-                    this is some example text
-                </TextareaInput>
+                  name="fifth"
+                  value="this is some example text"
+                  onChange={action('value')}/>
               )
             },
             {
@@ -92,8 +97,7 @@ storiesOf('Form', module)
                   label="Label"
                   helper="Helper text."
                   name="sixth"
-                  collapsed>
-                </TextareaInput>
+                  collapsed />
               )
             },
             {
@@ -104,8 +108,7 @@ storiesOf('Form', module)
                   helper="Helper text."
                   error={"This field is required."}
                   name="sixth"
-                  collapsed>
-                </TextareaInput>
+                  collapsed />
               )
             },
           ]
