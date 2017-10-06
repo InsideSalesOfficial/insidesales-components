@@ -215,9 +215,11 @@ class TextareaInput extends React.Component {
   }
 
   blurred = () => {
-    this.setState({
-      focused: false
-    })
+    if(!this.state.cancelBlur) {
+      this.setState({
+        focused: false
+      });
+    }
   }
 
   renderHelperText = () => {
@@ -239,10 +241,16 @@ class TextareaInput extends React.Component {
     }
   }
 
-  preventLostFocus = (e) => {
-    if (this.textareaInput === document.activeElement) {
-      e.preventDefault();
-    }
+  cancelBlur = (e) => {
+    this.setState({
+      cancelBlur: true
+    });
+  }
+
+  removeCancelBlur = () => {
+    this.setState({
+      cancelBlur: false
+    });
   }
 
   onChange = (e) => {
@@ -264,7 +272,9 @@ class TextareaInput extends React.Component {
     return (
       <TextareaInputWrapper>
         <TextareaBox
-          onMouseDown={this.preventLostFocus}
+          onMouseUp={this.removeCancelBlur}
+          onMouseDown={this.cancelBlur}
+          onMouseLeave={this.removeCancelBlur}
           onClick={this.focusOnTextarea}
           isFocused={this.state.focused}
           error={error}
