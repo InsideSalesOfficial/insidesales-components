@@ -80,6 +80,7 @@ const InputItem = styled.input`
   border: none;
   box-sizing: border-box;
   height: 100%;
+  max-height: 19px;
   padding: 0 1px;
   resize: none;
   text-align: left;
