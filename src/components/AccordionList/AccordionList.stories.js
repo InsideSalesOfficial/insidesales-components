@@ -70,7 +70,7 @@ class AccordionExample extends React.Component {
   }
 }
 
-storiesOf('Components', module)
+storiesOf('Lists', module)
 .addWithChapters(
   'AccordionList',
   {

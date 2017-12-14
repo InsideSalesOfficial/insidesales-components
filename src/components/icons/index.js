@@ -74,7 +74,7 @@ import TemplateIcon from './TemplateIcon';
 import TrashIcon from './TrashIcon';
 import ArrowBack from './ArrowBack';
 
-export default {
+module.exports = {
   AddCircleIcon,
   AddIcon,
   AttachmentIcon,
