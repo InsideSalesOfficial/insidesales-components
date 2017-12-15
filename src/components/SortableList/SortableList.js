@@ -65,14 +65,6 @@ class SortableList extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.items !== nextProps.items) {
-      this.setState({
-        items: nextProps.items
-      });
-    }
-  }
-
   moveItemInArray(array, element, delta) {
     const newArray = _.cloneDeep(array);
 
@@ -104,6 +96,8 @@ class SortableList extends React.Component {
     const items = _.cloneDeep(this.state.items);
     this.setState({
       items: _.filter(items, (item) => item.id !== itemId)
+    }, () => {
+      this.props.onItemDeleted(itemId)
     });
   }
 
