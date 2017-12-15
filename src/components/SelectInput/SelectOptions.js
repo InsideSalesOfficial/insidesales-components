@@ -7,6 +7,8 @@ import { colors, typography, boxShadows } from '../styles';
 
 import { OverflowWrapper } from './SelectInputThemes';
 
+import TextInput from '../TextInput';
+
 export const SelectOptionHeight = 36;
 
 const SelectOptionsContainer = styled.div`
@@ -148,9 +150,13 @@ const SelectOption = styled.div`
 `;
 
 const PromotedOptions = styled.div`
-  border-bottom: 1px solid ${colors.barLightGray};
+  border-bottom: ${props => props.listLength === 0 ? '0' : `1px solid ${colors.barLightGray}`};
   margin-bottom: 8px;
   width: 100%;
+`;
+
+const SearchInput = styled(TextInput)`
+  padding: 0 24px;
 `;
 
 class SelectOptions extends React.Component {
@@ -200,11 +206,24 @@ class SelectOptions extends React.Component {
     const { promotedOptions } = this.props;
     if (promotedOptions) {
       return (
-        <PromotedOptions>
+        <PromotedOptions listLength={_.size(promotedOptions)}>
           { promotedOptions.map((option, idx) => this.optionElement(idx, option.value, option.label, option.disabled)) }
         </PromotedOptions>
       );
     }
+  }
+
+  renderSearch = () => {
+    if (!this.props.searchable) return null;
+
+    return (
+      <SearchInput
+        label="Label"
+        name="selectSearch"
+        onChange={this.props.onSearch}
+        search
+      />
+    );
   }
 
   render() {
@@ -217,6 +236,7 @@ class SelectOptions extends React.Component {
     return (
       <SelectOptionsContainer dirty={this.state.inputUsed} {...this.props}>
         <SelectOptionsWrapper {...this.props} ref={(el) => { this.optionWrapperEl = el; }}>
+          {this.renderSearch()}
           {this.renderPromotedOptions()}
           {this.renderOptions()}
         </SelectOptionsWrapper>

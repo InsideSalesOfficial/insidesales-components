@@ -36,7 +36,8 @@ class SelectInput extends React.Component {
     this.state = {
       optionsListVisible: false,
       valid: false,
-      touched: false
+      touched: false,
+      searchFilter: ''
     };
   }
 
@@ -58,8 +59,15 @@ class SelectInput extends React.Component {
     this.closeOptionsList();
   }
 
-  toggleOptionsList = () => {
+  toggleOptionsList = (e) => {
     if (!this.props.wrapCloseDisabled && this.state.optionsListVisible) {
+      const clickedInsideSearch = () => {
+        const clickedElement = e.target.getAttribute('name');
+        return clickedElement === 'selectSearch';
+      }
+      if (clickedInsideSearch) {
+        return
+      }
       this.closeOptionsList();
     } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
       this.openOptionsList();
@@ -121,8 +129,22 @@ class SelectInput extends React.Component {
     return inputLabel;
   }
 
+  filterOptions = (searchFilter) => {
+    this.setState({
+      searchFilter
+    });
+  }
+
+  filterOptionsWithSearch = (options) => _.filter(options, (option) => {
+    return option.label.toLowerCase().search(this.state.searchFilter.toLowerCase()) !== -1;
+  });
+
   render() {
     const isDisabled = this.props.isDisabled || (this.props.isDisabledOneOption && this.props.options.length <= 1);
+
+    const options = this.filterOptionsWithSearch(this.props.options);
+    const promotedOptions = this.filterOptionsWithSearch(this.props.promotedOptions);
+
     return (
       /*
        * Adding className to the outtermost element allows for users of this component to create a
@@ -135,22 +157,26 @@ class SelectInput extends React.Component {
           ref="clickEventElement" style={this.props.containerStyles || {}}
           className={this.props.className}
           id="select-input__wrapper"
-          onClick={() => { if (!isDisabled) { this.toggleOptionsList(); } }}
+          onClick={(e) => { if (!isDisabled) { this.toggleOptionsList(e); } }}
         >
-          {this.props.label &&
+          {this.props.label && !this.props.addButtonList &&
             <SelectInputLabel>{this.props.label}</SelectInputLabel>
           }
           <SelectInputDisplay
+            defaultLabel={this.props.defaultLabel}
             label={this.determineLabel()}
             selectArrowFollows={this.props.selectArrowFollows}
             isDisabled={isDisabled}
             noCarat={this.props.noCarat}
+            addButtonList={this.props.addButtonList}
           />
           <SelectOptions
             onOptionUpdate={this.onChange}
-            promotedOptions={this.props.promotedOptions}
-            options={this.props.options}
+            promotedOptions={promotedOptions}
+            options={options}
             optionsCount={this.countOptions()}
+            searchable={this.props.searchable}
+            onSearch={this.filterOptions}
             visible={this.state.optionsListVisible} />
         </SelectWrapper>
       </ThemeProvider>

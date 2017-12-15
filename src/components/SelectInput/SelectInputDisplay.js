@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 
 import { colors, typography } from '../styles';
+import { AddCircleIcon  } from '../icons';
 
 import { OverflowWrapper } from './SelectInputThemes';
 import { SelectOptionHeight } from './SelectOptions';
@@ -192,22 +193,42 @@ const Label = styled.div`
   }};
 `;
 
+const AddButton = styled.div`
+  ${typography.body2};
+  color: ${colors.green};
+  padding-left: 32px;
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: 0;
+    bottom: px;
+  }
+`;
+
 class SelectInputDisplay extends React.Component {
   render() {
-    const { onClick, label, isDisabled, selectArrowFollows, noCarat } = this.props;
+    const { onClick, label, isDisabled, selectArrowFollows, noCarat, defaultLabel } = this.props;
     const clonedLabel = typeof (label) === 'string' ? <OverflowWrapper>{label}</OverflowWrapper> : React.cloneElement(label, { isClickable: true });
 
     return (
-      <Input
-        id="select-input__input"
-        onClick={onClick}
-        tabIndex={(isDisabled) ? -1 : 0}
-        selectArrowFollows={selectArrowFollows}
-        isDisabled={isDisabled}
-      >
-        <Label title={typeof (label) === 'string' ? label : _.get(label, 'props.label')}>{clonedLabel}</Label>
-        <Carat isDisabled={isDisabled} selectArrowFollows={selectArrowFollows} noCarat={noCarat} className="input-carat" />
-      </Input>
+      <div style={{width: '100%'}}>
+        {this.props.addButtonList &&
+          <AddButton><AddCircleIcon fill={colors.green} size={{width: 24, height: 24}} /> {defaultLabel}</AddButton>
+        }
+        {!this.props.addButtonList &&
+          <Input
+            id="select-input__input"
+            onClick={onClick}
+            tabIndex={(isDisabled) ? -1 : 0}
+            selectArrowFollows={selectArrowFollows}
+            isDisabled={isDisabled}
+          >
+            <Label title={typeof (label) === 'string' ? label : _.get(label, 'props.label')}>{clonedLabel}</Label>
+            <Carat isDisabled={isDisabled} selectArrowFollows={selectArrowFollows} noCarat={noCarat} className="input-carat" />
+          </Input>
+        }
+      </div>
     );
   }
 }

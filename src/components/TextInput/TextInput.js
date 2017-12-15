@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
+import { SearchMaterialIcon } from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
 
 const TextInputWrapper = styled.div`
@@ -81,7 +82,7 @@ const InputItem = styled.input`
   box-sizing: border-box;
   height: 100%;
   max-height: 19px;
-  padding: 0 1px;
+  padding: ${props => props.search ? '0 0 0 32px' : '0 1px'};
   resize: none;
   text-align: left;
   width: 100%;
@@ -132,6 +133,12 @@ export const TextInputHelper = styled.div`
 
 export const TextInputError = styled(TextInputHelper)`
   color: ${colors.red};
+`;
+
+const SearchIcon = styled(SearchMaterialIcon)`
+  position: absolute;
+  top: 22px;
+  left: 0;
 `;
 
 class TextInput extends React.Component {
@@ -236,8 +243,14 @@ class TextInput extends React.Component {
             error={error}
             value={this.state.value}
             ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
-            onChange={this.onChange} />
-          <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
+            onChange={this.onChange}
+            search={this.props.search} />
+          {this.props.search &&
+            <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
+          }
+          { !this.props.search &&
+            <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
+          }
         </TextBox>
         {this.renderHelperText()}
       </TextInputWrapper>

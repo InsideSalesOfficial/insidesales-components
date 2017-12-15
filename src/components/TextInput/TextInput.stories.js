@@ -112,6 +112,17 @@ storiesOf('Form', module)
                   collapsed />
               )
             },
+            {
+              title: 'Example: text input search',
+              sectionFn: () => (
+                <TextInput
+                  label="Search"
+                  name="seven"
+                  onChange={action('value')}
+                  search
+                />
+              )
+            },
           ]
         }
       ]

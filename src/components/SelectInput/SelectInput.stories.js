@@ -141,7 +141,39 @@ storiesOf('Form', module)
                   />
               </div>
             )
-          }
+          },
+          {
+            title: 'Searchable Options',
+            subtitle: 'Places a search input at the top of the options list.',
+            sectionFn: () => (
+              <div style={lightExample}>
+                <SelectInput
+                  options={genericOptions}
+                  theme={lineSelectInputTheme}
+                  onChange={action('Option Selected')}
+                  defaultLabel={''}
+                  searchable
+                  />
+              </div>
+            )
+          },
+          {
+            title: 'Add Button Select List',
+            subtitle: `Shows the select input as an Add button instead of the select input styling. The defaultLabel prop will determing the button text. 
+                      This is convenient for when you need a select list to choose options from to add to another list.`,
+            sectionFn: () => (
+              <div>
+                <SelectInput
+                  options={genericOptions}
+                  theme={lineSelectInputTheme}
+                  onChange={action('Option Selected')}
+                  defaultLabel={'ADD'}
+                  addButtonList
+                  searchable
+                  />
+              </div>
+            )
+          },
         ]
       }
     ]
