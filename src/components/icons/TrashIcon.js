@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TrashIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>Trash Icon</title>
     <path d="M72.14,31.07H57.86V26.43A1.43,1.43,0,0,0,56.43,25H43.57a1.43,1.43,0,0,0-1.43,1.43v4.64H27.86a1.43,1.43,0,0,0,0,
     2.86h4.71V73.57A1.43,1.43,0,0,0,34,75H66a1.43,1.43,0,0,0,1.43-1.43V33.93h4.71A1.43,1.43,0,1,0,72.14,31.07ZM45,

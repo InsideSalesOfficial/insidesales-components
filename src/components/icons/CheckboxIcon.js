@@ -19,7 +19,7 @@ const icons = {
 };
 
 const CheckboxIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>Checkbox Icon</title>
     {props.type ? icons[props.type] : icons['checkbox-checked']}
   </svg>

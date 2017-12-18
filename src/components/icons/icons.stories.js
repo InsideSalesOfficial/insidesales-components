@@ -28,15 +28,25 @@ const IconWrapper = styled.div`
   margin: 5px;
   color: white;
   text-align: center;
-  background-color: ${colors.greenBackground};
+  background-color: ${(props) => {
+    if (props.remove) {
+      return colors.red;
+    }
+    return colors.greenBackground;
+    }
+  };
 `;
 
-const icons = _.map(_.omit(Icons, 'TaskIcons'), (icon, key) => (
-  <IconWrapper onClick={action(key)}>
-    {React.createElement(icon, { fill: colors.white, size: { width: '50', height: '50' } })}
+const icons = _.map(_.omit(Icons, 'TaskIcons'), (icon, key) => {
+  const removeIcon = _.get(icon({size: undefined}), 'props.remove');
+  const IconEl = React.createElement(icon, { fill: colors.white, size: { width: '50', height: '50' } });
+  return (
+  <IconWrapper remove={removeIcon} onClick={action(key)} key={key}>
+    {IconEl}
     <div>{key}</div>
   </IconWrapper>
-));
+)}
+);
 
 storiesOf('Base', module)
 .addWithChapters(

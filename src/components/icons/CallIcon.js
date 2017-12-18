@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CallIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>Call Icon</title>
     <path d="M38.6,18.2l0.7,0.5l8.2,5.8l0.8,0.5l-0.4,0.8l-5.8,10.5c-0.3,0.7-0.8,1.2-1.5,1.6c-0.8,0.5-1.9,0.9-3.1,1.1
       c-0.6,0.1-1.1,0.2-1.7,0.2c-3,5.5-3,15.9,0.1,21.5c0.5,0,1.1,0.1,1.6,0.2c1.2,0.2,2.3,0.6,3.2,1.2c0.6,0.4,1.1,0.9,1.4,1.5L47.9,74

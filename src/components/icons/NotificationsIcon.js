@@ -33,7 +33,7 @@ const icons = {
 };
 
 const NotificationsIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>Notifications Icon</title>
     {props.type ? icons[props.type] : icons['notifications-oval-new-message']}
   </svg>

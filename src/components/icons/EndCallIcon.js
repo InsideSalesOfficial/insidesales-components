@@ -1,7 +1,7 @@
 import React from 'react';
 
 const EndCallIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>End Call Icon</title>
     <path d="M48.4,79.9l15.1-12.3c0.3-0.2,0.4-0.5,0.4-0.8c0-0.2,0-0.4-0.2-0.6c-0.3-0.4-1-0.4-1.4-0.1L49.5,76.5V49.3c0-0.6-0.4-1-1-1
       s-1,0.4-1,1v27.3L34.6,66.2c-0.4-0.4-1.1-0.3-1.4,0.1c-0.4,0.4-0.3,1.1,0.1,1.4L48.4,79.9z"/>

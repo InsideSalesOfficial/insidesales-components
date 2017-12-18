@@ -50,6 +50,7 @@ import MergeFieldIcon from './MergeFieldIcon';
 import MessageAlertIcon from './MessageAlertIcon';
 import MessageBulletedIcon from './MessageBulletedIcon';
 import MicrosoftIcon from './MicrosoftIcon';
+import MinimizeIcon from './MinimizeIcon';
 import MinusIcon from './MinusIcon';
 import MoreVertIcon from './MoreVertIcon';
 import MoveIcon from './MoveIcon';
@@ -127,6 +128,7 @@ module.exports = {
   MessageAlertIcon,
   MessageBulletedIcon,
   MicrosoftIcon,
+  MinimizeIcon,
   MinusIcon,
   MoreVertIcon,
   MoveIcon,

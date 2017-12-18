@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PlaybookIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>Playbook Icon</title>
     <path d="M44.92,53.67a2,2,0,0,0,2,2.77,4,4,0,0,0,3.65-2.77,2,2,0,0,0-2-2.77A4,4,0,0,0,44.92,53.67Z"/>
     <path d="M73.25,38a3.81,3.81,0,0,0-1.7-1.23,4.62,4.62,0,0,1-.14,1.64L62.76,66.73a2.06,2.06,0,0,1-1,1.19,3.21,3.21,0,0,

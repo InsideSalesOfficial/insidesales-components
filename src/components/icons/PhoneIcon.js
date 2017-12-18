@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PhoneIcon = props => (
-  <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+  <svg remove {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
     <title>Phone Icon</title>
     <path d="M52.2,18.9l0.7,0.5l8,5.7l0.8,0.5l-0.4,0.8l-5.7,10.2c-0.3,0.7-0.8,1.2-1.4,1.5c-0.8,0.5-1.8,0.9-3,1.1
       c-0.6,0.1-1.1,0.2-1.6,0.2c-2.9,5.4-2.9,15.6,0.1,21c0.5,0,1.1,0.1,1.5,0.2c1.2,0.2,2.2,0.6,3.1,1.2c0.6,0.4,1.1,0.9,1.4,1.5
