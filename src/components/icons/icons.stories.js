@@ -28,21 +28,13 @@ const IconWrapper = styled.div`
   margin: 5px;
   color: white;
   text-align: center;
-  background-color: ${(props) => {
-    if (props.remove) {
-      return colors.red;
-    }
-    return colors.greenBackground;
-    }
-  };
+  background-color: ${colors.greenBackground};
 `;
 
 const icons = _.map(_.omit(Icons, 'TaskIcons'), (icon, key) => {
-  const removeIcon = _.get(icon({size: undefined}), 'props.remove');
-  const IconEl = React.createElement(icon, { fill: colors.white, size: { width: '50', height: '50' } });
   return (
-  <IconWrapper remove={removeIcon} onClick={action(key)} key={key}>
-    {IconEl}
+  <IconWrapper onClick={action(key)} key={key}>
+    {React.createElement(icon, { fill: colors.white, size: { width: '24', height: '24' } })}
     <div>{key}</div>
   </IconWrapper>
 )}
