@@ -89,7 +89,7 @@
     "react-dev-utils": "^3.0.0",
     "react-docgen": "^2.15.0",
     "react-error-overlay": "^1.0.7",
-    "react-storybook-addon-chapters": "^1.1.0",
+    "react-storybook-addon-chapters": "^2.1.1",
     "react-test-renderer": "^15.6.1",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
