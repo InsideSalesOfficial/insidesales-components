@@ -81,7 +81,8 @@ class SelectInput extends React.Component {
 
   closeOptionsList = () => {
     document.removeEventListener('click', this.checkDocumentEvent);
-    this.setState({ optionsListVisible: false });
+    this.filterOptions('');
+    this.setState({ optionsListVisible: false});
   }
 
   countOptions = () => {

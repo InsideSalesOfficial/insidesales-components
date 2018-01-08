@@ -42,7 +42,7 @@ const TextBox = styled.div`
     if (props.error || props.isFocused) {
       return '7px';
     }
-    
+
     return '8px';
   }};
   position: relative;
@@ -86,7 +86,7 @@ const InputItem = styled.input`
   resize: none;
   text-align: left;
   width: 100%;
-  
+
   &:focus {
     outline: 0;
   }
@@ -156,6 +156,14 @@ class TextInput extends React.Component {
     if (value) {
       this.setState({
         value
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.visible !== nextProps.visible) {
+      this.setState({
+        value: ''
       });
     }
   }

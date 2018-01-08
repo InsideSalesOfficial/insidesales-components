@@ -116,7 +116,7 @@ const SelectOption = styled.div`
   }};
   padding: 0 24px;
 
-  color: 
+  color:
   ${(props) => {
     if (props.disabled) return colors.middleGray;
     else if (props.theme.optionTextColor) return props.theme.optionTextColor;
@@ -194,7 +194,7 @@ class SelectOptions extends React.Component {
   renderOptions = () => {
     const { options, promotedOptions } = this.props;
     if (_.isEmpty(options) && _.isEmpty(promotedOptions)) {
-      return this.optionElement(undefined, 'select', 'Select');
+      return this.optionElement(undefined, 'select', 'Select', true);
     }
     const numberOfPomoted = _.get(promotedOptions, 'length', 0);
     return (
@@ -221,6 +221,7 @@ class SelectOptions extends React.Component {
         label="Label"
         name="selectSearch"
         onChange={this.props.onSearch}
+        visible={this.props.visible}
         search
       />
     );
