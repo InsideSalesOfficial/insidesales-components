@@ -81,7 +81,6 @@ class SelectInput extends React.Component {
 
   closeOptionsList = () => {
     document.removeEventListener('click', this.checkDocumentEvent);
-    this.filterOptions('');
     this.setState({ optionsListVisible: false });
   }
 
