@@ -17,6 +17,7 @@ import ClockIconFilled from './ClockIconFilled';
 import CloseFullIcon from './CloseFullIcon';
 import CloseIcon from './CloseIcon';
 import CogIcon from './CogIcon';
+import CollapseIcon from './CollapseIcon';
 import CompanyIcon from './CompanyIcon';
 import CRMIcon from './CRMIcon';
 import DeleteIcon from './DeleteIcon';
@@ -24,6 +25,7 @@ import DialpadIcon from './DialpadIcon';
 import EditFilledIcon from './EditFilledIcon';
 import EmailFilledIcon from './EmailFilledIcon';
 import EmailRepliedIcon from './EmailRepliedIcon';
+import ExpandIcon from './ExpandIcon';
 import EyeIcon from './EyeIcon';
 import ForwardEmailIcon from './ForwardEmailIcon';
 import GroupAddIcon from './GroupAddIcon';
@@ -55,7 +57,7 @@ import TemplateIcon from './TemplateIcon';
 module.exports = {
   AddCircleIcon,
   AddIcon,
-  ArrowBack,  
+  ArrowBack,
   AttachmentIcon,
   AlarmIcon,
   AppointmentIcon,
@@ -64,7 +66,7 @@ module.exports = {
   AutoEmailIcon,
   BuildingsIcon,
   CalendarIcon,
-  CallbackIcon,  
+  CallbackIcon,
   CautionFilledIcon,
   CheckCircleIcon,
   CheckmarkFilledIcon,
@@ -73,6 +75,7 @@ module.exports = {
   CloseFullIcon,
   CloseIcon,
   CogIcon,
+  CollapseIcon,
   CompanyIcon,
   CRMIcon,
   DeleteIcon,
@@ -80,6 +83,7 @@ module.exports = {
   EditFilledIcon,
   EmailFilledIcon,
   EmailRepliedIcon,
+  ExpandIcon,
   EyeIcon,
   ForwardEmailIcon,
   GroupAddIcon,
