@@ -21,7 +21,7 @@ storiesOf('Menus', module)
       ~~~
       import React from 'react';
       import { OverflowMenu } from 'insidesales-components';
-      
+
       const options = [
         { action: action('click option'), label: 'Option 1' },
         { action: action('click option'), label: 'Option 2' }
@@ -41,8 +41,19 @@ storiesOf('Menus', module)
                 { action: action('click option'), label: 'Option 1' },
                 { action: action('click option'), label: 'Option 2' }
               ];
-              
+
               return  <DarkBackground><OverflowMenu options={options} /></DarkBackground>
+            }
+          },
+          {
+            title: 'Example: openUp',
+            sectionFn: () => {
+              const options = [
+                { action: action('click option'), label: 'Option 1' },
+                { action: action('click option'), label: 'Option 2' }
+              ];
+
+              return  <DarkBackground><OverflowMenu options={options} openUp /></DarkBackground>
             }
           }
         ]

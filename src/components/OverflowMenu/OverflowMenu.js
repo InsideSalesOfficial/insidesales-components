@@ -40,7 +40,8 @@ const SelectOption = styled.div`
 
 const OptionsContainer = styled.div`
   position: absolute;
-  top: 31px;
+  top: ${props => props.openUp ? 'initial' : '31px'};
+  bottom: ${props => props.openUp ? '31px' : 'initial'};
   right: -6px;
 
   min-width: 200px;
@@ -52,8 +53,8 @@ const OptionsContainer = styled.div`
     position: absolute;
     content: '';
     right: 10px;
-    top: -5px;
-    bottom: auto;
+    top: ${props => props.openUp ? 'auto' : '-5px'};
+    bottom: ${props => props.openUp ? '-5px' : 'auto'};
     width: 14px;
     height: 14px;
     transform: rotate(-45deg);
@@ -65,12 +66,12 @@ const OptionsContainer = styled.div`
     position: absolute;
     content: '';
     right: 10px;
-    top: -16px;
-    bottom: auto;
+    top: ${props => props.openUp ? 'auto' : '-16px'};
+    bottom: ${props => props.openUp ? '-16px' : 'auto'};
     width: 0;
     height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid ${colors.white};
+    border-top: 8px solid ${props => props.openUp ? colors.white : 'transparent'};
+    border-bottom: 8px solid ${props => props.openUp ? 'transparent' : colors.white};
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
   }
@@ -96,12 +97,14 @@ const OverflowWrapper = styled.div`
 class OverflowMenu extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    openUp: PropTypes.bool,
     options: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     isDisabled: false,
+    openUp: false,
     options: [],
     onChange: value => value
   };
@@ -163,7 +166,7 @@ class OverflowMenu extends React.Component {
           />
         </InteractiveElement>
         {this.state.menuVisible &&
-          <OptionsContainer>
+          <OptionsContainer openUp={this.props.openUp}>
             <OptionsWrapper>
               {this.renderMenu()}
             </OptionsWrapper>
