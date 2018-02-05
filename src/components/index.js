@@ -11,3 +11,5 @@ export {default as TextareaInput} from './TextareaInput';
 export {default as TextInput} from './TextInput';
 export {default as ToggleSlider} from './ToggleSlider';
 export {default as Icons} from './icons';
+export {default as RadioList} from './RadioList';
+export {default as Radio} from './RadioList/Radio';
