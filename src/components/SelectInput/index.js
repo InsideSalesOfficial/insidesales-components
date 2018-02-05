@@ -1,1 +1,7 @@
-export { default } from './SelectInput';
+export {
+  default,
+  checkDocumentEvent,
+  openOptionsList,
+  closeOptionsList,
+  toggleOptionsList
+} from './SelectInput';

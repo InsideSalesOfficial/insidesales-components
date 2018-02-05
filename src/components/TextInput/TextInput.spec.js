@@ -3,6 +3,13 @@ import { mount, shallow } from 'enzyme';
 import TextInput, { TextInputError, TextInputHelper } from './TextInput';
 
 describe('TextInput', () => {
+
+  const options = [
+    {
+      label: 'Foo',
+      value: 'Foo'
+    }
+  ];
   
   it('componentDidMount should set value on state if there is a value prop', () => {
     const text = 'Has text here';
@@ -117,7 +124,37 @@ describe('TextInput', () => {
     }, 0);
 
     jest.runAllTimers();
+  });
 
+  it('should toggle the options when the caret is clicked', () => {
+    jest.useFakeTimers();
+    const onChangePropSpy = jest.fn();
+    const wrapper = mount(<TextInput name="test" onChange={onChangePropSpy} options={options} />);
+
+    expect(wrapper.find('SelectOptions').props().visible).toBe(false);
+
+    wrapper.find('.pb-caret').simulate('click'); 
+    expect(wrapper.find('SelectOptions').props().visible).toBe(true)
+
+    wrapper.find('.pb-caret').simulate('click');
+    expect(wrapper.find('SelectOptions').props().visible).toBe(false);
+  });
+
+  it('should select an option and add it to the text field', () => {
+    let value;
+    const wrapper = mount(<TextInput name="test" onChange={(x) => value = x} options={options} />);
+
+    wrapper.find('.pb-caret').simulate('click');
+    wrapper.find('.pb-option').simulate('click');
+    
+    expect(value).toBe(options[0].value.toString());
+  });
+
+  it('should show promoted options', () => {
+    const wrapper = mount(<TextInput name="test" onChange={(x) => {}} value={options[0].value} options={options} />);
+    wrapper.find('.pb-caret').simulate('click');
+
+    expect(wrapper.find('.pb-option').length).toBe(2);
   });
 });
 

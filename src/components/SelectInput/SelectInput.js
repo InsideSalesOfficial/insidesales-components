@@ -11,6 +11,37 @@ import SelectInputLabel from './SelectInputLabel';
 import SelectInputDisplay from './SelectInputDisplay';
 import SelectOptions from './SelectOptions';
 
+export function checkDocumentEvent(event) {
+  const component = ReactDOM.findDOMNode(this.clickEventElement);
+  if (!component) {
+    document.removeEventListener('click', this.checkDocumentEvent);
+    return;
+  }
+  const clickedOutside = !component.contains(event.target);
+
+  if (this.state.optionsListVisible && clickedOutside) {
+    this.closeOptionsList();
+  }
+}
+
+export function openOptionsList() {
+  document.addEventListener('click', this.checkDocumentEvent);
+  this.setState({ optionsListVisible: true });
+}
+
+export function closeOptionsList() {
+  document.removeEventListener('click', this.checkDocumentEvent);
+  this.setState({ optionsListVisible: false });
+}
+
+export function toggleOptionsList() {
+  if (!this.props.wrapCloseDisabled && this.state.optionsListVisible) {
+    this.closeOptionsList();
+  } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
+    this.openOptionsList();
+  }
+}
+
 class SelectInput extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -41,18 +72,7 @@ class SelectInput extends React.Component {
     };
   }
 
-  checkDocumentEvent = (event) => {
-    const component = ReactDOM.findDOMNode(this.refs.clickEventElement);
-    if (!component) {
-      document.removeEventListener('click', this.checkDocumentEvent);
-      return;
-    }
-    const clickedOutside = !component.contains(event.target);
-
-    if (this.state.optionsListVisible && clickedOutside) {
-      this.closeOptionsList();
-    }
-  }
+  checkDocumentEvent = checkDocumentEvent.bind(this)
 
   onChange = (newValue) => {
     this.props.onChange(newValue);
@@ -74,16 +94,9 @@ class SelectInput extends React.Component {
     }
   }
 
-  openOptionsList = () => {
-    document.addEventListener('click', this.checkDocumentEvent);
-    this.setState({ optionsListVisible: true });
-  }
-
-  closeOptionsList = () => {
-    document.removeEventListener('click', this.checkDocumentEvent);
-    this.filterOptions('');
-    this.setState({ optionsListVisible: false });
-  }
+  openOptionsList = openOptionsList.bind(this);
+  
+  closeOptionsList = closeOptionsList.bind(this);
 
   countOptions = () => {
     const { options } = this.props;

@@ -1,11 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import SelectOptions from '../SelectInput/SelectOptions';
 import SelectWrapper from '../SelectInput/SelectWrapper';
 
 import EditableTextInput from './EditableTextInput';
+import {
+  checkDocumentEvent,
+  openOptionsList,
+  closeOptionsList,
+  toggleOptionsList
+} from '../SelectInput';
+
 
 class EditableSelectInput extends React.Component {
   constructor(props) {
@@ -16,18 +22,7 @@ class EditableSelectInput extends React.Component {
     };
   }
 
-  checkDocumentEvent = (event) => {
-    const component = ReactDOM.findDOMNode(this.clickEventElement);
-    if (!component) {
-      document.removeEventListener('click', this.checkDocumentEvent);
-      return;
-    }
-    const clickedOutside = !component.contains(event.target);
-
-    if (this.state.optionsListVisible && clickedOutside) {
-      this.closeOptionsList();
-    }
-  }
+  checkDocumentEvent = checkDocumentEvent.bind(this);
 
   onChange = (newValue) => {
     if (this.props.onChange) {
@@ -36,23 +31,11 @@ class EditableSelectInput extends React.Component {
     this.closeOptionsList();
   }
   
-  toggleOptionsList = () => {
-    if (!this.props.wrapCloseDisabled && this.state.optionsListVisible) {
-      this.closeOptionsList();
-    } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
-      this.openOptionsList();
-    }
-  }
+  toggleOptionsList = toggleOptionsList.bind(this)
 
-  openOptionsList = () => {
-    document.addEventListener('click', this.checkDocumentEvent);
-    this.setState({ optionsListVisible: true });
-  }
+  openOptionsList = openOptionsList.bind(this)
 
-  closeOptionsList = () => {
-    document.removeEventListener('click', this.checkDocumentEvent);
-    this.setState({ optionsListVisible: false });
-  }
+  closeOptionsList = closeOptionsList.bind(this)
 
   countOptions = () => {
     const { options } = this.props;

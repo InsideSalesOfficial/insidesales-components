@@ -2,13 +2,46 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { get, filter } from 'lodash';
 
 import { SearchMaterialIcon } from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
+import SelectOptions from '../SelectInput/SelectOptions';
+import {
+  checkDocumentEvent,
+  openOptionsList,
+  closeOptionsList,
+  toggleOptionsList
+} from '../SelectInput';
 
 const TextInputWrapper = styled.div`
   width: 100%;
+  position: relative;
+`;
+
+const Caret = styled.div`
+  position: absolute;
+  right: 0;
+  top: 62.5%;
+  transform: translateY(-50%);
+  width: 32px;
+  cursor: pointer;
+  height: 32px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    border-left: 5px transparent solid;
+    border-right: 5px transparent solid;
+    border-top: 5px ${colors.black40} solid;
+  }
 `;
 
 const TextBox = styled.div`
@@ -146,9 +179,19 @@ class TextInput extends React.Component {
     super(props);
 
     this.state = {
-      focused: false
+      focused: false,
+      optionsListVisible: false,
+      value: ""
     };
   }
+
+  checkDocumentEvent = checkDocumentEvent.bind(this)
+  
+  openOptionsList = openOptionsList.bind(this)
+
+  closeOptionsList = closeOptionsList.bind(this)
+
+  toggleOptionsList = toggleOptionsList.bind(this)
 
   componentDidMount() {
     const {value} = this.props;
@@ -185,6 +228,10 @@ class TextInput extends React.Component {
   renderHelperText = () => {
     const { error, helper, collapsed } = this.props;
 
+    if(!error && !helper) {
+      return null;
+    }
+
     if (collapsed && !this.state.value && !this.state.focused && !error) {
       return null;
     }
@@ -213,6 +260,12 @@ class TextInput extends React.Component {
     });
   }
 
+  handleValueChange = () => {
+    if (this.props.onChange) {
+      this.props.onChange(this.state.value);
+    }
+  }
+
   onChange = (e) => {
     if (e) {
       e.preventDefault();
@@ -220,15 +273,22 @@ class TextInput extends React.Component {
 
     this.setState({
       value: get(e, 'target.value', this.textInputEl.value)
-    }, () => {
-      if (this.props.onChange) {
-        this.props.onChange(this.state.value);
-      }
-    });
+    }, this.handleValueChange);
+  }
+
+  onDropDownSelect = (value) => {
+    this.setState({
+      value
+    }, this.handleValueChange);
+    this.closeOptionsList();
+  }
+
+  getPromotedOptions = () => {
+    return this.state.value ? filter(this.props.options, o => o.value.toLowerCase().indexOf(this.state.value.toLowerCase()) > -1) : [];
   }
 
   render() {
-    const { label, name, error, disabled, collapsed, className } = this.props;
+    const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding } = this.props;
     return (
       <TextInputWrapper className={className}>
         <TextBox
@@ -260,7 +320,17 @@ class TextInput extends React.Component {
             <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
           }
         </TextBox>
+        { options && <Caret onClick={this.toggleOptionsList} className={'pb-caret'} />}
         {this.renderHelperText()}
+        { options && <SelectOptions
+          ref={(options) => { this.clickEventElement = options; }}
+          onOptionUpdate={this.onDropDownSelect}
+          promotedOptions={promotedOptions || this.getPromotedOptions() }
+          options={options}
+          optionsCount={options.length}
+          visible={this.state.optionsListVisible} 
+          lowPadding={lowPadding}
+        />}
       </TextInputWrapper>
     );
   }
@@ -279,7 +349,18 @@ TextInput.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  collapsed: PropTypes.bool
+  collapsed: PropTypes.bool,
+  lowPadding: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string,
+    disabled: PropTypes.bool
+  })),
+  promotedOptions: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.string,
+    disabled: PropTypes.bool
+  })) 
 };
 
 export default TextInput;
