@@ -35,7 +35,8 @@ const RadioCircle = styled.span`
   vertical-align: middle;
   margin-right: 0.5em;
   background: white;
-
+  box-sizing: content-box;
+  
   ${props => props.active && css`
     &:before {
       content: '';
