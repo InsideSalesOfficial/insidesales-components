@@ -12,13 +12,12 @@ import SelectInputDisplay from './SelectInputDisplay';
 import SelectOptions from './SelectOptions';
 
 export function checkDocumentEvent(event) {
-  const component = ReactDOM.findDOMNode(this.clickEventElement);
+  const component = ReactDOM.findDOMNode(this.refs.clickEventElement);
   if (!component) {
     document.removeEventListener('click', this.checkDocumentEvent);
     return;
   }
   const clickedOutside = !component.contains(event.target);
-
   if (this.state.optionsListVisible && clickedOutside) {
     this.closeOptionsList();
   }
@@ -49,7 +48,8 @@ class SelectInput extends React.Component {
     onChange: PropTypes.func.isRequired,
     selectArrowFollows: PropTypes.bool,
     theme: PropTypes.object,
-    isDisabledOneOption: PropTypes.bool
+    isDisabledOneOption: PropTypes.bool,
+    multiSelect: PropTypes.bool
   };
 
   static defaultProps = {
@@ -58,7 +58,8 @@ class SelectInput extends React.Component {
     options: [],
     onChange: value => value,
     theme: lightSelectInputTheme,
-    isDisabledOneOption: false // Prop to disable the dropdown if only one option is present
+    isDisabledOneOption: false, // Prop to disable the dropdown if only one option is present
+    multiSelect: false
   }
 
   constructor() {
@@ -75,8 +76,16 @@ class SelectInput extends React.Component {
   checkDocumentEvent = checkDocumentEvent.bind(this)
 
   onChange = (newValue) => {
-    this.props.onChange(newValue);
-    this.closeOptionsList();
+    if(this.props.multiSelect) {
+      if(_.includes(this.props.value, newValue)) {
+        this.props.onChange(_.without(this.props.value, newValue));
+      } else {
+        this.props.onChange(_.concat(this.props.value, [newValue]));
+      }
+    } else {
+      this.props.onChange(newValue);
+      this.closeOptionsList();
+    }
   }
 
   toggleOptionsList = (e) => {
@@ -85,7 +94,7 @@ class SelectInput extends React.Component {
         const clickedElement = e.target.getAttribute('name');
         return clickedElement === 'selectSearch';
       }
-      if (clickedInsideSearch) {
+      if (clickedInsideSearch()) {
         return
       }
       this.closeOptionsList();
@@ -95,7 +104,7 @@ class SelectInput extends React.Component {
   }
 
   openOptionsList = openOptionsList.bind(this);
-  
+
   closeOptionsList = closeOptionsList.bind(this);
 
   countOptions = () => {
@@ -112,7 +121,7 @@ class SelectInput extends React.Component {
   }
 
   determineLabel = () => {
-    const { defaultLabel, options, promotedOptions, value } = this.props;
+    const { defaultLabel, options, promotedOptions, value, multiSelect } = this.props;
 
     let copiedOptions = _.map(options, _.clone);
 
@@ -131,7 +140,9 @@ class SelectInput extends React.Component {
     if (!_.isNil(value)) {
       const optionObject = _.find(copiedOptions, { value });
 
-      if (optionObject && optionObject.label) {
+      if (multiSelect && _.size(value)) {
+        inputLabel = `${_.size(value)} Selected`;
+      } else if (optionObject && optionObject.label) {
         inputLabel = optionObject.label;
       } else {
         inputLabel = placeholder;
@@ -171,27 +182,30 @@ class SelectInput extends React.Component {
           ref="clickEventElement" style={this.props.containerStyles || {}}
           className={this.props.className}
           id="select-input__wrapper"
-          onClick={(e) => { if (!isDisabled) { this.toggleOptionsList(e); } }}
         >
           {this.props.label && !this.props.addButtonList &&
             <SelectInputLabel>{this.props.label}</SelectInputLabel>
           }
-          <SelectInputDisplay
-            defaultLabel={this.props.defaultLabel}
-            label={this.determineLabel()}
-            selectArrowFollows={this.props.selectArrowFollows}
-            isDisabled={isDisabled}
-            noCarat={this.props.noCarat}
-            addButtonList={this.props.addButtonList}
-          />
+          <div style={{width: '100%'}} onClick={(e) => { if (!isDisabled) { this.toggleOptionsList(e); } }}>
+            <SelectInputDisplay
+              defaultLabel={this.props.defaultLabel}
+              label={this.determineLabel()}
+              selectArrowFollows={this.props.selectArrowFollows}
+              isDisabled={isDisabled}
+              noCarat={this.props.noCarat}
+              addButtonList={this.props.addButtonList}
+            />
+          </div>
           <SelectOptions
+            selectedOptions={this.props.value}
             onOptionUpdate={this.onChange}
             promotedOptions={promotedOptions}
             options={options}
             optionsCount={this.countOptions()}
             searchable={this.props.searchable}
             onSearch={this.filterOptions}
-            visible={this.state.optionsListVisible} />
+            visible={this.state.optionsListVisible}
+            multiSelect={this.props.multiSelect} />
         </SelectWrapper>
       </ThemeProvider>
     );

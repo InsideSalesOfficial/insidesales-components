@@ -1,5 +1,6 @@
 export {default as AccordionList} from './AccordionList';
 export {default as Button} from './Button';
+export {default as Checkbox} from './Checkbox';
 export {default as EditableSelectInput} from './EditableSelectInput';
 export {default as InteractiveElement} from './InteractiveElement';
 export {default as OverflowMenu} from './OverflowMenu';

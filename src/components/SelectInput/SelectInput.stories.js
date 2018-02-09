@@ -39,6 +39,11 @@ const genericOptions = [
   { value: '11', label: 'A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string' },
 ];
 
+const selectedOptions = [
+  '1',
+  '2',
+]
+
 storiesOf('Form', module)
 .addWithChapters(
   'SelectInput',
@@ -58,7 +63,7 @@ storiesOf('Form', module)
             title: 'Default Theme',
             sectionFn: () => (
               <div style={darkExample}>
-                <SelectInput 
+                <SelectInput
                   onChange={action('Option Selected')}
                   options={genericOptions} />
               </div>
@@ -68,9 +73,9 @@ storiesOf('Form', module)
             subtitle: 'Custom Label',
             sectionFn: () => (
               <div style={darkExample}>
-                <SelectInput 
+                <SelectInput
                   onChange={action('Option Selected')}
-                  defaultLabel="Custom Label" 
+                  defaultLabel="Custom Label"
                   options={genericOptions} />
               </div>
             )
@@ -159,7 +164,7 @@ storiesOf('Form', module)
           },
           {
             title: 'Add Button Select List',
-            subtitle: `Shows the select input as an Add button instead of the select input styling. The defaultLabel prop will determing the button text. 
+            subtitle: `Shows the select input as an Add button instead of the select input styling. The defaultLabel prop will determing the button text.
                       This is convenient for when you need a select list to choose options from to add to another list.`,
             sectionFn: () => (
               <div>
@@ -171,6 +176,18 @@ storiesOf('Form', module)
                   addButtonList
                   searchable
                   />
+              </div>
+            )
+          },
+          {
+            title: 'Multi Select',
+            sectionFn: () => (
+              <div style={darkExample}>
+                <SelectInput
+                  onChange={action('Option Selected')}
+                  options={genericOptions}
+                  value={selectedOptions}
+                  multiSelect />
               </div>
             )
           },
