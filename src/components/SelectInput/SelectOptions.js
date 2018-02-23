@@ -159,14 +159,6 @@ const PromotedOptions = styled.div`
   width: 100%;
 `;
 
-const SearchInput = (props) => {
-  const SearchTextInput = styled(TextInput)`
-    padding: 0 24px;
-  `;
-
-  return (<SearchTextInput {...props} />);
-}
-
 class SelectOptions extends React.Component {
 
   constructor() {
@@ -239,13 +231,15 @@ class SelectOptions extends React.Component {
     if (!this.props.searchable) return null;
 
     return (
-      <SearchInput
-        label="Label"
-        name="selectSearch"
-        onChange={this.props.onSearch}
-        visible={this.props.visible}
-        search
-      />
+      <div style={{padding: '0 24px'}}  >
+        <TextInput
+          label="Label"
+          name="selectSearch"
+          onChange={this.props.onSearch}
+          visible={this.props.visible}
+          search
+        />
+      </div>
     );
   }
 
