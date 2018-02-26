@@ -1,19 +1,25 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Button from './';
+import Loader from './';
+
+const darkExample = {
+  height: '40px',
+  backgroundColor: '#2a434a',
+  padding: '16px'
+}
 
 
 storiesOf('Base', module)
 .addWithChapters(
-  'Button',
+  'Loader',
   {
     info: `
       Usage
 
       ~~~
       import React from 'react';
-      import { Button } from 'insidesales-components';
+      import { Loader } from 'insidesales-components';
       ~~~
     `,
     chapters: [
@@ -22,31 +28,27 @@ storiesOf('Base', module)
           {
             title: 'Default',
             sectionFn: () => (
-              <Button label='Button'/>
+              <Loader/>
             )
           },
           {
-            title: 'Loading',
+            title: 'Medium',
             sectionFn: () => (
-              <Button label='Button' loading/>
+              <Loader medium/>
             )
           },
           {
-            title: 'Disabled',
+            title: 'Small',
             sectionFn: () => (
-              <Button label='Button' disabled/>
+              <Loader small/>
             )
           },
           {
-            title: 'Danger',
+            title: 'White',
             sectionFn: () => (
-              <Button label='Button' danger/>
-            )
-          },
-          {
-            title: 'Neuralytics',
-            sectionFn: () => (
-              <Button label='Button' neuralytics/>
+              <div style={darkExample}>
+                <Loader white/>
+              </div>
             )
           },
         ]
