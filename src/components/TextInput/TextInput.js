@@ -190,7 +190,7 @@ class TextInput extends React.Component {
   }
 
   checkDocumentEvent = checkDocumentEvent.bind(this)
-  
+
   openOptionsList = openOptionsList.bind(this)
 
   closeOptionsList = closeOptionsList.bind(this)
@@ -301,10 +301,10 @@ class TextInput extends React.Component {
           onMouseLeave={this.removeCancelBlur}
           onClick={this.focusOnTextInput}
           isFocused={this.state.focused}
-          lineColor={lineColor}
           error={error}
           open={this.state.value}
           disabled={disabled}
+          lineColor={lineColor}
           collapsed={collapsed}>
           <InputItem
             type='text'
