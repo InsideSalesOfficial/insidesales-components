@@ -54,6 +54,8 @@ const TextBox = styled.div`
         return colors.green;
     } else if (props.disabled) {
       return colors.black20;
+    } else if (props.lineColor) {
+      return props.lineColor;
     }
     return colors.black40;
   }};
@@ -133,6 +135,8 @@ const TextLabel = styled.label`
         return colors.red;
       } else if (props.isFocused) {
         return colors.green;
+      } else if (props.labelColor) {
+        return props.labelColor;
       } else {
         return colors.black60;
       }
@@ -288,7 +292,7 @@ class TextInput extends React.Component {
   }
 
   render() {
-    const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding } = this.props;
+    const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
     return (
       <TextInputWrapper className={className}>
         <TextBox
@@ -297,6 +301,7 @@ class TextInput extends React.Component {
           onMouseLeave={this.removeCancelBlur}
           onClick={this.focusOnTextInput}
           isFocused={this.state.focused}
+          lineColor={lineColor}
           error={error}
           open={this.state.value}
           disabled={disabled}
@@ -317,7 +322,7 @@ class TextInput extends React.Component {
             <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
           }
           { !this.props.search &&
-            <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
+            <TextLabel isFocused={this.state.focused} labelColor={labelColor} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
           }
         </TextBox>
         { options && <Caret onClick={this.toggleOptionsList} className={'pb-caret'} />}
@@ -328,7 +333,7 @@ class TextInput extends React.Component {
           promotedOptions={promotedOptions || this.getPromotedOptions() }
           options={options}
           optionsCount={options.length}
-          visible={this.state.optionsListVisible} 
+          visible={this.state.optionsListVisible}
           lowPadding={lowPadding}
         />}
       </TextInputWrapper>
@@ -360,7 +365,7 @@ TextInput.propTypes = {
     value: PropTypes.any,
     label: PropTypes.string,
     disabled: PropTypes.bool
-  })) 
+  }))
 };
 
 export default TextInput;
