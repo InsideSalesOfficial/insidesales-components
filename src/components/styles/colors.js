@@ -61,6 +61,7 @@ export const colors = {
   white74black: '#BDC9C9',
   offWhite: '#FEFEFE',
   hoverGray: '#D7DBDC',
+  lighterGray: '#F0F0F0',
   lightGray: '#D3DBDB',
   barLightGray: '#E1E1E1',
   barDarkGray: 'rgba(229,229,229,0.5)',
