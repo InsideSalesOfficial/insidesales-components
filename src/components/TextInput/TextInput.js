@@ -44,7 +44,7 @@ const Caret = styled.div`
   }
 `;
 
-const TextBox = styled.div`
+export const TextBox = styled.div`
   background-color: ${colors.white};
   border-bottom: thin solid ${colors.black40};
   border-color: ${(props) => {
@@ -111,7 +111,7 @@ const TextBox = styled.div`
   }}
 `;
 
-const InputItem = styled.input`
+export const InputItem = styled.input`
   background-color: transparent;
   border: none;
   box-sizing: border-box;
@@ -129,7 +129,7 @@ const InputItem = styled.input`
   ${darkScrollbar}
 `;
 
-const TextLabel = styled.label`
+export const TextLabel = styled.label`
   color: ${(props) => {
       if (props.error) {
         return colors.red;
@@ -276,7 +276,7 @@ class TextInput extends React.Component {
     }
 
     this.setState({
-      value: get(e, 'target.value', this.textInputEl.value)
+      value: get(e, 'target.value', this.textInputEl.value),
     }, this.handleValueChange);
   }
 

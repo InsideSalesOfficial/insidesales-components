@@ -57,6 +57,7 @@ export const Value = styled.button`
   box-sizing: border-box;
   border-bottom: 2px solid ${props => props.isDisabled ? 'transparent' : colors.black40};
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
+  border-radius: 2px;
 
   &:focus {
     outline: 0;
