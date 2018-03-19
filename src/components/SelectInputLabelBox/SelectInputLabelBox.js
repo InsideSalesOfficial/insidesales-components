@@ -1,6 +1,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import _ from 'lodash';
 
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsList } from '../SelectInput';
 import SelectOptions from '../SelectInput/SelectOptions';
@@ -93,6 +94,11 @@ export default class SelectInputLabelBox extends React.Component {
 
   toggleOptionsList = () => { toggleOptionsList.call(this) }
 
+  determineLabel = () => {
+    const selectedOption = _.find(this.props.options, o => o.value === this.props.value);
+    return _.get(selectedOption, 'label', this.props.value);
+  }
+
   render() {
     return (
       <Wrapper onClick={this.toggleOptionsList}
@@ -104,7 +110,7 @@ export default class SelectInputLabelBox extends React.Component {
           open={this.state.optionsListVisible}
           isDisabled={this.props.isDisabled}
           className="select-input-label-box-value"
-        >{this.props.value}</Value>
+        >{this.determineLabel()}</Value>
         <SelectOptions
           ref={(options) => { this.clickEventElement = options; }}
           selectedOptions={this.props.value}
