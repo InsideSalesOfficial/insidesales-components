@@ -59,6 +59,9 @@ export const Value = styled.button`
   border-bottom: 2px solid ${props => props.isDisabled ? 'transparent' : colors.black40};
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
   border-radius: 2px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:focus {
     outline: 0;
@@ -100,6 +103,7 @@ export default class SelectInputLabelBox extends React.Component {
   }
 
   render() {
+    const optionLabel = this.determineLabel();
     return (
       <Wrapper onClick={this.toggleOptionsList}
         {...this.props}
@@ -109,8 +113,9 @@ export default class SelectInputLabelBox extends React.Component {
         <Value
           open={this.state.optionsListVisible}
           isDisabled={this.props.isDisabled}
+          title={optionLabel}
           className="select-input-label-box-value"
-        >{this.determineLabel()}</Value>
+        >{optionLabel}</Value>
         <SelectOptions
           ref={(options) => { this.clickEventElement = options; }}
           selectedOptions={this.props.value}

@@ -96,7 +96,7 @@ storiesOf('Form', module)
                 <SelectInputLabelBox
                   isDisabled={true}
                   label="Hello World!"
-                  value="Hi"
+                  value="11"
                   options={genericOptions} />
               </div>
             )
