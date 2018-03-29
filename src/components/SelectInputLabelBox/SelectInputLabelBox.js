@@ -107,7 +107,8 @@ export default class SelectInputLabelBox extends React.Component {
     return (
       <Wrapper onClick={this.toggleOptionsList}
         {...this.props}
-        ref="clickEventElement">
+        ref={(el) => { this.clickEventElement = el }}
+        >
         <Caret open={this.state.optionsListVisible} />
         <Label value={this.props.value}>{this.props.label}</Label>
         <Value
@@ -117,7 +118,6 @@ export default class SelectInputLabelBox extends React.Component {
           className="select-input-label-box-value"
         >{optionLabel}</Value>
         <SelectOptions
-          ref={(options) => { this.clickEventElement = options; }}
           selectedOptions={this.props.value}
           onOptionUpdate={this.props.onChange}
           options={this.props.options}

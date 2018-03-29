@@ -118,7 +118,7 @@ class OverflowMenu extends React.Component {
   }
 
   checkDocumentEvent = (event) => {
-    if (this.state.menuVisible && !_.includes(event.path, this.refs.clickEventElement)) {
+    if (this.state.menuVisible && !_.includes(event.path, this.clickEventElement)) {
       this.closeMenu();
     }
   }
@@ -157,7 +157,9 @@ class OverflowMenu extends React.Component {
 
   render() {
     return (
-      <OverflowWrapper {...this.props} ref="clickEventElement">
+      <OverflowWrapper
+      {...this.props}
+      ref={(el) => { this.clickEventElement = el }}>
         <InteractiveElement onClick={() => { this.toggleMenu(); }}>
           <MoreVertIcon
             className="overflow-menu__icon"

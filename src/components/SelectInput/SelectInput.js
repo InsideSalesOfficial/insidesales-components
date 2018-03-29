@@ -12,7 +12,7 @@ import SelectInputDisplay from './SelectInputDisplay';
 import SelectOptions from './SelectOptions';
 
 export function checkDocumentEvent(event) {
-  const component = ReactDOM.findDOMNode(this.refs.clickEventElement);
+  const component = ReactDOM.findDOMNode(this.clickEventElement);
   if (!component) {
     document.removeEventListener('click', this.checkDocumentEvent);
     return;
@@ -179,7 +179,8 @@ class SelectInput extends React.Component {
        */
       <ThemeProvider theme={this.props.theme}>
         <SelectWrapper
-          ref="clickEventElement" style={this.props.containerStyles || {}}
+          ref={(el) => { this.clickEventElement = el }}
+          style={this.props.containerStyles || {}}
           className={this.props.className}
           id="select-input__wrapper"
         >

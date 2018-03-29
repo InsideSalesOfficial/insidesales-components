@@ -23,7 +23,7 @@ const SelectOptionsContainer = styled.div`
     if (props.theme.optionListPosition) return props.theme.optionListPosition;
     return 'calc(100%)';
   }};
-  width: 100%;
+  width: ${props => props.width ? `${props.width}px` : '100%'};
   z-index: 2;
   box-shadow: ${(props) => {
     if (props.theme.optionsListShadow && props.visible) return props.theme.optionsListShadow;
@@ -254,8 +254,12 @@ class SelectOptions extends React.Component {
 
   render() {
     return (
-      <SelectOptionsContainer dirty={this.state.inputUsed} {...this.props}>
-        <SelectOptionsWrapper {...this.props} ref={(el) => { this.optionWrapperEl = el; }}>
+      <SelectOptionsContainer
+      dirty={this.state.inputUsed}
+      {...this.props}
+      ref={this.props.optionsRef}
+      >
+        <SelectOptionsWrapper {...this.props}>
           {this.renderSearch()}
           {this.renderPromotedOptions()}
           {this.renderOptions()}
@@ -272,6 +276,7 @@ SelectOptions.propTypes = {
   optionsCount: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
   multiSelect: PropTypes.bool,
+  optionsRef: PropTypes.func,
   promotedOptions: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string,
@@ -280,11 +285,12 @@ SelectOptions.propTypes = {
 };
 
 SelectOptions.defaultProps = {
-  onClick: () => {},
+  onClick: _.noop,
   options: [],
   optionsCount: 0,
   visible: false,
-  multiSelect: false
+  multiSelect: false,
+  optionsRef: _.noop,
 };
 
 export default SelectOptions;
