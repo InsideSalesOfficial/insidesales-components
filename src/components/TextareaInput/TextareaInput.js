@@ -20,6 +20,8 @@ const TextareaBox = styled.div`
         return colors.green;
     } else if (props.disabled) {
       return colors.black20;
+    } else if (props.lineColor) {
+      return props.lineColor;
     }
     return colors.black40;
   }};
@@ -43,7 +45,7 @@ const TextareaBox = styled.div`
     } else if (props.error || props.isFocused) {
       return '27px';
     }
-    
+
     return '28px';
   }};
   height: ${(props) => {
@@ -129,7 +131,7 @@ const Textarea = styled.textarea`
   resize: none;
   text-align: left;
   width: 100%;
-  
+
   &:focus {
     outline: 0;
     padding: 0 15px;
@@ -144,6 +146,8 @@ const TextLabel = styled.label`
         return colors.red;
       } else if (props.isFocused) {
         return colors.green;
+      } else if (props.labelColor) {
+        return props.labelColor;
       } else {
         return colors.black60;
       }
@@ -268,14 +272,15 @@ class TextareaInput extends React.Component {
   }
 
   render() {
-    const { label, name, error, disabled, collapsed } = this.props;
+    const { className, label, name, error, disabled, collapsed, labelColor, lineColor } = this.props;
     return (
-      <TextareaInputWrapper>
+      <TextareaInputWrapper className={className}>
         <TextareaBox
           onMouseUp={this.removeCancelBlur}
           onMouseDown={this.cancelBlur}
           onMouseLeave={this.removeCancelBlur}
           onClick={this.focusOnTextarea}
+          lineColor={lineColor}
           isFocused={this.state.focused}
           error={error}
           open={this.state.value}
@@ -292,7 +297,7 @@ class TextareaInput extends React.Component {
             ref={(input) => { this.textareaInput = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}>
           </Textarea>
-          <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
+          <TextLabel isFocused={this.state.focused} labelColor={labelColor} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
         </TextareaBox>
         {this.renderHelperText()}
       </TextareaInputWrapper>

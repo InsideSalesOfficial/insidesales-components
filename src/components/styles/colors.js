@@ -20,6 +20,7 @@ export const colors = {
   black87: transparentize(.13, black),
   black90: transparentize(.10, black),
   blackLight: '#1a1a1a',
+  caution: '#E78F2B',
   fontBlack: '#333333',
   lightBlue: '#69D9F9',
   green: '#3AB676',
