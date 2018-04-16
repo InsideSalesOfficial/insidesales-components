@@ -154,8 +154,8 @@ const SelectOption = styled.div`
 `;
 
 const PromotedOptions = styled.div`
-  border-bottom: ${props => props.listLength === 0 ? '0' : `1px solid ${colors.barLightGray}`};
-  margin-bottom: 8px;
+  border-bottom: ${props => (props.listLength === 0 || props.hideDivider) ? '0' : `1px solid ${colors.barLightGray}`};
+  margin-bottom: ${props => props.hideDivider ? '0' : '8px'};
   width: 100%;
 `;
 
@@ -217,10 +217,10 @@ class SelectOptions extends React.Component {
   };
 
   renderPromotedOptions = () => {
-    const { promotedOptions } = this.props;
+    const { promotedOptions, hideDivider } = this.props;
     if (_.get(promotedOptions, 'length')) {
       return (
-        <PromotedOptions listLength={_.size(promotedOptions)}>
+        <PromotedOptions listLength={_.size(promotedOptions)} hideDivider={hideDivider}>
           { promotedOptions.map((option, idx) => this.optionElement(idx, option.value, option.label, option.disabled)) }
         </PromotedOptions>
       );
@@ -273,6 +273,7 @@ SelectOptions.propTypes = {
   onClick: PropTypes.func.isRequired,
   promotedOption: PropTypes.objectOf(PropTypes.string),
   options: PropTypes.array.isRequired,
+  hideDivider: PropTypes.bool,
   optionsCount: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
   multiSelect: PropTypes.bool,

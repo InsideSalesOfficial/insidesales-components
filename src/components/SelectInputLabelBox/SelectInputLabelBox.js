@@ -1,12 +1,12 @@
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import _ from 'lodash';
 
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsList } from '../SelectInput';
 import SelectOptions from '../SelectInput/SelectOptions';
 import { colors } from '../styles/colors';
-import {typography} from '../styles/typography';
+import { typography } from '../styles/typography';
 import PropTypes from 'prop-types';
 
 const padding = '16px';
@@ -16,7 +16,13 @@ export const Label = styled.div`
   transition: all 200ms;
   transform: translateY(-50%);
   position: absolute;
-  left: ${padding};
+  left: ${(props) => {
+    if (props.theme.leftDisplayPosition) {
+      return props.theme.leftDisplayPosition;
+    }
+
+    return padding;
+  }};
   top: 50%;
 
   ${props => props.value && `
@@ -28,7 +34,13 @@ export const Label = styled.div`
 const Caret = styled.div`
   position: absolute;
   right: 24px;
-  top: 50%;
+  top: ${(props) => {
+    if (props.theme.caretTopPosition) {
+      return props.theme.caretTopPosition;
+    }
+
+    return '50%';
+  }};
   transform: translateY(-50%);
   cursor: pointer;
 
@@ -46,19 +58,50 @@ const Caret = styled.div`
 
 export const Value = styled.button`
   border: 0;
-  background: transparent;
   display: block;
   width: 100%;
   text-align: left;
   ${typography.subhead1};
-  color: ${colors.black90};
+  color: ${(props) => {
+    if (props.isPlaceHolder) {
+      return colors.black60;
+    }
+
+    return colors.black90;
+  }};
   height: 56px;
-  padding: 22px ${padding} 0 ${padding};
-  background: ${colors.lighterGray};
+  padding: 22px ${padding} 0 ${(props) => {
+    if (props.theme.leftDisplayPosition) {
+      return props.theme.leftDisplayPosition;
+    }
+
+    return padding;
+  }};
+  background: ${(props) => {
+    if (props.theme.background) {
+      return props.theme.background;
+    }
+
+    return colors.lighterGray;
+  }};
   box-sizing: border-box;
-  border-bottom: 2px solid ${props => props.isDisabled ? 'transparent' : colors.black40};
+  border-bottom-width: ${(props) => {
+    if (props.theme.borderWidth) {
+      return props.theme.borderWidth;
+    }
+
+    return '2px';
+  }};
+  border-bottom-style: solid;
+  border-bottom-color: ${props => props.isDisabled ? 'transparent' : colors.black40};
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
-  border-radius: 2px;
+  border-radius: ${(props) => {
+    if (props.theme.borderRadius) {
+      return props.theme.borderRadius;
+    }
+
+    return '2px';
+  }};
   white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -74,6 +117,13 @@ export const Value = styled.button`
 export const Wrapper = styled.div`
   position: relative;
   ${typography.subhead1};
+  width: ${(props) => {
+    if (props.theme.selectDisplayWidth) {
+      return props.theme.selectDisplayWidth;
+    }
+
+    return 'auto';
+  }};
 
   ${props => props.isDisabled && `
     opacity: 0.6;
@@ -105,25 +155,30 @@ export default class SelectInputLabelBox extends React.Component {
   render() {
     const optionLabel = this.determineLabel();
     return (
-      <Wrapper onClick={this.toggleOptionsList}
-        {...this.props}
-        ref={(el) => { this.clickEventElement = el }}
-        >
-        <Caret open={this.state.optionsListVisible} />
-        <Label value={this.props.value}>{this.props.label}</Label>
-        <Value
-          open={this.state.optionsListVisible}
-          isDisabled={this.props.isDisabled}
-          title={optionLabel}
-          className="select-input-label-box-value"
-        >{optionLabel}</Value>
-        <SelectOptions
-          selectedOptions={this.props.value}
-          onOptionUpdate={this.props.onChange}
-          options={this.props.options}
-          visible={this.state.optionsListVisible}
-        />
-      </Wrapper>
+      <ThemeProvider theme={this.props.theme}>
+        <Wrapper onClick={this.toggleOptionsList}
+          {...this.props}
+          ref={(el) => { this.clickEventElement = el }}
+          >
+          <Caret open={this.state.optionsListVisible} />
+          <Label value={this.props.value}>{this.props.label}</Label>
+          <Value
+            open={this.state.optionsListVisible}
+            isDisabled={this.props.isDisabled}
+            title={optionLabel}
+            isPlaceHolder={this.props.isPlaceHolder}
+            className="select-input-label-box-value"
+          >{optionLabel}</Value>
+          <SelectOptions
+            selectedOptions={this.props.value}
+            promotedOptions={this.props.promotedOptions}
+            onOptionUpdate={this.props.onChange}
+            options={this.props.options}
+            hideDivider={_.isEmpty(this.props.options)}
+            visible={this.state.optionsListVisible}
+          />
+        </Wrapper>
+      </ThemeProvider>
     )
   }
 }
@@ -131,16 +186,19 @@ export default class SelectInputLabelBox extends React.Component {
 SelectInputLabelBox.defaultProps = {
   value: '',
   label: '',
-  isDisabled: false
+  isDisabled: false,
+  theme: {},
+  isPlaceHolder: false
 }
 
 SelectInputLabelBox.propTypes = {
   value: PropTypes.any,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
-    label: PropTypes.string,
+    label: PropTypes.any,
   })).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   label: PropTypes.string,
-  isDisabled: PropTypes.bool
+  isDisabled: PropTypes.bool,
+  isPlaceHolder: PropTypes.bool
 }
