@@ -191,6 +191,19 @@ storiesOf('Form', module)
               </div>
             )
           },
+          {
+            title: 'Custom Dropdown Width',
+            sectionFn: () => (
+              <div style={{...darkExample, width: '400px'}}>
+                <SelectInput
+                  onChange={action('Option Selected')}
+                  options={genericOptions}
+                  value={selectedOptions}
+                  selectOptionsWidth={600}
+                  multiSelect />
+              </div>
+            )
+          },
         ]
       }
     ]
