@@ -247,6 +247,16 @@ storiesOf('Form', module)
                 </div>
               )
             },
+            {
+              title: 'Example: use inputType to change to password input',
+              sectionFn: () => (
+                <TextInput
+                  label="Password"
+                  name="password"
+                  inputType="password"
+                />
+              )
+            },
           ]
         }
       ]
