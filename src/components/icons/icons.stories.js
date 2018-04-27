@@ -31,14 +31,14 @@ const IconWrapper = styled.div`
   background-color: ${colors.greenBackground};
 `;
 
-const icons = _.map(_.omit(Icons, 'TaskIcons'), (icon, key) => {
+const icons = _.sortBy(_.map(_.omit(Icons, 'TaskIcons'), (icon, key) => {
   return (
   <IconWrapper onClick={action(key)} key={key}>
     {React.createElement(icon, { fill: colors.white, size: { width: '24', height: '24' } })}
     <div>{key}</div>
   </IconWrapper>
 )}
-);
+), 'key');
 
 storiesOf('Base', module)
 .addWithChapters(
