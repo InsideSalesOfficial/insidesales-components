@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 
 import { colors, typography } from '../styles';
-import { AddCircleIcon  } from '../icons';
+import Icons from '../icons';
 
 import { OverflowWrapper } from './SelectInputThemes';
 import { SelectOptionHeight } from './SelectOptions';
@@ -214,7 +214,7 @@ class SelectInputDisplay extends React.Component {
     return (
       <div style={{width: '100%'}}>
         {this.props.addButtonList &&
-          <AddButton><AddCircleIcon fill={colors.green} size={{width: 24, height: 24}} /> {defaultLabel}</AddButton>
+          <AddButton><Icons.AddCircleIcon fill={colors.green} size={{width: 24, height: 24}} /> {defaultLabel}</AddButton>
         }
         {!this.props.addButtonList &&
           <Input

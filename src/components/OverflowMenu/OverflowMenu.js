@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import * as _ from 'lodash';
 
 import InteractiveElement from '../InteractiveElement';
-import { MoreVertIcon } from '../icons';
+import Icons from '../icons';
 import { boxShadows, colors, typography } from '../styles';
 
 const SelectOption = styled.div`
@@ -161,7 +161,7 @@ class OverflowMenu extends React.Component {
       {...this.props}
       ref={(el) => { this.clickEventElement = el }}>
         <InteractiveElement onClick={() => { this.toggleMenu(); }}>
-          <MoreVertIcon
+          <Icons.MoreVertIcon
             className="overflow-menu__icon"
             fill={colors.white80}
             size={{ width: 24, height: 24 }}

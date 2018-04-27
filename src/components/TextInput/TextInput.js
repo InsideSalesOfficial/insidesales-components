@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { get, filter } from 'lodash';
 
-import { SearchMaterialIcon } from '../icons';
+import Icons from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
 import SelectOptions from '../SelectInput/SelectOptions';
 import {
@@ -174,7 +174,7 @@ export const TextInputError = styled(TextInputHelper)`
   color: ${colors.red};
 `;
 
-const SearchIcon = styled(SearchMaterialIcon)`
+const SearchIcon = styled(Icons.SearchMaterialIcon)`
   position: absolute;
   top: 22px;
   left: 0;

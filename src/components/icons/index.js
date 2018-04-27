@@ -62,7 +62,7 @@ import StarFilledIcon from './StarFilledIcon';
 import TagsIcon from './TagsIcon';
 import TeamsIcon from './TeamsIcon';
 
-module.exports = {
+export default {
   AddCircleIcon,
   AddIcon,
   ArrowBack,
