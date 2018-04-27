@@ -69,13 +69,13 @@ const Button = styled.button`
 const FadeInAddIcon = styled(Icons.AddIcon)`
   svg& {
     opacity: ${(props) => {
-      if (props.toggled) {
+      if (props['data-toggled']) {
         return 1;
       }
       return 0;
     }};
     transform: ${(props) => {
-      if (props.toggled) {
+      if (props['data-toggled']) {
         return 'rotate(45deg) scale(1)';
       } else {
         return 'rotate(0deg) scale(0.5)';
@@ -110,7 +110,7 @@ class ActionButton extends React.Component {
       >
         <Icon />
         {!isAddIcon &&
-          <FadeInAddIcon toggled={this.props.toggled} />
+          <FadeInAddIcon data-toggled={this.props.toggled} />
         }
       </Button>
     );

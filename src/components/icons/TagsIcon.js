@@ -9,9 +9,8 @@ const TagsIcon = props => (
 );
 
 TagsIcon.propTypes = {
-  size: PropTypes.string,
+  size: PropTypes.object,
   color: PropTypes.string
 };
-
 
 export default TagsIcon;

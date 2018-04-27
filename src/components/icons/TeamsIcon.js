@@ -9,7 +9,7 @@ const TeamsIcon = props => (
 );
 
 TeamsIcon.propTypes = {
-  size: PropTypes.string,
+  size: PropTypes.object,
   color: PropTypes.string
 };
 

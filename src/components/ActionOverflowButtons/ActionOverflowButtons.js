@@ -18,7 +18,7 @@ const ActionOverflowButtonsWrapper = styled.div`
 `;
 
 const ItemText = styled.span`
-  max-width: 160px;
+  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -171,25 +171,34 @@ class ActionOverflowButtons extends React.Component {
   // ensure last animation has enough time to animate within alotted time
   animationDelay = (ANIMATION_IN_TOTAL - ANIMATION_IN_ITEM) / this.props.overflowItems.length;
 
+  closeOverflowItems = () => {
+    this.setState({
+      transitionOff: true,
+      actionButtonToggle: false
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          overflowItemsVisible: false,
+          transitionOff: false
+        })
+      }, ANIMATION_OUT);
+    });
+  }
+
   toggleOverflowItems = () => {
     if (this.state.overflowItemsVisible) {
-      this.setState({
-        transitionOff: true,
-        actionButtonToggle: false
-      }, () => {
-        setTimeout(() => {
-          this.setState({
-            overflowItemsVisible: false,
-            transitionOff: false
-          })
-        }, ANIMATION_OUT);
-      });
+      this.closeOverflowItems();
     } else {
       this.setState({
         overflowItemsVisible: true,
         actionButtonToggle: true
       });
     }
+  }
+
+  clickItem = (itemClickEvent, e) => {
+    itemClickEvent(e);
+    this.closeOverflowItems();
   }
 
   renderOverflowItems = () => {
@@ -199,7 +208,7 @@ class ActionOverflowButtons extends React.Component {
       const IconEl = Icons[item.icon];
       return (
         <OverflowListItem key={`overflow-item-${key}`} overflowItemsVisible={overflowItemsVisible} labelsPosition={labelsPosition}>
-          <OverflowItemButton onClick={item.onClick} labelsPosition={labelsPosition}>
+          <OverflowItemButton onClick={(e) => { this.clickItem(item.onClick, e); }} labelsPosition={labelsPosition}>
             <IconWrapper>
               <IconEl />
             </IconWrapper>
@@ -215,7 +224,7 @@ class ActionOverflowButtons extends React.Component {
     const { overflowItemsVisible, transitionOff, actionButtonToggle } = this.state;
     const { labelsPosition, actionButtonIcon, overflowItems } = this.props;
     return (
-      <ActionOverflowButtonsWrapper>
+      <ActionOverflowButtonsWrapper className={this.props.className}>
         <ActionButton icon={actionButtonIcon} onClick={this.toggleOverflowItems} toggled={actionButtonToggle} />
         <OverflowList
           overflowItemsVisible={overflowItemsVisible}
