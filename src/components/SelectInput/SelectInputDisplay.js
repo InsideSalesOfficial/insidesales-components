@@ -202,7 +202,6 @@ const AddButton = styled.div`
   svg {
     position: absolute;
     left: 0;
-    bottom: px;
   }
 `;
 

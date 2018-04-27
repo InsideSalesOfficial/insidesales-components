@@ -1,11 +1,14 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
+import styled from 'styled-components';
+
+import { colors, typography } from '../styles';
+import Icons from '../icons';
 
 import {
   lineSelectInputTheme,
   transparentSelectInputTheme
 } from './SelectInputThemes';
-
 import SelectInput from './';
 
 const darkExample = {
@@ -43,6 +46,18 @@ const selectedOptions = [
   '1',
   '2',
 ]
+
+const AddButton = styled.div`
+  ${typography.body2};
+  color: ${colors.green};
+  padding-left: 32px;
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: 0;
+  }
+`;
 
 storiesOf('Form', module)
 .addWithChapters(
@@ -188,6 +203,20 @@ storiesOf('Form', module)
                   options={genericOptions}
                   value={selectedOptions}
                   multiSelect />
+              </div>
+            )
+          },
+          {
+            title: 'Multi Select/Bottom Action Area',
+            sectionFn: () => (
+              <div style={darkExample}>
+                <SelectInput
+                  onChange={action('Option Selected')}
+                  options={genericOptions}
+                  value={selectedOptions}
+                  multiSelect
+                  selectOptionsWidth={250}
+                  bottomActionArea={(<AddButton><Icons.AddCircleIcon fill={colors.green} size={{width: 24, height: 24}} /> {'Add Tag'}</AddButton>)}/>
               </div>
             )
           },

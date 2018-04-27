@@ -14,10 +14,10 @@ import TextInput from '../TextInput';
 export const SelectOptionHeight = 36;
 
 const SelectOptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   visibility: hidden;
   background: ${colors.white};
-  max-height: 200px;
-  overflow-y: auto;
   position: absolute;
   top: ${(props) => {
     if (props.theme.optionListPosition) return props.theme.optionListPosition;
@@ -62,6 +62,13 @@ const SelectOptionsContainer = styled.div`
     0% { transform: translateY(0); opacity: 1; visibility: visible; }
     100% { transform: translateY(-4px); opacity: 0; visibility: hidden; }
   }
+`;
+
+const SelectOptionsWrapper = styled.div`
+  width: 100%;
+  max-height: 200px;
+  transform: translateZ(0);
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     background-color: ${colors.white};
@@ -87,17 +94,6 @@ const SelectOptionsContainer = styled.div`
   *, *:before, *:after {
     box-sizing: border-box;
   }
-`;
-
-const SelectOptionsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  flex-basis: auto;
-  justify-content: flex-start;
-  align-content: center;
-
-  transform: translateZ(0);
 `;
 
 const SelectOption = styled.div`
@@ -157,6 +153,16 @@ const PromotedOptions = styled.div`
   border-bottom: ${props => (props.listLength === 0 || props.hideDivider) ? '0' : `1px solid ${colors.barLightGray}`};
   margin-bottom: ${props => props.hideDivider ? '0' : '8px'};
   width: 100%;
+`;
+
+const BottomActionAreaWrapper = styled.div`
+  padding: 10px;
+`;
+
+const BottomActionAreaDivider = styled.hr`
+  height: 1px;
+  background-color: ${colors.black40};
+  color: ${colors.black40};
 `;
 
 class SelectOptions extends React.Component {
@@ -264,6 +270,12 @@ class SelectOptions extends React.Component {
           {this.renderPromotedOptions()}
           {this.renderOptions()}
         </SelectOptionsWrapper>
+        {this.props.bottomActionArea &&
+          <BottomActionAreaWrapper>
+            <BottomActionAreaDivider/>
+            {this.props.bottomActionArea}
+          </BottomActionAreaWrapper>
+        }
       </SelectOptionsContainer>
     );
   }
@@ -291,6 +303,7 @@ SelectOptions.defaultProps = {
   optionsCount: 0,
   visible: false,
   multiSelect: false,
+  bottomActionArea: null,
   optionsRef: _.noop,
 };
 
