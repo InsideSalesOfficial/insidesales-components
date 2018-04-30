@@ -35,6 +35,7 @@ import InsideSalesLogoIcon from './InsideSalesLogoIcon';
 import LinkedinSocialIcon from './LinkedinSocialIcon';
 import LinkIcon from './LinkIcon';
 import MenuIcon from './MenuIcon';
+import LaunchIcon from './LaunchIcon';
 import LogoutIcon from './LogoutIcon';
 import MergeFieldIcon from './MergeFieldIcon';
 import MessageAlertIcon from './MessageAlertIcon';
@@ -104,6 +105,7 @@ export default {
   MenuIcon,
   MinusIcon,
   MoveIcon,
+  LaunchIcon,
   LogoutIcon,
   MergeFieldIcon,
   MessageAlertIcon,
