@@ -58,6 +58,7 @@ import TaskIcons from './TaskIcons';
 import TemplateIcon from './TemplateIcon';
 import TrashIcon from './TrashIcon';
 import ImportIcon from './ImportIcon';
+import InfoOutlineIcon from './InfoOutlineIcon';
 import StarFilledIcon from './StarFilledIcon';
 import TagsIcon from './TagsIcon';
 import TeamsIcon from './TeamsIcon';
@@ -123,6 +124,7 @@ export default {
   TemplateIcon,
   TrashIcon,
   ImportIcon,
+  InfoOutlineIcon,
   StarFilledIcon,
   TagsIcon,
   TeamsIcon
