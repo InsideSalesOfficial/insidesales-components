@@ -14,7 +14,7 @@ import {
   toggleOptionsList
 } from '../SelectInput';
 
-const TextInputWrapper = styled.div`
+export const TextInputWrapper = styled.div`
   width: 100%;
   position: relative;
 `;
@@ -187,7 +187,7 @@ class TextInput extends React.Component {
     this.state = {
       focused: false,
       optionsListVisible: false,
-      value: ""
+      value: this.props.value || ''
     };
   }
 
@@ -326,16 +326,7 @@ class TextInput extends React.Component {
       : [];
   }
 
-  getInputType (inputType) {
-    switch(inputType) {
-      case 'password': {
-        return inputType;
-      }
-      default: {
-        return 'text';
-      }
-    }
-  }
+  getInputType = (inputType) => ['text', 'password', 'number'].indexOf(inputType) > -1 ? inputType : 'text'
 
   render() {
     const { label, name, inputType, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
