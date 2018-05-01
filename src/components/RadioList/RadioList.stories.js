@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
+import { lightRadioListTheme } from './RadioListThemes';
 
 import RadioListComponent from './index.js';
 
@@ -48,6 +49,38 @@ storiesOf('Form', module)
                 <RadioListComponent
                   radios={radios}
                   value={value}
+                  onChange={action('onChange')}
+                  name={name} />
+              )
+            }
+          },
+          {
+            title: 'Example: Light Themed Radio List',
+            subtitle: 'A Radio List with Numeric Values and an Initial Value of 3',
+            sectionFn: () => {
+              const radios = [
+                {
+                  value: 1,
+                  id: 'radio-1',
+                  label: <p style={{'display': 'inline-block'}}>radio 1</p>
+                },
+                {
+                  value: 2,
+                  id: 'radio-2',
+                  label: <p style={{'display': 'inline-block'}}>radio 2</p>
+                },
+                {
+                  value: 3,
+                  id: 'radio-3',
+                  label: <p style={{'display': 'inline-block'}}>radio 3</p>
+                },
+              ];
+              
+              return (
+                <RadioListComponent
+                  radios={radios}
+                  value={value}
+                  theme={lightRadioListTheme}
                   onChange={action('onChange')}
                   name={name} />
               )
