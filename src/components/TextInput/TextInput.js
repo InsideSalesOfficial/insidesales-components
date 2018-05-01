@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { get, filter } from 'lodash';
+import _ from 'lodash';
 
 import Icons from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
@@ -328,6 +329,13 @@ class TextInput extends React.Component {
 
   getInputType = (inputType) => ['text', 'password', 'number'].indexOf(inputType) > -1 ? inputType : 'text'
 
+  usePlaceholder = () => {
+    if (_.isEmpty(this.props.label) || this.props.label === DEFAULT_LABEL) {
+      return this.props.placeholder;
+    };
+    return '';
+  }
+
   render() {
     const { label, name, inputType, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
 
@@ -357,7 +365,8 @@ class TextInput extends React.Component {
             value={this.state.value}
             ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}
-            search={this.props.search} />
+            search={this.props.search}
+            placeholder={this.usePlaceholder()} />
           {this.props.search &&
             <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
           }
@@ -384,9 +393,11 @@ class TextInput extends React.Component {
   }
 }
 
+const DEFAULT_LABEL = 'Label';
+
 TextInput.defaultProps = {
   name: 'Name',
-  label: 'Label'
+  label: DEFAULT_LABEL
 };
 
 TextInput.propTypes = {

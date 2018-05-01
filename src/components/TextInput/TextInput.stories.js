@@ -108,7 +108,7 @@ storiesOf('Form', module)
                   label="Label"
                   helper="Helper text."
                   error={"This field is required."}
-                  name="sixth"
+                  name="six"
                   collapsed />
               )
             },
@@ -116,7 +116,7 @@ storiesOf('Form', module)
               title: 'Example: text input search',
               sectionFn: () => (
                 <TextInput
-                  label="Search"
+                  placeholder="Search"
                   name="seven"
                   onChange={action('value')}
                   search
@@ -128,7 +128,7 @@ storiesOf('Form', module)
               sectionFn: () => (
                 <TextInput
                   label="Search"
-                  name="seven"
+                  name="eight"
                   onChange={action('value')}
                   options={[
                     {
