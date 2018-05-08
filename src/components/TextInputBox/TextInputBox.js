@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { colors, darkScrollbar, typography} from '../styles';
-import TextInput, { TextInputWrapper, InputItem, TextLabel, SearchIcon } from '../TextInput/TextInput';
+import { colors } from '../styles';
+import TextInput, { TextInputWrapper, InputItem, TextLabel } from '../TextInput/TextInput';
 
 const TextBox = styled.div`
     background-color: ${colors.lighterGray};
@@ -74,7 +74,7 @@ const InputBoxItem = styled(InputItem)`
 
 export default class TextInputBox extends TextInput {
     render() {
-        const { label, name, inputType, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
+        const { label, name, inputType, error, disabled, collapsed, className, labelColor, lineColor } = this.props;
             
         return (<TextInputWrapper
             className={className}
@@ -101,12 +101,8 @@ export default class TextInputBox extends TextInput {
                 error={error}
                 value={this.state.value}
                 ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
-                onChange={this.onChange}
-                search={this.props.search} />
-            {this.props.search &&
-                <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
-            }
-            { !this.props.search &&
+                onChange={this.onChange} />
+            { this.props.label &&
                 <TextBoxLabel isFocused={this.state.focused} labelColor={labelColor} open={this.state.value} htmlFor={name} error={error}>{label}</TextBoxLabel>
             }
             </TextBox>

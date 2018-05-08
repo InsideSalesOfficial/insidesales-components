@@ -12,7 +12,8 @@ const dropDownItems = [
   {
     icon: 'EditFilledIcon',
     text: 'Edit',
-    onClick: action('clicked')
+    onClick: action('clicked'),
+    className: 'nickelodeon-guts'
   },
   {
     icon: 'GroupAddIcon',
@@ -97,6 +98,7 @@ storiesOf('Components', module)
               sectionFn: () => (
                 <div style={{padding: '16px', paddingBottom: '300px', backgroundColor: colors.greenBackground}}>
                   <ActionOverflowButtons
+                    className="main-class"
                     overflowItems={dropDownItems}
                   />
                 </div>
