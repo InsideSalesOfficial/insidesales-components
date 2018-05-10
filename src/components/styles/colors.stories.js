@@ -1,18 +1,9 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import _ from 'lodash';
 
 import { colors } from './colors';
-
-
-const media = {
-  large: (...args) => css`
-    @media (min-width: 960px) {
-      ${ css(...args) }
-    }
-  `
-}
 
 const ExampleWrapper = styled.div`
   display: flex;
@@ -27,7 +18,7 @@ const ColorWrapper = styled.div`
   justify-content: center;
 `;
 
-const invertColor = (color) => {
+const getRGBAValues = (color) => {
   let r, g ,b, a;
   if (color.indexOf('#') === 0) {
     color = color.slice(1);
@@ -39,8 +30,8 @@ const invertColor = (color) => {
         throw new Error('Invalid HEX color.');
     }
 
-    r = parseInt(color.slice(0, 2), 16),
-    g = parseInt(color.slice(2, 4), 16),
+    r = parseInt(color.slice(0, 2), 16);
+    g = parseInt(color.slice(2, 4), 16);
     b = parseInt(color.slice(4, 6), 16);
     a = 1;
   } else {
@@ -51,20 +42,61 @@ const invertColor = (color) => {
     a = parseFloat(_.trim(parts[3]), 10);
   }
 
-
-  return a < 0.5 || Math.max(r,g,b) > 186
-      ? 'black'
-      : 'white';
-
+  return {r, g, b, a};
 }
 
-const colorList = _.map(colors, (color, key) => {
+const invertColor = (color) => {
+  const c = getRGBAValues(color);  
+
+  return c.a < 0.5 || Math.max(c.r,c.g,c.b) > 186
+      ? 'black'
+      : 'white';
+}
+
+const rgbToHSL = (r, g, b) => {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0; // achromatic
+  } else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = (g - b) / d + (g <= b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+      default: ;
+    }
+
+    h /= 6;
+  }
+
+  return { h, s, l };
+}
+
+const colorComboValue = (color) => {
+  const rgba = getRGBAValues(color);
+  return rgba.r + rgba.g + rgba.b + rgba.a;
+}
+
+const sortByColor = (items) => {
+  return _.sortBy(items, ['props.hslVal.h', 'props.colorVal']);
+}
+
+const colorList = sortByColor(_.map(colors, (color, key) => {
+  const {r, g, b} = getRGBAValues(color);
   return (
-  <ColorWrapper onClick={action(key)} key={key} style={{backgroundColor: color, color: invertColor(color)}}>
+  <ColorWrapper onClick={action(key)} key={key} hslVal={rgbToHSL(r, g, b)} colorVal={colorComboValue(color)} style={{backgroundColor: color, color: invertColor(color)}}>
     {key}
   </ColorWrapper>
 )}
-);
+));
 
 storiesOf('Base', module)
 .addWithChapters(
