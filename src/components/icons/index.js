@@ -45,6 +45,7 @@ import MinimizeIcon from './MinimizeIcon';
 import MinusIcon from './MinusIcon';
 import MoreVertIcon from './MoreVertIcon';
 import MoveIcon from './MoveIcon';
+import NeuralIcon from './NeuralIcon';
 import NotificationBellIcon from './NotificationBellIcon';
 import OtherFilledIcon from './OtherFilledIcon';
 import PauseCircleIcon from './PauseCircleIcon';
@@ -113,6 +114,7 @@ export default {
   MicrosoftIcon,
   MinimizeIcon,
   MoreVertIcon,
+  NeuralIcon,
   NotificationBellIcon,
   OtherFilledIcon,
   PauseCircleIcon,

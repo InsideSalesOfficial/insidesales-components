@@ -43,7 +43,7 @@ export const colors = {
   gray90: '#e5e5e5',
   fontGrey: '#999999',
   grayBlue: '#35444A',
-  neuralBlue: '#74defa',
+  neuralBlue: '#00C9FF',
   orange: '#F18B14',
   red: '#EA5959',
   red70: '#B24C4E',
