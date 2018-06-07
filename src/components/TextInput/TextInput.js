@@ -356,7 +356,22 @@ class TextInput extends React.Component {
   }
 
   render() {
-    const { label, name, inputType, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
+    const {
+      label,
+      name,
+      inputType,
+      error,
+      disabled,
+      collapsed,
+      className,
+      options,
+      promotedOptions,
+      lowPadding,
+      labelColor,
+      lineColor,
+      stateless,
+      value
+    } = this.props;
 
     return (
       <TextInputWrapper
@@ -382,7 +397,7 @@ class TextInput extends React.Component {
             name={name}
             disabled={disabled}
             error={error}
-            value={this.state.value}
+            value={stateless ? value : this.state.value}
             ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}
             search={this.props.search}
@@ -418,7 +433,8 @@ const DEFAULT_LABEL = 'Label';
 TextInput.defaultProps = {
   name: 'Name',
   label: DEFAULT_LABEL,
-  onSelectionStartChange: _.noop
+  onSelectionStartChange: _.noop,
+  stateless: false,
 };
 
 TextInput.propTypes = {
@@ -432,6 +448,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func,
   collapsed: PropTypes.bool,
   lowPadding: PropTypes.bool,
+  stateless: PropTypes.bool,
   selectOptionsWidth: PropTypes.number,
   onSelectionStartChange: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.shape({
