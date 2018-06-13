@@ -41,13 +41,13 @@ storiesOf('Components', module)
                       <FT.TH onClick={action('clicked')} center priority={2}>
                         Header Content
                       </FT.TH>
-                      <FT.TH center icon="PhoneFilledIcon" fixed="22">
+                      <FT.TH center icon="PhoneFilledIcon" fixed={22}>
                         Header Content 2
                       </FT.TH>
-                      <FT.TH onClick={action('clicked')} center icon="ClockIconFilled" fixed="22">
+                      <FT.TH onClick={action('clicked')} center icon="ClockIconFilled" fixed={22}>
                         Header Content 2
                       </FT.TH>
-                      <FT.TH center icon="EyeIcon" fixed="22">
+                      <FT.TH center icon="EyeIcon" fixed={22}>
                         Header Content 2
                       </FT.TH>
                       <FT.TH right>
@@ -61,13 +61,13 @@ storiesOf('Components', module)
                       <FT.TD center priority={2}>
                         Header Content
                       </FT.TD>
-                      <FT.TD center fixed="22">
+                      <FT.TD center fixed={22}>
                         2
                       </FT.TD>
-                      <FT.TD center fixed="22">
+                      <FT.TD center fixed={22}>
                         25
                       </FT.TD>
-                      <FT.TD center fixed="22">
+                      <FT.TD center fixed={22}>
                         5
                       </FT.TD>
                       <FT.TD right>
@@ -81,13 +81,13 @@ storiesOf('Components', module)
                       <FT.TD center priority={2}>
                         body Content 2 this also has a lot of text to fill up the space
                       </FT.TD>
-                      <FT.TD center fixed="22">
+                      <FT.TD center fixed={22}>
                         83
                       </FT.TD>
-                      <FT.TD center fixed="22">
+                      <FT.TD center fixed={22}>
                         6
                       </FT.TD>
-                      <FT.TD center fixed="22">
+                      <FT.TD center fixed={22}>
                         18
                       </FT.TD>
                       <FT.TD right>

@@ -73,7 +73,7 @@ TableItem.defaultProps = {
 };
 
 TableItem.propTypes = {
-  fixed: PropTypes.string,
+  fixed: PropTypes.number,
   priority: PropTypes.number,
   center: PropTypes.bool,
   right: PropTypes.bool,
