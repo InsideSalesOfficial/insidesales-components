@@ -233,7 +233,7 @@ export default class SelectInputLabelBox extends React.Component {
       inputLabel = placeholder;
     }
 
-    return inputLabel;
+    return inputLabel || this.props.value;
   }
 
   render() {
