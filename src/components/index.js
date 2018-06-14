@@ -17,11 +17,18 @@ export {default as SortableList} from './SortableList';
 export {default as StepChain} from './StepChain';
 export {default as TextareaInput} from './TextareaInput';
 export {default as TextInput} from './TextInput';
-export {default as TextInputBox} from './TextInputBox';
+export {
+  default as TextInputBox,
+  darkTheme as TextInputBoxDarkTheme
+} from './TextInputBox';
 export {default as ToggleSlider} from './ToggleSlider';
 export {default as Icons} from './icons';
 export {default as RadioList} from './RadioList';
 export {default as Radio} from './RadioList/Radio';
-export {default as SelectInputLabelBox} from './SelectInputLabelBox';
+export {
+  default as SelectInputLabelBox,
+  darkTheme as SelectInputLabelBoxDarkTheme,
+  ineSelectInputBoxTransparentTheme as SelectInputLabelBoxlineSelectInputBoxTransparentTheme
+} from './SelectInputLabelBox';
 export {default as TextareaBox} from './TextareaBox';
 export { colors, boxShadows, scrollbars, typography } from './styles'
