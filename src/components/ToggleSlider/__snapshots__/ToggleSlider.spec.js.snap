@@ -13,7 +13,7 @@ exports[`ToggleSlider Snapshots shows disabled 1`] = `
   />
   <div
     checked={false}
-    className="sc-htpNat jiIFKi"
+    className="sc-htpNat iYUQYI"
     disabled={true}
   />
 </label>
