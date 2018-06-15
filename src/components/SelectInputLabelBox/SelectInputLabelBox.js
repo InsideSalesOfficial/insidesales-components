@@ -91,7 +91,7 @@ export const Value = styled.button`
       return props.theme.background;
     }
 
-    return colors.greyA;
+    return colors.grayA;
   }};
   box-sizing: border-box;
   border-bottom-width: ${(props) => {
