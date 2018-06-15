@@ -19,7 +19,7 @@ const SliderInput = styled.input`
 const SliderTrack = styled.div`
   background-color: ${(props) => {
     if (props.disabled) {
-      return colors.darkGray;
+      return colors.grayD;
     }
     if (props.checked) {
       return colors.green70;
@@ -39,7 +39,7 @@ const SliderTrack = styled.div`
     background-color: ${(props) => {
       debugger;
       if (props.disabled) {
-        return colors.darkslategray;
+        return colors.grayC;
       }
       if (props.checked) {
         return colors.green;
