@@ -458,7 +458,7 @@ TextareaInput.propTypes = {
   collapsed: PropTypes.bool,
   charLimit: PropTypes.number,
   placeholder: PropTypes.string,
-  theme: PropTypes.string
+  theme: PropTypes.object
 };
 
 export default TextareaInput;
