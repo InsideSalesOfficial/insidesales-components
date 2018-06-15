@@ -37,7 +37,6 @@ const SliderTrack = styled.div`
 
   &:before {
     background-color: ${(props) => {
-      debugger;
       if (props.disabled) {
         return colors.grayC;
       }
