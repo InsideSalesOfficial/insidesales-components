@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { get, size } from 'lodash';
 
 import { colors, typography, darkScrollbar } from '../styles';
+import {defaultTheme} from './TextareaInputThemes'
 
 const TextareaInputWrapper = styled.div`
   width: 100%;
 `;
 
 const TextareaBox = styled.div`
-  background-color: ${props => props.theme.background || colors.white};
+  background-color: ${props => props.theme.background};
   border: thin solid ${colors.black40};
   border-color: ${(props) => {
     if (props.error) {
@@ -22,10 +23,9 @@ const TextareaBox = styled.div`
       return colors.black20;
     } else if (props.lineColor) {
       return props.lineColor;
-    } else if (props.theme.borderColor) {
+    } else  {
       return props.theme.borderColor;
     }
-    return colors.black40;
   }};
   border-radius: 4px;
   border-width: ${(props) => {
@@ -155,11 +155,9 @@ color: ${(props) => {
       return colors.green;
     } else if (props.labelColor) {
       return props.labelColor;
-    } else if (props.theme.labelColor){
-      return props.theme.labelColor;
     } else {
-      return colors.black60;
-    }
+      return props.theme.labelColor;
+    } 
   }};
 top: ${(props) => {
     if (props.error || props.isFocused || props.placeholder) {
@@ -444,7 +442,7 @@ TextareaInput.defaultProps = {
   charLimit: 0,
   error: '',
   placeholder: '',
-  theme: {}
+  theme: defaultTheme
 };
 
 TextareaInput.propTypes = {
