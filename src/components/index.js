@@ -26,6 +26,7 @@ export {
   darkTheme as TextInputBoxDarkTheme
 } from './TextInputBox';
 export {default as ToggleSlider} from './ToggleSlider';
+export {default as FilterBar} from './FilterBar';
 export {default as Icons} from './icons';
 export {default as RadioList} from './RadioList';
 export {default as Radio} from './RadioList/Radio';
