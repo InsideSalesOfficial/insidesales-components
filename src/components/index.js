@@ -33,7 +33,7 @@ export {default as Radio} from './RadioList/Radio';
 export {
   default as SelectInputLabelBox,
   darkTheme as SelectInputLabelBoxDarkTheme,
-  ineSelectInputBoxTransparentTheme as SelectInputLabelBoxlineSelectInputBoxTransparentTheme
+  lineSelectInputBoxTransparentTheme as SelectInputLabelBoxLineSelectInputBoxTransparentTheme
 } from './SelectInputLabelBox';
 export {default as TextareaBox} from './TextareaBox';
 export { colors, boxShadows, scrollbars, typography } from './styles'
