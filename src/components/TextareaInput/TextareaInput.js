@@ -1,29 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, {ThemeProvider}  from 'styled-components';
 import PropTypes from 'prop-types';
 import { get, size } from 'lodash';
 
 import { colors, typography, darkScrollbar } from '../styles';
+import {defaultTheme} from './TextareaInputThemes'
 
 const TextareaInputWrapper = styled.div`
   width: 100%;
 `;
 
 const TextareaBox = styled.div`
-  background-color: ${colors.white};
+  background-color: ${props => props.theme.background};
   border: thin solid ${colors.black40};
   border-color: ${(props) => {
     if (props.error) {
       return colors.red;
     } else if (props.isFocused) {
-        return colors.green;
+      return colors.green;
     } else if (props.disabled) {
       return colors.black20;
     } else if (props.lineColor) {
       return props.lineColor;
+    } else  {
+      return props.theme.borderColor;
     }
-    return colors.black40;
   }};
   border-radius: 4px;
   border-width: ${(props) => {
@@ -34,11 +36,11 @@ const TextareaBox = styled.div`
   }};
   box-sizing: border-box;
   cursor: ${(props) => {
-        if (props.disabled) {
-          return 'default';
-        }
-        return 'text';
-      }};
+    if (props.disabled) {
+      return 'default';
+    }
+    return 'text';
+  }};
   padding-top: ${(props) => {
     if (!props.open && !props.isFocused && props.collapsed) {
       return 0;
@@ -64,43 +66,43 @@ const TextareaBox = styled.div`
 
   &:hover {
     border-width: ${(props) => {
-      if (props.disabled) {
-        return '1px';
-      }
-      return '2px';
-    }};
+    if (props.disabled) {
+      return '1px';
+    }
+    return '2px';
+  }};
     padding-top: ${(props) => {
-      if (!props.open && !props.isFocused && props.collapsed) {
-        return 0;
-      } else if (props.disabled) {
-        return '28px';
-      }
-      return '27px';
-    }};
+    if (!props.open && !props.isFocused && props.collapsed) {
+      return 0;
+    } else if (props.disabled) {
+      return '28px';
+    }
+    return '27px';
+  }};
 
     textarea {
       padding: ${(props) => {
-        if ((props.error || props.isFocused || props.open) && !props.disabled) {
-          return '0 15px';
-        } else {
-          return '0 16px';
-        }
-      }};
+    if ((props.error || props.isFocused || props.open) && !props.disabled) {
+      return '0 15px';
+    } else {
+      return '0 16px';
+    }
+  }};
     }
 
     label {
       left: ${(props) => {
-        if (props.disabled) {
-          return '16px';
-        }
-        return '15px';
-      }};
+    if (props.disabled) {
+      return '16px';
+    }
+    return '15px';
+  }};
       top: ${(props) => {
-        if (props.disabled) {
-          return '0';
-        }
-        return '-1px';
-      }};
+    if (props.disabled) {
+      return '0';
+    }
+    return '-1px';
+  }};
     }
   }
 
@@ -112,32 +114,33 @@ const TextareaBox = styled.div`
           color: ${colors.black40};
         }
       `;
-    }
+     }
   }}
-`;
+  `;
 
 const Textarea = styled.textarea`
-  background-color: transparent;
-  border: none;
-  box-sizing: border-box;
-  height: 100%;
-  padding: ${(props) => {
+background-color: transparent;
+border: none;
+color: ${(props) => props.theme.valueColor};
+box-sizing: border-box;
+height: 100%;
+padding: ${(props) => {
     if (props.error || props.isFocused) {
       return '0 15px';
     } else {
       return '0 16px';
     }
   }};
-  resize: none;
-  text-align: left;
-  width: 100%;
+resize: none;
+text-align: left;
+width: 100%;
 
   &:focus {
-    outline: 0;
-    padding: 0 15px;
-  }
-  ${typography.subhead1}
-  ${darkScrollbar}
+  outline: 0;
+  padding: 0 15px;
+}
+${typography.subhead1}
+${darkScrollbar}
 
   &::-webkit-input-placeholder {
     color: ${colors.black40};
@@ -145,59 +148,59 @@ const Textarea = styled.textarea`
 `;
 
 const TextLabel = styled.label`
-  color: ${(props) => {
-      if (props.error) {
-        return colors.red;
-      } else if (props.isFocused) {
-        return colors.green;
-      } else if (props.labelColor) {
-        return props.labelColor;
-      } else {
-        return colors.black60;
-      }
-    }};
-  top: ${(props) => {
+color: ${(props) => {
+    if (props.error) {
+      return colors.red;
+    } else if (props.isFocused) {
+      return colors.green;
+    } else if (props.labelColor) {
+      return props.labelColor;
+    } else {
+      return props.theme.labelColor;
+    } 
+  }};
+top: ${(props) => {
     if (props.error || props.isFocused || props.placeholder) {
       return '-1px';
     }
     return '0';
   }};;
-  left: ${(props) => {
+left: ${(props) => {
     if (props.error || props.isFocused || props.placeholder) {
       return '15px';
     }
     return '16px';
   }};
-  position: absolute;
-  transform: ${(props) => {
+position: absolute;
+transform: ${(props) => {
     if (props.open || props.isFocused || props.placeholder) {
       return 'translateY(8px)';
     } else {
       return 'translateY(16px)';
     }
   }};
-  transition: font-size 0.14s ease-in-out, transform 0.14s ease-in-out, color 0.14s ease-in-out;
-  ${(props) => {
+transition: font-size 0.14s ease-in-out, transform 0.14s ease-in-out, color 0.14s ease-in-out;
+${(props) => {
     if (props.open || props.isFocused || props.placeholder) {
       return typography.caption
     } else {
       return typography.subhead1
     }
   }}
-  line-height: 16px;
+line-height: 16px;
 `;
 
 const charCountTextWidth = '110px';
 
 export const CharCounterText = styled.div`
-  ${typography.caption}
-  color: ${colors.green};
-  text-align: right;
-  width: ${charCountTextWidth};
+${typography.caption}
+color: ${colors.green};
+text-align: right;
+width: ${charCountTextWidth};
 `;
 
 export const CharCounterErrorText = styled(CharCounterText)`
-  color: ${colors.red};
+color: ${colors.red};
 `;
 
 export const FooterTextContainer = styled.div`
@@ -238,9 +241,9 @@ export function charLimitExceeded(charLimit, value) {
  * @param {string} value
  */
 export function determineCharCounterTextValue(charLimit, value) {
-    if (!charLimit) return null;
-    
-    return `${size(value)} / ${charLimit}`;
+  if (!charLimit) return null;
+
+  return `${size(value)} / ${charLimit}`;
 }
 
 export const ErrorTextContainer = (props) => {
@@ -248,7 +251,7 @@ export const ErrorTextContainer = (props) => {
   return (
     <HelperTextContainer hasCharLimit={charLimit > 0}>
       {(error || localError) &&
-      <HelperErrorText>{error || localError}</HelperErrorText>}
+        <HelperErrorText>{error || localError}</HelperErrorText>}
     </HelperTextContainer>
   );
 };
@@ -329,7 +332,7 @@ class TextareaInput extends React.Component {
     const localError = this.determineLocalError();
     return <ErrorTextContainer localError={localError} charLimit={charLimit} error={error} />;
   };
-  
+
   determineLocalError = () => {
     const { charLimit } = this.props;
     const value = get(this.state, 'value', get(this.props, 'value', ''));
@@ -391,6 +394,7 @@ class TextareaInput extends React.Component {
     const localError = this.determineLocalError();
 
     return (
+      <ThemeProvider theme={this.props.theme}>
       <TextareaInputWrapper className={className}>
         <TextareaBox
           onMouseUp={this.removeCancelBlur}
@@ -422,11 +426,12 @@ class TextareaInput extends React.Component {
             htmlFor={name}
             error={error || localError}
             placeholder={placeholder}>
-              {label}
-            </TextLabel>
+            {label}
+          </TextLabel>
         </TextareaBox>
         {this.renderFooterText()}
       </TextareaInputWrapper>
+      </ThemeProvider>
     );
   }
 }
@@ -436,7 +441,8 @@ TextareaInput.defaultProps = {
   label: 'Label',
   charLimit: 0,
   error: '',
-  placeholder: ''
+  placeholder: '',
+  theme: defaultTheme
 };
 
 TextareaInput.propTypes = {
@@ -449,7 +455,8 @@ TextareaInput.propTypes = {
   onChange: PropTypes.func,
   collapsed: PropTypes.bool,
   charLimit: PropTypes.number,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  theme: PropTypes.object
 };
 
 export default TextareaInput;

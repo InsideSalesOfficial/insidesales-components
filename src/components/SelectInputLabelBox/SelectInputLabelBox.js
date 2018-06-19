@@ -91,7 +91,7 @@ export const Value = styled.button`
       return props.theme.background;
     }
 
-    return colors.lighterGray;
+    return colors.grayA;
   }};
   box-sizing: border-box;
   border-bottom-width: ${(props) => {
@@ -166,11 +166,6 @@ export default class SelectInputLabelBox extends React.Component {
   closeOptionsList = () => { closeOptionsList.call(this) }
 
   toggleOptionsList = (e) => { toggleOptionsListOnSearch.bind(this)(e) }
-/*
-  determineLabel = () => {
-    const selectedOption = _.find(this.props.options, o => o.value === this.props.value);
-    return _.get(selectedOption, 'label', this.props.value);
-  }*/
 
   filterOptions = (searchFilter) => {
     this.setState({
@@ -233,7 +228,7 @@ export default class SelectInputLabelBox extends React.Component {
       inputLabel = placeholder;
     }
 
-    return inputLabel;
+    return inputLabel || this.props.value;
   }
 
   render() {
@@ -265,6 +260,7 @@ export default class SelectInputLabelBox extends React.Component {
             hideDivider={_.isEmpty(this.props.options)}
             visible={this.state.optionsListVisible}
             multiSelect={this.props.multiSelect}
+            maxHeight="240px"
             searchable={this.props.searchable}
             onSearch={this.filterOptions}
           />
