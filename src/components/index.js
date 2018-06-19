@@ -20,6 +20,7 @@ export {
   darkTheme as TextareaInputDarkTheme
 } from './TextareaInput';
 export {default as TextInput} from './TextInput';
+export {default as SearchBox} from './SearchBox';
 export {
   default as TextInputBox,
   darkTheme as TextInputBoxDarkTheme
