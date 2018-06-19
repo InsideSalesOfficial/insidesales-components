@@ -4,9 +4,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import { colors } from '../styles';
 import TextInput, { TextInputWrapper, InputItem, TextLabel } from '../TextInput/TextInput';
+import { defaultTheme } from './TextInputBoxThemes';
 
 const TextBox = styled.div`
-    background-color: ${props => props.theme.background || colors.grayA};
+    background-color: ${props => props.theme.background};
     border-bottom: thin solid ${colors.black40};
     border-radius: 2px;
     border-width: 2px; 
@@ -19,10 +20,9 @@ const TextBox = styled.div`
         return colors.black20;
     } else if (props.lineColor) {
         return props.lineColor;
-    } else if (props.theme.borderColor) {
+    } else {
         return props.theme.borderColor;
     }
-    return colors.black40;
     }};
 
     box-sizing: border-box;
@@ -72,13 +72,11 @@ const InputBoxItem = styled(InputItem)`
         -webkit-appearance: none; 
         margin: 0; 
     }
-    ${
-        (props) => {
-            if(props.theme){
-                return ('color: ' + props.theme.valueColor) ;
-            }
+    ${(props) => {
+        if(props.theme.valueColor){
+            return ('color: ' + props.theme.valueColor) ;
         }
-    }
+    }}
 `;
 
 export default class TextInputBox extends TextInput {
@@ -132,7 +130,7 @@ export default class TextInputBox extends TextInput {
 TextInput.defaultProps = {
     name: 'Name',
     label: '',
-    theme: {}
+    theme: defaultTheme
 };
 
 TextInput.propTypes = {
