@@ -30,6 +30,7 @@ import EmailRepliedIcon from './EmailRepliedIcon';
 import ExpandIcon from './ExpandIcon';
 import ExploreIcon from './ExploreIcon';
 import EyeIcon from './EyeIcon';
+import FilterIcon from './FilterIcon';
 import ForwardEmailIcon from './ForwardEmailIcon';
 import GroupAddIcon from './GroupAddIcon';
 import HelpBoxIcon from './HelpBoxIcon';
@@ -102,6 +103,7 @@ export default {
   ExpandIcon,
   ExploreIcon,
   EyeIcon,
+  FilterIcon,
   ForwardEmailIcon,
   GroupAddIcon,
   HelpBoxIcon,
