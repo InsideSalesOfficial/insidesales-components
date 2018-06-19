@@ -78,8 +78,8 @@ storiesOf('Menus', module)
             title: 'Example: openRight and openUp',
             sectionFn: () => {
               const options = [
-                { action: action('click option'), label: 'Option 1' },
-                { action: action('click option'), label: 'Option 2' }
+                { action: action('click option'), label: 'This is some really, length text for demo' },
+                { action: action('click option'), label: 'Some short text' }
               ];
               const LeftDarkBackground = styled(DarkBackground)`
                 display: flex;
