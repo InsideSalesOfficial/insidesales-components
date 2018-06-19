@@ -94,7 +94,7 @@ export default class TextInputBox extends TextInput {
                     onClick={this.focusOnTextInput}
                     isFocused={this.state.focused}
                     error={error}
-                    open={this.state.value}
+                    open={this.getValue()}
                     disabled={disabled}
                     lineColor={lineColor}
                     collapsed={collapsed}
@@ -107,14 +107,14 @@ export default class TextInputBox extends TextInput {
                     name={name}
                     disabled={disabled}
                     error={error}
-                    value={this.state.value}
+                    value={this.getValue()}
                     ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
                     onChange={this.onChange} />
                 { this.props.label &&
                     <TextBoxLabel 
                         isFocused={this.state.focused} 
                         labelColor={this.props.theme.labelColor || labelColor} 
-                        open={this.state.value} 
+                        open={this.getValue()} 
                         htmlFor={name} 
                         error={error}>{label}
                     </TextBoxLabel>
