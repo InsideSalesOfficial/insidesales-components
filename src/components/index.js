@@ -13,6 +13,7 @@ export {default as MessageDialog} from './MessageDialog';
 export {default as OverflowMenu} from './OverflowMenu';
 export {default as RangeSlider} from './RangeSlider';
 export {default as SelectInput} from './SelectInput';
+export {default as Modal} from './Modal';
 export {default as SortableList} from './SortableList';
 export {default as StepChain} from './StepChain';
 export {
