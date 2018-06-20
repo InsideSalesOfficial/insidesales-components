@@ -5,6 +5,8 @@ import {
 } from '@storybook/react';
 
 import TextInputBox from './TextInputBox';
+import { darkTheme } from './TextInputBoxThemes';
+
 
 storiesOf('Form', module)
   .addWithChapters(
@@ -73,6 +75,39 @@ storiesOf('Form', module)
                   name="e"
                   onChange={action('value')}
                   disabled
+                />
+              )
+            },
+            {
+              title: 'Example: dark theme',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value="I am dark"
+                  onChange={action('value')}
+                  theme={darkTheme}
+                />
+              )
+            },
+            {
+              title: 'Example: Stateless',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value="I am stateless"
+                  onChange={action('value')}
+                  stateless
+                />
+              )
+            },
+            {
+              title: 'Example: Stateless no value',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value=""
+                  onChange={action('value')}
+                  stateless
                 />
               )
             },

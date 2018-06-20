@@ -41,6 +41,21 @@ export function toggleOptionsList() {
   }
 }
 
+export function toggleOptionsListOnSearch(e) {
+  if (!this.props.wrapCloseDisabled && this.state.optionsListVisible) {
+    const clickedInsideSearch = () => {
+      const clickedElement = e.target.getAttribute('name');
+      return clickedElement === 'selectSearch';
+    }
+    if (clickedInsideSearch()) {
+      return
+    }
+    this.closeOptionsList();
+  } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
+    this.openOptionsList();
+  }
+}
+
 class SelectInput extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -88,20 +103,7 @@ class SelectInput extends React.Component {
     }
   }
 
-  toggleOptionsList = (e) => {
-    if (!this.props.wrapCloseDisabled && this.state.optionsListVisible) {
-      const clickedInsideSearch = () => {
-        const clickedElement = e.target.getAttribute('name');
-        return clickedElement === 'selectSearch';
-      }
-      if (clickedInsideSearch()) {
-        return
-      }
-      this.closeOptionsList();
-    } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
-      this.openOptionsList();
-    }
-  }
+  toggleOptionsList = (e) => {toggleOptionsListOnSearch.bind(this)(e)}
 
   openOptionsList = openOptionsList.bind(this);
 
@@ -193,6 +195,7 @@ class SelectInput extends React.Component {
             onClick={(e) => { if (!isDisabled) { this.toggleOptionsList(e); } }}>
             <SelectInputDisplay
               defaultLabel={this.props.defaultLabel}
+              headerLabel={this.props.headerLabel}
               label={this.determineLabel()}
               selectArrowFollows={this.props.selectArrowFollows}
               isDisabled={isDisabled}

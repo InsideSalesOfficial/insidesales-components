@@ -6,6 +6,7 @@ export {default as ButtonBar} from './ButtonBar';
 export {default as Checkbox} from './Checkbox';
 export {default as DropdownButton} from './DropdownButton';
 export {default as EditableSelectInput} from './EditableSelectInput';
+export {default as FlexTable, TR as FlexTR, TD as FlexTD, TH as FlexTH} from './FlexTable';
 export {default as InteractiveElement} from './InteractiveElement';
 export {default as Loader} from './Loader';
 export {default as MessageDialog} from './MessageDialog';
@@ -14,13 +15,25 @@ export {default as RangeSlider} from './RangeSlider';
 export {default as SelectInput} from './SelectInput';
 export {default as SortableList} from './SortableList';
 export {default as StepChain} from './StepChain';
-export {default as TextareaInput} from './TextareaInput';
+export {
+  default as TextareaInput,
+  darkTheme as TextareaInputDarkTheme
+} from './TextareaInput';
 export {default as TextInput} from './TextInput';
-export {default as TextInputBox} from './TextInputBox';
+export {default as SearchBox} from './SearchBox';
+export {
+  default as TextInputBox,
+  darkTheme as TextInputBoxDarkTheme
+} from './TextInputBox';
 export {default as ToggleSlider} from './ToggleSlider';
+export {default as FilterBar} from './FilterBar';
 export {default as Icons} from './icons';
 export {default as RadioList} from './RadioList';
 export {default as Radio} from './RadioList/Radio';
-export {default as SelectInputLabelBox} from './SelectInputLabelBox';
+export {
+  default as SelectInputLabelBox,
+  darkTheme as SelectInputLabelBoxDarkTheme,
+  lineSelectInputBoxTransparentTheme as SelectInputLabelBoxLineSelectInputBoxTransparentTheme
+} from './SelectInputLabelBox';
 export {default as TextareaBox} from './TextareaBox';
 export { colors, boxShadows, scrollbars, typography } from './styles'

@@ -5,6 +5,7 @@ import {
 } from '@storybook/react';
 
 import TextareaInput from './TextareaInput';
+import { darkTheme } from './TextareaInputThemes';
 
 storiesOf('Form', module)
   .addWithChapters(
@@ -27,6 +28,16 @@ storiesOf('Form', module)
                 <TextareaInput
                   label="Label"
                   name="first"
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: textarea with placeholder',
+              sectionFn: () => (
+                <TextareaInput
+                  label="Label"
+                  placeholder="Hi, what would you like to say?"
                   onChange={action('value')}
                 />
               )
@@ -109,6 +120,44 @@ storiesOf('Form', module)
                   error={"This field is required."}
                   name="sixth"
                   collapsed />
+              )
+            },
+            {
+              title: 'Example: textarea with value and character limit',
+              sectionFn: () => (
+                <TextareaInput
+                  label="Label"
+                  name="first"
+                  value="Hello world"
+                  charLimit={120}
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: textarea with value over character limit',
+              sectionFn: () => (
+                <TextareaInput
+                  label="Label"
+                  name="first"
+                  value="Hello world. This is the story of a dog named Scott. Scott loved to walk and talk with people. He was a talking dog, of course. Everywhere Scott went his friend, Ruby, the bunny, went with him. They had a happy life. The end."
+                  charLimit={120}
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: textarea dark theme',
+              sectionFn: () => (
+                <TextareaInput
+                  label="Label"
+                  name="first"
+                  charLimit={120}
+                  value="I am dark"
+                  onChange={action('value')}
+                  helper="Helper text."
+                  theme={darkTheme}
+                />
               )
             },
           ]
