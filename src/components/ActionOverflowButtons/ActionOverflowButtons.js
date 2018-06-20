@@ -83,7 +83,7 @@ const OverflowList = styled.ul`
     return _.map(props.overflowItems, (item, key) => {
       const currentItemKey = key + 1;
       return `
-        li:nth-child(${currentItemKey}) {
+        ${props.openDirection === 'down' ? 'li:nth-child' : 'li:nth-last-child'}(${currentItemKey}) {
           transition-delay: ${props.itemDelay * currentItemKey}ms;
           transform: scale(0.4) translateY(-${key * 16}px);
           span {
