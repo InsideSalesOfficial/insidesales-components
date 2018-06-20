@@ -12,6 +12,8 @@ import CalendarIcon from './CalendarIcon';
 import CautionFilledIcon from './CautionFilledIcon';
 import CheckCircleIcon from './CheckCircleIcon';
 import CheckmarkFilledIcon from './CheckmarkFilledIcon';
+import ChevronLeft from './ChevronLeft';
+import ChevronRight from './ChevronRight';
 import ClockIcon from './ClockIcon';
 import ClockIconFilled from './ClockIconFilled';
 import CloseFullIcon from './CloseFullIcon';
@@ -83,6 +85,8 @@ export default {
   CautionFilledIcon,
   CheckCircleIcon,
   CheckmarkFilledIcon,
+  ChevronLeft,
+  ChevronRight,
   ClockIcon,
   ClockIconFilled,
   CloseFullIcon,
