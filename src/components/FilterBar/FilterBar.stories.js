@@ -44,7 +44,8 @@ class FilterBarWrapper extends React.PureComponent {
         (value) => {
           this.setState({ searchValue: value})
         }
-      }/>
+      }
+      hideFilter={this.props.hideFilter}/>
   )}
 }
 
@@ -71,7 +72,16 @@ storiesOf('Components', module)
                 <FilterBarWrapper/>
               </div>
             )
-          }
+          },
+          {
+            title: 'Example: Filter Button Hidden',
+            sectionFn: () => (
+              <div style={darkExample}>
+                <FilterBarWrapper
+                hideFilter={true}/>
+              </div>
+            )
+          },
         ]
       }
     ]
