@@ -11,7 +11,7 @@ import { InputItem } from '../TextInput/TextInput';
 import { colors, boxShadows } from '../styles';
 
 const FilterBarWrapper = styled.div`
-  background-color: ${colors.darkBlue};
+  background-color: ${colors.darkBlueD};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,10 +21,13 @@ const FilterBarWrapper = styled.div`
 
 const SearchBarWrapper = styled(FilterBarWrapper)`
   background-color: ${colors.white};
+  padding: 0 21px 0 19px;
 `;
 
 const StyledSelectInput = styled(SelectInput)`
   padding-left: 16px;
+  flex-basis: 0;
+  flex-grow: 7;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -32,7 +35,8 @@ const ButtonsWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  flex-basis: 30%;
+  flex-basis: 0;
+  flex-grow: ${props => props.buttonsSize};
   border-left: 1px ${colors.black20} solid;
   height: 100%;
 `;
@@ -42,13 +46,9 @@ const StyledInteractiveElement = styled(InteractiveElement)`
   display: flex;
 `;
 
-const SearchIcon = styled(Icons.SearchMaterialIcon)`
-  padding: 0 19px;
-`
-
-const CloseIcon = styled(Icons.CloseIcon)`
-  padding: 0 21px;
-`
+const StyledInputItem = styled(InputItem)`
+  padding-left: 19px;
+`;
 
 class FilterBar extends React.Component {
 
@@ -63,34 +63,67 @@ class FilterBar extends React.Component {
   showSearch = () => {
     this.setState({
       showSearch: true
-    })
+    });
   }
 
   hideSearch = () => {
+    this.props.onSearchChange('');
     this.setState({
       showSearch: false
-    })
+    });
+  }
+
+  onSearchChange = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    this.props.onSearchChange(_.get(e, 'target.value'));
+  }
+
+  getButtons = () => {
+    const buttons =
+    [
+      (
+        <StyledInteractiveElement className='pb-test__search-button' onClick={this.showSearch}>
+          <Icons.SearchMaterialIcon fill={colors.white60}/>
+        </StyledInteractiveElement>
+      )
+    ]
+
+    if(!this.props.hideFilter) {
+      buttons.unshift((
+        <StyledInteractiveElement className='pb-test__filter-button' onClick={this.props.onClickFilter}>
+          <Icons.FilterIcon fill={colors.white60}/>
+        </StyledInteractiveElement>
+      ))
+    }
+    return (
+      <ButtonsWrapper buttonsSize={_.size(buttons)}>
+        {buttons}
+      </ButtonsWrapper>
+    );
   }
 
   render() {
     if(this.state.showSearch) {
-      return (
-        <SearchBarWrapper>
-          <SearchIcon fill={colors.black60}/>
-          <InputItem
+    return (
+        <SearchBarWrapper {...this.props}>
+          <Icons.SearchMaterialIcon fill={colors.black60}/>
+          <StyledInputItem
             type={'text'}
-            onChange={this.props.onSearchChange}
+            className='pb-test__search-bar'
+            onChange={this.onSearchChange}
             placeholder={this.props.searchPlaceholder}
             autoFocus/>
           <StyledInteractiveElement onClick={this.hideSearch}>
-              <CloseIcon fill={colors.black60}/>
-            </StyledInteractiveElement>
+            <Icons.CloseIcon fill={colors.black60}/>
+          </StyledInteractiveElement>
         </SearchBarWrapper>
       );
     }
 
     return (
-      <FilterBarWrapper>
+      <FilterBarWrapper {...this.props}>
           <StyledSelectInput
           options={this.props.sortOptions}
           onChange={this.props.onSortOptionChange}
@@ -106,14 +139,7 @@ class FilterBar extends React.Component {
             selectArrowColor: colors.white80,
             inputPaddingRight: 23
           }}/>
-          <ButtonsWrapper>
-            <StyledInteractiveElement onClick={this.props.onClickFilter}>
-              <Icons.FilterIcon fill={colors.white60}/>
-            </StyledInteractiveElement>
-            <StyledInteractiveElement onClick={this.showSearch}>
-              <Icons.SearchMaterialIcon fill={colors.white60}/>
-            </StyledInteractiveElement>
-          </ButtonsWrapper>
+          {this.getButtons()}
         </FilterBarWrapper>
     );
   }
@@ -121,6 +147,7 @@ class FilterBar extends React.Component {
 
 FilterBar.defaultProps = {
   onClickFilter: _.noop,
+  hideFilter: false,
   onSortOptionChange: _.noop,
   sortOptions: [],
   sortLabel: 'Sort By',
@@ -136,7 +163,8 @@ FilterBar.propTypes = {
   sortLabel: PropTypes.string.isRequired,
   selectedSortOption: PropTypes.any,
   onSearchChange: PropTypes.func.isRequired,
-  searchPlaceholder: PropTypes.string
+  searchPlaceholder: PropTypes.string,
+  hideFilter: PropTypes.bool
 };
 
 export default FilterBar;
