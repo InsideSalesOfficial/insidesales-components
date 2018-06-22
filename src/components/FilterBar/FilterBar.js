@@ -44,6 +44,10 @@ const ButtonsWrapper = styled.div`
 const StyledInteractiveElement = styled(InteractiveElement)`
   cursor: pointer;
   display: flex;
+  fill: ${colors.white60};
+  &:hover {
+    fill: ${colors.white90};
+  }
 `;
 
 const StyledInputItem = styled(InputItem)`
@@ -85,7 +89,7 @@ class FilterBar extends React.Component {
     [
       (
         <StyledInteractiveElement className='pb-test__search-button' onClick={this.showSearch}>
-          <Icons.SearchMaterialIcon fill={colors.white60}/>
+          <Icons.SearchMaterialIcon/>
         </StyledInteractiveElement>
       )
     ]
@@ -93,7 +97,7 @@ class FilterBar extends React.Component {
     if(!this.props.hideFilter) {
       buttons.unshift((
         <StyledInteractiveElement className='pb-test__filter-button' onClick={this.props.onClickFilter}>
-          <Icons.FilterIcon fill={colors.white60}/>
+          <Icons.FilterIcon/>
         </StyledInteractiveElement>
       ))
     }
@@ -136,7 +140,8 @@ class FilterBar extends React.Component {
             iconColor: colors.white60,
             inputColor: colors.white80,
             disabledInputColor: colors.white50,
-            selectArrowColor: colors.white80,
+            selectArrowColor: colors.white60,
+            hoverSelectArrowColor: colors.white90,
             inputPaddingRight: 23
           }}/>
           {this.getButtons()}

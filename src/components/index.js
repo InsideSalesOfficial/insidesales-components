@@ -16,6 +16,7 @@ export {default as SelectInput} from './SelectInput';
 export {default as Modal} from './Modal';
 export {default as SortableList} from './SortableList';
 export {default as StepChain} from './StepChain';
+export {default as Thumbnail} from './Thumbnail';
 export {
   default as TextareaInput,
   darkTheme as TextareaInputDarkTheme

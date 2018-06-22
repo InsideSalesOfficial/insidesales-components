@@ -239,13 +239,14 @@ export default class SelectInputLabelBox extends React.Component {
 
     return (
       <ThemeProvider theme={this.props.theme}>
-        <Wrapper onClick={this.toggleOptionsList}
+        <Wrapper
           {...this.props}
           ref={(el) => { this.clickEventElement = el }}
           >
           <Caret open={this.state.optionsListVisible} />
           <Label value={this.props.value}>{this.props.label}</Label>
           <Value
+            onClick={this.toggleOptionsList}
             open={this.state.optionsListVisible}
             isDisabled={this.props.isDisabled}
             title={optionLabel}
