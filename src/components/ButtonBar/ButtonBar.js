@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import Button from '../Button';
 import InteractiveElement from '../InteractiveElement';
@@ -35,7 +35,7 @@ const SecondaryActionButton = styled(Button)`
   width: auto;
   border: none;
   padding: 0;
-  color: ${colors.black90};
+  color: ${props => props.theme.labelColor || colors.black90};
 `;
 
 const PrimaryActionElement = styled(InteractiveElement)`
@@ -63,7 +63,8 @@ const ButtonBar = ({
   onSecondaryActionClick,
   secondaryActionStyle,
   secondaryActionText,
-  tertiaryElement
+  tertiaryElement,
+  theme
 }) => {
   function getPrimaryElement() {
     if (primaryActionStyle === 'button') {
@@ -124,17 +125,20 @@ const ButtonBar = ({
     );
   }
   return (
-    <ButtonContainer primaryActionStyle={primaryActionStyle}>
-      {tertiaryElement}
-      {getSecondaryElement()}
-      {getPrimaryElement()}
-    </ButtonContainer>
+    <ThemeProvider  theme={theme}>
+      <ButtonContainer primaryActionStyle={primaryActionStyle}>
+        {tertiaryElement}
+        {getSecondaryElement()}
+        {getPrimaryElement()}
+      </ButtonContainer>
+    </ThemeProvider>
   );
 };
 
 ButtonBar.defaultProps = {
   primaryActionStyle: 'button',
-  secondaryActionStyle: 'button'
+  secondaryActionStyle: 'button',
+  theme: {},
 };
 
 export default ButtonBar;
