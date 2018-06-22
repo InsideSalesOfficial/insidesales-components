@@ -32,11 +32,10 @@ storiesOf('Components', module)
           {
             title: 'DarkBarTheme',
             sectionFn: () => (
-              <div style={
-                {background: darkBlue.darkBlue,
+              <div style={{
+                background: darkBlue.darkBlue,
                 padding: '15px'
-                }
-              }>
+              }}>
                 <ButtonBar
                   primaryActionText='Continue'
                   secondaryActionText='Skip'
