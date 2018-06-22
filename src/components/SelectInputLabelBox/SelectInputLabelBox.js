@@ -5,14 +5,19 @@ import _ from 'lodash';
 
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsListOnSearch } from '../SelectInput';
 import SelectOptions from '../SelectInput/SelectOptions';
-import { colors } from '../styles/colors';
+import { colors, red } from '../styles/colors';
 import { typography } from '../styles/typography';
 import PropTypes from 'prop-types';
 
 const padding = '16px';
 
 export const Label = styled.div`
-  color: ${props => props.theme.labelColor || colors.black40};
+  color: ${props => {
+    if (props.error) {
+      return red.red;
+    }
+    return props.theme.labelColor || colors.black40;
+  }};
   transition: all 200ms;
   transform: translateY(-50%);
   position: absolute;
@@ -68,6 +73,10 @@ export const Value = styled.button`
   text-align: left;
   ${typography.subhead1};
   color: ${(props) => {
+    if (props.error) {
+      return red.red;
+    }
+
     if (props.isPlaceHolder) {
       return colors.black60;
     }
@@ -105,9 +114,9 @@ export const Value = styled.button`
   border-bottom-color: ${props => {
     if (props.isDisabled){
       return 'transparent';
-    }
-
-    if (props.theme.borderColor) {
+    } else if (props.error) {
+      return red.red;
+    } else if (props.theme.borderColor) {
       return props.theme.borderColor;
     }
 
@@ -127,7 +136,12 @@ export const Value = styled.button`
 
   &:focus {
     outline: 0;
-    border-color: ${props => props.isDisabled ? 'transparent' : colors.green};
+    border-color: ${props => {
+      if (props.error) {
+        return red.red;
+      }
+      return props.isDisabled ? 'transparent' : colors.green
+    }};
   }
 `;
 
@@ -244,7 +258,7 @@ export default class SelectInputLabelBox extends React.Component {
           ref={(el) => { this.clickEventElement = el }}
           >
           <Caret open={this.state.optionsListVisible} />
-          <Label value={this.props.value}>{this.props.label}</Label>
+          <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
           <Value
             onClick={this.toggleOptionsList}
             open={this.state.optionsListVisible}
@@ -252,6 +266,7 @@ export default class SelectInputLabelBox extends React.Component {
             title={optionLabel}
             isPlaceHolder={this.props.isPlaceHolder}
             className="select-input-label-box-value"
+            error={this.props.error}
           >{optionLabel}</Value>
           <SelectOptions
             selectedOptions={this.props.value}
@@ -276,7 +291,8 @@ SelectInputLabelBox.defaultProps = {
   label: '',
   isDisabled: false,
   theme: {},
-  isPlaceHolder: false
+  isPlaceHolder: false,
+  error: false
 }
 
 SelectInputLabelBox.propTypes = {
@@ -290,5 +306,6 @@ SelectInputLabelBox.propTypes = {
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
   multiSelect: PropTypes.bool,
-  searchable: PropTypes.bool
+  searchable: PropTypes.bool,
+  error: PropTypes.bool
 }
