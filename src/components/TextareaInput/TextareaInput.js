@@ -216,6 +216,7 @@ export const HelperTextContainer = styled.div`
 `;
 
 export const HelperText = styled.span`
+  color: ${props => props.theme.helperColor};
   ${typography.caption}
 `;
 
