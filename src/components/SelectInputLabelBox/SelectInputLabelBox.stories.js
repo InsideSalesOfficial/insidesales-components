@@ -247,6 +247,19 @@ storiesOf('Form', module)
                   options={genericOptions} />
               </div>
             )
+          },
+          {
+            title: 'SelectInputLabelBox with error',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label={'error'}
+                  value='NO!'
+                  error
+                  onChange={action('Option Selected')}
+                  options={genericOptions} />
+              </div>
+            )
           }
         ]
       }
