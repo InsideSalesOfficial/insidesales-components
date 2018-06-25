@@ -397,6 +397,10 @@ class TextareaInput extends React.Component {
     return stateValue;
   }
 
+  setValue = (value) => {
+    this.setState({ value });
+  };
+
   render() {
     const { className, label, name, error, disabled, collapsed, labelColor, lineColor, placeholder } = this.props;
     const localError = this.determineLocalError();
@@ -422,7 +426,7 @@ class TextareaInput extends React.Component {
             name={name}
             disabled={disabled}
             error={error || localError}
-            value={this.getValue(this.state.value,  this.props.overrideValue)}
+            value={this.getValue(this.state.value)}
             ref={(input) => { this.textareaInput = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}
             placeholder={placeholder}>
