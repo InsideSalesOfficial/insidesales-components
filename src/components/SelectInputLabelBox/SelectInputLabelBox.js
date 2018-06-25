@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsListOnSearch } from '../SelectInput';
 import SelectOptions from '../SelectInput/SelectOptions';
-import { colors, red } from '../styles/colors';
+import { colors } from '../styles/colors';
 import { typography } from '../styles/typography';
 import PropTypes from 'prop-types';
 
@@ -14,7 +14,7 @@ const padding = '16px';
 export const Label = styled.div`
   color: ${props => {
     if (props.error) {
-      return red.red;
+      return colors.red;
     }
     return props.theme.labelColor || colors.black40;
   }};
@@ -74,7 +74,7 @@ export const Value = styled.button`
   ${typography.subhead1};
   color: ${(props) => {
     if (props.error) {
-      return red.red;
+      return colors.red;
     }
 
     if (props.isPlaceHolder) {
@@ -115,7 +115,7 @@ export const Value = styled.button`
     if (props.isDisabled){
       return 'transparent';
     } else if (props.error) {
-      return red.red;
+      return colors.red;
     } else if (props.theme.borderColor) {
       return props.theme.borderColor;
     }
@@ -138,7 +138,7 @@ export const Value = styled.button`
     outline: 0;
     border-color: ${props => {
       if (props.error) {
-        return red.red;
+        return colors.red;
       }
       return props.isDisabled ? 'transparent' : colors.green
     }};
