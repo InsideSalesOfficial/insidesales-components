@@ -167,6 +167,18 @@ storiesOf('Form', module)
             )
           },
           {
+            title: 'SelectInputLabelBox with custom options width',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label="Hello World!"
+                  optionsWidth="240"
+                  onChange={action('Option Selected')}
+                  options={genericOptions} />
+              </div>
+            )
+          },
+          {
             title: 'Disabled SelectInputLabelBox',
             sectionFn: () => (
               <div>
