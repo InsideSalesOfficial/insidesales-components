@@ -1,7 +1,7 @@
 import { colors } from "../styles/colors";
 
 export const darkTheme = {
-  background: colors.darkBlue,
+  background: colors.darkBlueC,
   valueColor: colors.white90,
   labelColor: colors.white60,
   borderColor: colors.white40,
