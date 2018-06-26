@@ -390,13 +390,6 @@ class TextareaInput extends React.Component {
     });
   }
 
-  getValue(stateValue, overrideValue){
-    if (isString(overrideValue)){
-      return overrideValue;
-    }
-    return stateValue;
-  }
-
   setValue = (value) => {
     this.setState({ value });
   };
@@ -416,7 +409,7 @@ class TextareaInput extends React.Component {
           lineColor={lineColor}
           isFocused={this.state.focused}
           error={error || localError}
-          open={this.getValue(this.state.value,  this.props.overrideValue)}
+          open={this.state.value}
           disabled={disabled}
           collapsed={collapsed}>
           <Textarea
@@ -426,7 +419,7 @@ class TextareaInput extends React.Component {
             name={name}
             disabled={disabled}
             error={error || localError}
-            value={this.getValue(this.state.value)}
+            value={this.state.value}
             ref={(input) => { this.textareaInput = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}
             placeholder={placeholder}>
@@ -434,7 +427,7 @@ class TextareaInput extends React.Component {
           <TextLabel
             isFocused={this.state.focused}
             labelColor={labelColor}
-            open={this.getValue(this.state.value,  this.props.overrideValue)}
+            open={this.state.value}
             htmlFor={name}
             error={error || localError}
             placeholder={placeholder}>
