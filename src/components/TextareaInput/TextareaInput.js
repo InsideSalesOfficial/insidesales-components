@@ -447,8 +447,7 @@ TextareaInput.defaultProps = {
   charLimit: 0,
   error: '',
   placeholder: '',
-  theme: defaultTheme,
-  overrideValue: null
+  theme: defaultTheme
 };
 
 TextareaInput.propTypes = {
@@ -458,7 +457,6 @@ TextareaInput.propTypes = {
   error: PropTypes.string,
   disabled: PropTypes.bool,
   value: PropTypes.string,
-  overrideValue: PropTypes.string,
   onChange: PropTypes.func,
   collapsed: PropTypes.bool,
   charLimit: PropTypes.number,
