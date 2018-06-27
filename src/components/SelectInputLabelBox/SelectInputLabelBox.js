@@ -273,6 +273,7 @@ export default class SelectInputLabelBox extends React.Component {
             promotedOptions={promotedOptions}
             onOptionUpdate={this.onChange}
             options={options}
+            width={this.props.optionsWidth}
             hideDivider={_.isEmpty(this.props.options)}
             visible={this.state.optionsListVisible}
             multiSelect={this.props.multiSelect}
