@@ -273,7 +273,8 @@ class TextareaInput extends React.Component {
     super(props);
 
     this.state = {
-      focused: false
+      focused: false,
+      value: ''
     };
   }
 
@@ -444,7 +445,6 @@ class TextareaInput extends React.Component {
 TextareaInput.defaultProps = {
   name: 'Name',
   label: 'Label',
-  value: '',
   charLimit: 0,
   error: '',
   placeholder: '',
