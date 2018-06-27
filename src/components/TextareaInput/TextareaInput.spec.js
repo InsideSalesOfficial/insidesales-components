@@ -55,7 +55,7 @@ describe('TextareaInput', () => {
     const localError = CharLimitExceededError;
     const value = 'hello world';
     const charLimit = value.length - 1;
-    const wrapper = shallow(<TextareaInput name="test" charLimit={charLimit} value={value}/>);
+    const wrapper = mount(<TextareaInput name="test" charLimit={charLimit} value={value}/>);
 
     const errorText = wrapper.instance().renderErrorText();
 
@@ -87,7 +87,7 @@ describe('TextareaInput', () => {
   it('renderCharCounterText should return CharCounterText if charLimit greater than 0 and char limit not reached', () => {
     const charLimit = 100;
     const inputValue = 'hello world';
-    const wrapper = shallow(<TextareaInput name="test" value={inputValue} charLimit={charLimit}/>);
+    const wrapper = mount(<TextareaInput name="test" value={inputValue} charLimit={charLimit}/>);
 
     const charCounter = wrapper.instance().renderCharCounterText();
     const charCounterStr = determineCharCounterTextValue(charLimit, inputValue);
@@ -107,7 +107,7 @@ describe('TextareaInput', () => {
   it('renderCharCounterText should return CharCounterText if charLimit greater than 0 and char limit has been passed', () => {
     const charLimit = 10;
     const inputValue = 'hello world, there is some text';
-    const wrapper = shallow(<TextareaInput name="test" value={inputValue} charLimit={charLimit}/>);
+    const wrapper = mount(<TextareaInput name="test" value={inputValue} charLimit={charLimit}/>);
 
     const charCounter = wrapper.instance().renderCharCounterText();
     const charCounterStr = determineCharCounterTextValue(charLimit, inputValue);
