@@ -167,6 +167,18 @@ storiesOf('Form', module)
             )
           },
           {
+            title: 'SelectInputLabelBox with custom options width',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label="Hello World!"
+                  optionsWidth="240"
+                  onChange={action('Option Selected')}
+                  options={genericOptions} />
+              </div>
+            )
+          },
+          {
             title: 'Disabled SelectInputLabelBox',
             sectionFn: () => (
               <div>
@@ -243,6 +255,19 @@ storiesOf('Form', module)
                 <SelectInputLabelBox
                   theme={darkTheme}
                   value='Hi world'
+                  onChange={action('Option Selected')}
+                  options={genericOptions} />
+              </div>
+            )
+          },
+          {
+            title: 'SelectInputLabelBox with error',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label={'error'}
+                  value='NO!'
+                  error
                   onChange={action('Option Selected')}
                   options={genericOptions} />
               </div>
