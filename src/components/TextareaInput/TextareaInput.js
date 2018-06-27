@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, {ThemeProvider}  from 'styled-components';
 import PropTypes from 'prop-types';
-import { get, size, isString } from 'lodash';
+import { get, size } from 'lodash';
 
 import { colors, typography, darkScrollbar } from '../styles';
 import {defaultTheme} from './TextareaInputThemes'
@@ -444,6 +444,7 @@ class TextareaInput extends React.Component {
 TextareaInput.defaultProps = {
   name: 'Name',
   label: 'Label',
+  value: '',
   charLimit: 0,
   error: '',
   placeholder: '',
