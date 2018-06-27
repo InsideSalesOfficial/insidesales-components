@@ -130,6 +130,7 @@ class FilterBar extends React.Component {
       <FilterBarWrapper {...this.props}>
           <StyledSelectInput
           options={this.props.sortOptions}
+          promotedOptions={this.props.promotedSortOptions}
           onChange={this.props.onSortOptionChange}
           headerLabel={this.props.sortLabel}
           value={this.props.selectedSortOption}
@@ -155,6 +156,7 @@ FilterBar.defaultProps = {
   hideFilter: false,
   onSortOptionChange: _.noop,
   sortOptions: [],
+  promotedSortOptions: [],
   sortLabel: 'Sort By',
   selectedSortOption: {},
   onSearchChange: _.noop,
@@ -165,6 +167,7 @@ FilterBar.propTypes = {
   onClickFilter: PropTypes.func.isRequired,
   onSortOptionChange: PropTypes.func.isRequired,
   sortOptions: PropTypes.array.isRequired,
+  promotedSortOptions: PropTypes.array,
   sortLabel: PropTypes.string.isRequired,
   selectedSortOption: PropTypes.any,
   onSearchChange: PropTypes.func.isRequired,

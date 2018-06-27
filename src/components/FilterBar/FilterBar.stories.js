@@ -14,6 +14,11 @@ const genericOptions = [
   { value: '6', label: 'Account Name' }
 ];
 
+const promotedOptions = [
+  { value: '7', label: 'Custom Sort 1' },
+  { value: '8', label: 'Custom Sort 2' }
+]
+
 const darkExample = {
   height: '200px',
   width: '440px',
@@ -34,6 +39,7 @@ class FilterBarWrapper extends React.PureComponent {
     return(
     <FilterBar
       sortOptions={genericOptions}
+      promotedSortOptions={promotedOptions}
       selectedSortOption={this.state.sortValue}
       sortLabel={'Sort By'}
       onSortOptionChange={(value) => {

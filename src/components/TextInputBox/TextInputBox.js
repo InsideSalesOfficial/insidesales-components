@@ -39,7 +39,7 @@ const TextBox = styled.div`
     width: 100%;
     padding-left: 16px;
     padding-right: 16px;
-    padding-bottom: ${props => props.label ? '10px' : '18px'};
+    padding-bottom: ${props => props.label ? '9px' : '17px'};
 
     ${(props) => {
         if (props.disabled) {
