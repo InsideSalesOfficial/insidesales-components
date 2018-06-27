@@ -116,7 +116,7 @@ class TextareaBox extends TextInput {
       this.setState({
         filledHeight: _.get(this.measuringDivEl, 'clientHeight', 0),
       })
-      this.handleValueChange()
+      this.handleValueChange(this.state.value)
     });
   }
 
