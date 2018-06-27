@@ -273,7 +273,8 @@ class TextareaInput extends React.Component {
     super(props);
 
     this.state = {
-      focused: false
+      focused: false,
+      value: ''
     };
   }
 
@@ -389,6 +390,10 @@ class TextareaInput extends React.Component {
       }
     });
   }
+
+  setValue = (value) => {
+    this.setState({ value });
+  };
 
   render() {
     const { className, label, name, error, disabled, collapsed, labelColor, lineColor, placeholder } = this.props;
