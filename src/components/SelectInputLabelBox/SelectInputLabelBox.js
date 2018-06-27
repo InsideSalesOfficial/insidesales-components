@@ -30,7 +30,7 @@ export const Label = styled.div`
   }};
   top: 50%;
 
-  ${props => props.value && `
+  ${props => (props.value && !_.isEmpty(props.value)) && `
     top: 30%;
     ${typography.caption}
   `}
