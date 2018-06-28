@@ -11,3 +11,5 @@ export const defaultTheme = {
   background: colors.grayA,
   borderColor: colors.black40
 }
+
+export default {darkTheme, defaultTheme};

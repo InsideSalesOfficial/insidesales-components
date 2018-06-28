@@ -2,11 +2,11 @@ import React from 'react';
 import _ from 'lodash';
 import { storiesOf, action } from '@storybook/react';
 import SelectInputLabelBox from './SelectInputLabelBox';
-import { lineSelectInputBoxTransparentTheme, darkTheme } from './SelectInputLabelBoxThemes';
 import styled from 'styled-components';
 
 import { typography } from '../styles/typography';
 import { colors } from '../styles/colors';
+import { SelectInputLabelBoxThemes } from '../index';
 
 const OptionWrapper = styled.div`
   display: flex;
@@ -235,7 +235,7 @@ storiesOf('Form', module)
                 <SelectInputLabelBox
                   options={htmlOptions}
                   promotedOptions={optionsToPromote}
-                  theme={lineSelectInputBoxTransparentTheme} />
+                  theme={SelectInputLabelBoxThemes.lineSelectInputBoxTransparentTheme} />
               </div>
             )
           },
@@ -244,7 +244,7 @@ storiesOf('Form', module)
             sectionFn: () => (
               <div>
                 <SelectInputLabelBox
-                  theme={darkTheme}
+                  theme={SelectInputLabelBoxThemes.darkTheme}
                   onChange={action('Option Selected')}
                   options={genericOptions} />
               </div>
@@ -329,7 +329,7 @@ storiesOf('Form', module)
             sectionFn: () => (
               <div>
                 <SelectInputLabelBox
-                  theme={darkTheme}
+                  theme={SelectInputLabelBoxThemes.darkTheme}
                   value='Hi world'
                   onChange={action('Option Selected')}
                   options={genericOptions} />
