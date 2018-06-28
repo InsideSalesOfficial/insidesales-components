@@ -40,6 +40,23 @@ class WrapperComponent extends React.Component {
     />) 
 }
 
+class MultiselectWrapperComponent extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      value: []
+    }
+  }
+  render = () => (
+    <SelectInputLabelBox
+      {...this.props}
+      value={this.state.value}
+      onChange={(value) => {
+        this.setState({value})}}
+      multiSelect
+    />) 
+}
+
 class WrapperEmailThreadComponent extends React.Component {
   constructor() {
     super()
@@ -128,7 +145,7 @@ const htmlOptions = [
 const selectedOptions = [
   '1',
   '2',
-]
+];
 
 storiesOf('Form', module)
   .addWithChapters(
@@ -162,6 +179,16 @@ storiesOf('Form', module)
               <div>
                 <WrapperComponent
                   label="Hello World!"
+                  options={genericOptions} />
+              </div>
+            )
+          },
+          {
+            title: 'SelectInputLabelBox with Stateful wrapper and multiselect',
+            sectionFn: () => (
+              <div>
+                <MultiselectWrapperComponent
+                  label="multiselect"
                   options={genericOptions} />
               </div>
             )
@@ -236,7 +263,7 @@ storiesOf('Form', module)
             )
           },
           {
-            title: 'SelectInputLabelBoxTransparent with multiselect',
+            title: 'SelectInputLabelBox with multiselect',
             sectionFn: () => (
               <div>
                 <SelectInputLabelBox

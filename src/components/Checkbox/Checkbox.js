@@ -52,7 +52,7 @@ const Text = styled.label`
 
 export const Checkbox = ({ label, defaultChecked, checked, disabled, name, onChange, className, onWhiteBg }) => (
     <div className={className}>
-      <CheckboxEl id={name} name={name} type="checkbox" defaultChecked={defaultChecked} checked={checked} disabled={disabled} onClick={ onChange } />
+      <CheckboxEl onChange={e => e.stopPropagation()} id={name} name={name} type="checkbox" defaultChecked={defaultChecked} checked={checked} disabled={disabled} onClick={ onChange } />
       {label && (
         <Text htmlFor={name} onWhite={onWhiteBg}>{label}</Text>
       )}
