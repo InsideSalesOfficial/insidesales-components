@@ -1,2 +1,2 @@
 export { default } from './TextareaInput';
-export { darkTheme } from './TextareaInputThemes';
+export { default as TextareaInputThemes } from './TextareaInputThemes';

@@ -15,3 +15,5 @@ export const darkTheme = {
   labelColor: white.white60,
   borderColor: white.white40,
 }
+
+export default {lineSelectInputBoxTransparentTheme, darkTheme};

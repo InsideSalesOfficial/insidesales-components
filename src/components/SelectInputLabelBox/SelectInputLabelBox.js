@@ -3,6 +3,8 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import _ from 'lodash';
 
+import { isValued } from './utils';
+
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsListOnSearch } from '../SelectInput';
 import SelectOptions from '../SelectInput/SelectOptions';
 import { colors } from '../styles/colors';
@@ -30,7 +32,7 @@ export const Label = styled.div`
   }};
   top: 50%;
 
-  ${props => props.value && `
+  ${props => isValued(props.value) && `
     top: 30%;
     ${typography.caption}
   `}
