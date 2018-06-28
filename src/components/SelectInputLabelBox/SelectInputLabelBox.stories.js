@@ -147,14 +147,6 @@ const selectedOptions = [
   '2',
 ];
 
-function changeValue(newOptions) {
-  mutableSelectedOptions = newOptions;
-};
-
-var mutableSelectedOptions = [];
-
-
-
 storiesOf('Form', module)
   .addWithChapters(
   'SelectInputLabelBox',
