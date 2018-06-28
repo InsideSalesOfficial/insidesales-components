@@ -249,6 +249,55 @@ storiesOf('Form', module)
             )
           },
           {
+            title: 'SelectInputLabel with multiselect and no selected values',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label="Hello World!"
+                  onChange={action('Option Selected')}
+                  value={[]}
+                  options={genericOptions} 
+                  multiSelect />
+              </div>
+            )
+          },
+          {
+            title: 'SelectInputLabel with boolean value',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label="Hello World!"
+                  onChange={action('Option Selected')}
+                  value={true}
+                  options={[{ value: true, label: 'true' }, { value: false, label: 'false' }]} />
+              </div>
+            )
+          },
+          {
+            title: 'SelectInputLabel with boolean value',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label="Hello World!"
+                  onChange={action('Option Selected')}
+                  value={false}
+                  options={[{ value: true, label: 'true' }, { value: false, label: 'false' }]} />
+              </div>
+            )
+          },
+          {
+            title: 'SelectInputLabel with no selected values',
+            sectionFn: () => (
+              <div>
+                <SelectInputLabelBox
+                  label="Hello World!"
+                  onChange={action('Option Selected')}
+                  value={''}
+                  options={genericOptions} />
+              </div>
+            )
+          },
+          {
             title: 'SelectInputLabelBox with darkTheme with value',
             sectionFn: () => (
               <div>
