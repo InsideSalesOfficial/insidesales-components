@@ -1,8 +1,3 @@
-export {
-  default
-} from './SelectInputLabelBox';
+export {default} from './SelectInputLabelBox';
 
-export {
-  darkTheme,
-  lineSelectInputBoxTransparentTheme
-} from './SelectInputLabelBoxThemes';
+export {default as SelectInputLabelBoxThemes} from './SelectInputLabelBoxThemes';

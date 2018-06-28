@@ -15,4 +15,6 @@ export const defaultTheme = {
   borderColor: colors.black40,
   helperColor: colors.black40
 }
+
+export default {darkTheme, defaultTheme};
  	 

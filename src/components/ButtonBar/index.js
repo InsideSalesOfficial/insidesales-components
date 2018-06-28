@@ -1,3 +1,3 @@
 export { default } from './ButtonBar';
 
-export { darkBarTheme } from './ButtonBarThemes';
+export { default as ButtonBarThemes} from './ButtonBarThemes';

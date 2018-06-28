@@ -1,11 +1,11 @@
 export {default as AccordionList} from './AccordionList';
 export {default as ActionButton} from './ActionButton';
 export {default as ActionOverflowButtons} from './ActionOverflowButtons';
+export {default as Button} from './Button';
 export {
-  default as Button,
-  darkBarTheme as ButtonBarDarkTheme
-} from './Button';
-export {default as ButtonBar} from './ButtonBar';
+  default as ButtonBar,
+  ButtonBarThemes
+} from './ButtonBar';
 export {default as Checkbox} from './Checkbox';
 export {default as DropdownButton} from './DropdownButton';
 export {default as EditableSelectInput} from './EditableSelectInput';
@@ -22,13 +22,13 @@ export {default as StepChain} from './StepChain';
 export {default as Thumbnail} from './Thumbnail';
 export {
   default as TextareaInput,
-  darkTheme as TextareaInputDarkTheme
+  TextareaInputThemes
 } from './TextareaInput';
 export {default as TextInput} from './TextInput';
 export {default as SearchBox} from './SearchBox';
 export {
   default as TextInputBox,
-  darkTheme as TextInputBoxDarkTheme
+  TextInputBoxThemes
 } from './TextInputBox';
 export {default as ToggleSlider} from './ToggleSlider';
 export {default as FilterBar} from './FilterBar';
@@ -37,8 +37,7 @@ export {default as RadioList} from './RadioList';
 export {default as Radio} from './RadioList/Radio';
 export {
   default as SelectInputLabelBox,
-  darkTheme as SelectInputLabelBoxDarkTheme,
-  lineSelectInputBoxTransparentTheme as SelectInputLabelBoxLineSelectInputBoxTransparentTheme
+  SelectInputLabelBoxThemes
 } from './SelectInputLabelBox';
 export {default as TextareaBox} from './TextareaBox';
 export { colors, boxShadows, scrollbars, typography } from './styles'
