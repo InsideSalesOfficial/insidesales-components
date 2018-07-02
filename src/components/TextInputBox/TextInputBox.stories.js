@@ -111,6 +111,27 @@ storiesOf('Form', module)
                 />
               )
             },
+            {
+              title: 'Example: boolean value, true',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value={true}
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: boolean value, false',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value={false}
+                  onChange={action('value')}
+                  stateless
+                />
+              )
+            },
           ]
         }
       ]
