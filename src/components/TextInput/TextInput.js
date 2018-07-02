@@ -250,7 +250,7 @@ class TextInput extends React.Component {
   renderHelperText = () => {
     const { error, helper, collapsed } = this.props;
 
-    if(!error && !helper) {
+    if((!error || _.isBoolean(error)) && !helper) {
       return null;
     }
 
@@ -450,7 +450,7 @@ TextInput.propTypes = {
   label: PropTypes.string.isRequired,
   inputType: PropTypes.string,
   helper: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.any,
   disabled: PropTypes.bool,
   value: PropTypes.string,
   onChange: PropTypes.func,

@@ -138,7 +138,7 @@ TextInput.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     inputType: PropTypes.string,
-    error: PropTypes.string,
+    error: PropTypes.any,
     disabled: PropTypes.bool,
     value: PropTypes.any,
     onChange: PropTypes.func,
