@@ -68,7 +68,7 @@ const Caret = styled.div`
   }
 `;
 
-export const Value = styled.button`
+export const Value = styled.div`
   border: 0;
   display: block;
   width: 100%;
@@ -165,6 +165,18 @@ export const Wrapper = styled.div`
   `}
 `;
 
+export const SelectToggle = styled.button`
+  display: block;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  cursor: pointer;
+  ${typography.subhead1}
+`;
+
 export default class SelectInputLabelBox extends React.Component {
 
   constructor() {
@@ -259,23 +271,24 @@ export default class SelectInputLabelBox extends React.Component {
           {...this.props}
           ref={(el) => { this.clickEventElement = el }}
           >
-          <Caret open={this.state.optionsListVisible} />
-          <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
-          <Value
-            onClick={this.toggleOptionsList}
-            open={this.state.optionsListVisible}
-            isDisabled={this.props.isDisabled}
-            title={optionLabel}
-            isPlaceHolder={this.props.isPlaceHolder}
-            className="select-input-label-box-value"
-            error={this.props.error}
-          >{optionLabel}</Value>
+          <SelectToggle onClick={this.toggleOptionsList}>
+            <Caret open={this.state.optionsListVisible} />
+            <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
+            <Value
+              open={this.state.optionsListVisible}
+              isDisabled={this.props.isDisabled}
+              title={optionLabel}
+              isPlaceHolder={this.props.isPlaceHolder}
+              className="select-input-label-box-value"
+              error={this.props.error}
+            >{optionLabel}</Value>
+          </SelectToggle>
           <SelectOptions
             selectedOptions={this.props.value}
             promotedOptions={promotedOptions}
             onOptionUpdate={this.onChange}
             options={options}
-            width={this.props.optionsWidth}
+            width={this.props.optionsWidth}	
             hideDivider={_.isEmpty(this.props.options)}
             visible={this.state.optionsListVisible}
             multiSelect={this.props.multiSelect}
