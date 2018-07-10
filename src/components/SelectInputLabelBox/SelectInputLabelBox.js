@@ -90,7 +90,7 @@ export const Value = styled.div`
     return colors.black90;
   }};
   height: 56px;
-  padding: 22px ${padding} 0 ${(props) => {
+  padding: 22px 26px 0 ${(props) => {
     if (props.theme.leftDisplayPosition) {
       return props.theme.leftDisplayPosition;
     }
