@@ -143,9 +143,9 @@ ${typography.subhead1}
 
 ${(props) => {
     if (isEqual(props.theme,defaultTheme))
-      return darkScrollbar
+      return darkScrollbar;
     else
-      return lightScrollbar
+      return lightScrollbar;
   }};
 
   &::-webkit-input-placeholder {
