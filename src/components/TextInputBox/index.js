@@ -1,3 +1,3 @@
 export { default } from './TextInputBox';
 
-export { darkTheme } from './TextInputBoxThemes';
+export { default as TextInputBoxThemes } from './TextInputBoxThemes';

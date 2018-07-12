@@ -4,9 +4,11 @@ import styled, { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import { colors } from '../styles';
 import TextInput, { TextInputWrapper, InputItem, TextLabel } from '../TextInput/TextInput';
+import { defaultTheme } from './TextInputBoxThemes';
+import { hasValue } from './utils';
 
 const TextBox = styled.div`
-    background-color: ${props => props.theme.background || colors.grayA};
+    background-color: ${props => props.theme.background};
     border-bottom: thin solid ${colors.black40};
     border-radius: 2px;
     border-width: 2px; 
@@ -19,10 +21,9 @@ const TextBox = styled.div`
         return colors.black20;
     } else if (props.lineColor) {
         return props.lineColor;
-    } else if (props.theme.borderColor) {
+    } else {
         return props.theme.borderColor;
     }
-    return colors.black40;
     }};
 
     box-sizing: border-box;
@@ -39,7 +40,7 @@ const TextBox = styled.div`
     width: 100%;
     padding-left: 16px;
     padding-right: 16px;
-    padding-bottom: ${props => props.label ? '10px' : '18px'};
+    padding-bottom: ${props => props.label ? '9px' : '17px'};
 
     ${(props) => {
         if (props.disabled) {
@@ -72,13 +73,11 @@ const InputBoxItem = styled(InputItem)`
         -webkit-appearance: none; 
         margin: 0; 
     }
-    ${
-        (props) => {
-            if(props.theme){
-                return ('color: ' + props.theme.valueColor) ;
-            }
+    ${(props) => {
+        if(props.theme.valueColor){
+            return ('color: ' + props.theme.valueColor) ;
         }
-    }
+    }}
 `;
 
 export default class TextInputBox extends TextInput {
@@ -96,7 +95,7 @@ export default class TextInputBox extends TextInput {
                     onClick={this.focusOnTextInput}
                     isFocused={this.state.focused}
                     error={error}
-                    open={this.state.value}
+                    open={this.getValue()}
                     disabled={disabled}
                     lineColor={lineColor}
                     collapsed={collapsed}
@@ -109,14 +108,14 @@ export default class TextInputBox extends TextInput {
                     name={name}
                     disabled={disabled}
                     error={error}
-                    value={this.state.value}
+                    value={this.getValue()}
                     ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
                     onChange={this.onChange} />
                 { this.props.label &&
                     <TextBoxLabel 
                         isFocused={this.state.focused} 
                         labelColor={this.props.theme.labelColor || labelColor} 
-                        open={this.state.value} 
+                        open={hasValue(this.getValue())} 
                         htmlFor={name} 
                         error={error}>{label}
                     </TextBoxLabel>
@@ -132,16 +131,16 @@ export default class TextInputBox extends TextInput {
 TextInput.defaultProps = {
     name: 'Name',
     label: '',
-    theme: {}
+    theme: defaultTheme
 };
 
 TextInput.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     inputType: PropTypes.string,
-    error: PropTypes.string,
+    error: PropTypes.any,
     disabled: PropTypes.bool,
-    value: PropTypes.string,
+    value: PropTypes.any,
     onChange: PropTypes.func,
     collapsed: PropTypes.bool,
 };

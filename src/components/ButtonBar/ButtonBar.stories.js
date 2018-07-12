@@ -3,6 +3,9 @@ import { storiesOf } from '@storybook/react';
 
 import ButtonBar from './';
 
+import { ButtonBarThemes } from '../index';
+import { darkBlue } from "../styles/colors";
+
 
 storiesOf('Components', module)
 .addWithChapters(
@@ -25,6 +28,22 @@ storiesOf('Components', module)
               <ButtonBar primaryActionText='Continue'
               secondaryActionText='Skip'
               onSecondaryActionClick={() => {}}/>
+            )
+          },
+          {
+            title: 'DarkBarTheme',
+            sectionFn: () => (
+              <div style={{
+                background: darkBlue.darkBlue,
+                padding: '15px'
+              }}>
+                <ButtonBar
+                  primaryActionText='Continue'
+                  secondaryActionText='Skip'
+                  onSecondaryActionClick={() => {}}
+                  theme={ButtonBarThemes.darkBarTheme}
+                />
+              </div>
             )
           }
         ]

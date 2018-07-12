@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import { colors } from '../styles';
 
 const SliderBase = styled.label`
-    cursor: pointer;
-    display: inline-block;
-    height: 14px;
-    position: relative;
-    width: 37px;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  display: inline-block;
+  height: 14px;
+  position: relative;
+  width: 37px;
 `;
 
 const SliderInput = styled.input`
@@ -18,6 +18,9 @@ const SliderInput = styled.input`
 
 const SliderTrack = styled.div`
   background-color: ${(props) => {
+    if (props.disabled) {
+      return colors.grayD;
+    }
     if (props.checked) {
       return colors.green70;
     }
@@ -34,6 +37,9 @@ const SliderTrack = styled.div`
 
   &:before {
     background-color: ${(props) => {
+      if (props.disabled) {
+        return colors.grayC;
+      }
       if (props.checked) {
         return colors.green;
       }
@@ -48,7 +54,7 @@ const SliderTrack = styled.div`
     position: absolute;
     top: -3px;
     transform: ${(props) => {
-      if (props.checked) {
+      if (props.checked && !props.disabled) {
         return 'translateX(17px)';
       }
 
@@ -62,12 +68,13 @@ const SliderTrack = styled.div`
 class ToggleSlider extends React.PureComponent {
   render() {
     return (
-      <SliderBase>
+      <SliderBase disabled={this.props.disabled}>
         <SliderInput
           type="checkbox"
+          disabled={this.props.disabled}
           onChange={this.props.toggle}
           checked={this.props.checked} />
-        <SliderTrack checked={this.props.checked} />
+        <SliderTrack checked={this.props.checked} disabled={this.props.disabled} />
       </SliderBase>
     );
   }
@@ -77,11 +84,13 @@ ToggleSlider.defaultProps = {
   /** Function to execute when toggle is clicked */
   toggle: () => {},
   /** Boolean of whether the toggle is on */
-  checked: false
+  checked: false,
+  disabled: false
 };
 
 ToggleSlider.propTypes = {
   checked: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired
 };
 

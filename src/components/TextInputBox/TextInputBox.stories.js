@@ -5,7 +5,9 @@ import {
 } from '@storybook/react';
 
 import TextInputBox from './TextInputBox';
-import { darkTheme } from './TextInputBoxThemes';
+import TextInputBoxThemes, { darkTheme } from './TextInputBoxThemes';
+
+import { colors } from "../styles/colors";
 
 
 storiesOf('Form', module)
@@ -87,6 +89,78 @@ storiesOf('Form', module)
                   onChange={action('value')}
                   theme={darkTheme}
                 />
+              )
+            },
+            {
+              title: 'Example: Stateless',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value="I am stateless"
+                  onChange={action('value')}
+                  stateless
+                />
+              )
+            },
+            {
+              title: 'Example: Stateless no value',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value=""
+                  onChange={action('value')}
+                  stateless
+                />
+              )
+            },
+            {
+              title: 'Example: boolean value, true',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value={true}
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: boolean value, false',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value={false}
+                  onChange={action('value')}
+                  stateless
+                />
+              )
+            },
+            {
+              title: 'Example: helper',
+              sectionFn: () => (
+                <TextInputBox
+                  label="This is a test"
+                  value={false}
+                  onChange={action('value')}
+                  stateless
+                  helper="Help me Obi-Wan Kenobi"
+                />
+              )
+            },
+            {
+              title: 'Example: dark theme with error',
+              sectionFn: () => (
+                <div style={{
+                  background: colors.black40,
+                  padding: '15px',
+                }}>
+                  <TextInputBox
+                    label="This is a test"
+                    theme={TextInputBoxThemes.darkTheme}
+                    value="error"
+                    onChange={action('value')}
+                    error
+                  />
+                </div>
               )
             },
           ]

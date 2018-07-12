@@ -42,7 +42,8 @@ const OptionsContainer = styled.div`
   position: absolute;
   top: ${props => props.openUp ? 'initial' : '31px'};
   bottom: ${props => props.openUp ? '31px' : 'initial'};
-  right: ${props => props.openRight ? '-89px' : '-6px'};
+  right: ${props => props.openRight ? 'auto' : '-6px'};
+  left: ${props => props.openRight ? '-6px' : 'auto'};
 
   min-width: 120px;
   background-color: transparent;
@@ -52,7 +53,8 @@ const OptionsContainer = styled.div`
   &:before {
     position: absolute;
     content: '';
-    right: ${props => props.openRight ? '94px' : '10px'};
+    right: ${props => props.openRight ? 'auto' : '10px'};
+    left: ${props => props.openRight ? '10px' : 'auto'};
     top: ${props => props.openUp ? 'auto' : '-5px'};
     bottom: ${props => props.openUp ? '-5px' : 'auto'};
     width: 14px;
@@ -65,7 +67,8 @@ const OptionsContainer = styled.div`
   &:after {
     position: absolute;
     content: '';
-    right: ${props => props.openRight ? '94px' : '10px'};
+    right: ${props => props.openRight ? 'auto' : '10px'};
+    left: ${props => props.openRight ? '10px' : 'auto'};
     top: ${props => props.openUp ? 'auto' : '-16px'};
     bottom: ${props => props.openUp ? '-16px' : 'auto'};
     width: 0;

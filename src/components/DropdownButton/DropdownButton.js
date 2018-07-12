@@ -87,7 +87,6 @@ const ButtonBase = styled.button`
   }};
 
   height: 36px;
-  line-height: 24px;
   outline: 0;
 
   width: auto;
@@ -108,7 +107,7 @@ const CenteredSpan = styled.span`
   text-transform: uppercase;
 
   font-family: 'isdc-roboto', 'Roboto', sans-serif;
-  ${typography.body2}
+  ${typography.subhead1}
 
   filter: none;
 
@@ -120,7 +119,7 @@ const LeftIconSpan = styled.span`
   display: inline;
   position: relative;
   top: 3px;
-  padding 0 10px 0 0;
+  padding: 0 10px 0 0;
 `;
 
 const CaretButton = styled(ButtonBase)`
