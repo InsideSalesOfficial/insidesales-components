@@ -2,6 +2,7 @@ import React from 'react';
 
 const ColoredMicrosoftIcon = props => (
   <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 50 50">
+    {props.title && <title>{props.title}</title>}
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g>
         <path d="M0,0 L23.7179487,0 C23.7165242,7.92857143 23.7179487,15.8571429 23.7165242,23.7857143 L0,23.7857143 L0,0 Z" id="Fill-1" fill="#F25022"></path>

@@ -2,6 +2,7 @@ import React from 'react';
 
 const ConferenceCallIcon = props => (
   <svg {...props.size || { width: '24px', height: '24px' }} {...props} viewBox="0 0 100 100">
+    {props.title && <title>{props.title}</title>}
     <path d="M60.3,36.5c0-5.7-4.6-10.3-10.3-10.3s-10.3,4.6-10.3,10.3S44.3,46.8,50,46.8S60.3,42.2,60.3,36.5z M50,43.8
       c-4,0-7.3-3.3-7.3-7.3s3.3-7.3,7.3-7.3s7.3,3.3,7.3,7.3S54,43.8,50,43.8z"/>
     <path d="M34.1,38.5c0-3.6-2.9-6.4-6.4-6.4s-6.4,2.9-6.4,6.4c0,3.6,2.9,6.4,6.4,6.4S34.1,42.1,34.1,38.5z M27.7,43.1
