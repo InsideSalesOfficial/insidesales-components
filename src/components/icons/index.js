@@ -88,6 +88,7 @@ import SearchMaterialIcon from './SearchMaterialIcon';
 import SkipIcon from './SkipIcon';
 import TaskIcons from './TaskIcons';
 import TemplateIcon from './TemplateIcon';
+import TodayIcon from './TodayIcon';
 import TrashIcon from './TrashIcon';
 import ImportIcon from './ImportIcon';
 import InfoOutlineIcon from './InfoOutlineIcon';
@@ -194,6 +195,7 @@ export default {
   TaskIcons,
   TeamsIcon,
   TemplateIcon,
+  TodayIcon,
   TrashIcon,
   UpdateFilledIcon,
   VerifyShieldIcon,
