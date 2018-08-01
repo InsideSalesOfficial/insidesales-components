@@ -46,9 +46,9 @@ export function toggleOptionsListOnSearch(e) {
     const clickedInsideSearch = () => {
       const clickedElement = e.target.getAttribute('name');
       return clickedElement === 'selectSearch';
-    }
+    };
     if (clickedInsideSearch()) {
-      return
+      return;
     }
     this.closeOptionsList();
   } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
@@ -91,8 +91,8 @@ class SelectInput extends React.Component {
   checkDocumentEvent = checkDocumentEvent.bind(this)
 
   onChange = (newValue) => {
-    if(this.props.multiSelect) {
-      if(_.includes(this.props.value, newValue)) {
+    if (this.props.multiSelect) {
+      if (_.includes(this.props.value, newValue)) {
         this.props.onChange(_.without(this.props.value, newValue));
       } else {
         this.props.onChange(_.concat(this.props.value, [newValue]));
@@ -103,7 +103,7 @@ class SelectInput extends React.Component {
     }
   }
 
-  toggleOptionsList = (e) => {toggleOptionsListOnSearch.bind(this)(e)}
+  toggleOptionsList = (e) => { toggleOptionsListOnSearch.bind(this)(e); }
 
   openOptionsList = openOptionsList.bind(this);
 
@@ -162,7 +162,10 @@ class SelectInput extends React.Component {
     });
   }
 
-  filterOptionsWithSearch = (options) => _.filter(options, (option) => {
+  filterOptionsWithSearch = options => _.filter(options, (option) => {
+    if (!_.isString(option.label)) {
+      return true;
+    }
     return option.label.toLowerCase().search(this.state.searchFilter.toLowerCase()) !== -1;
   });
 
@@ -181,7 +184,7 @@ class SelectInput extends React.Component {
        */
       <ThemeProvider theme={this.props.theme}>
         <SelectWrapper
-          ref={(el) => { this.clickEventElement = el }}
+          ref={(el) => { this.clickEventElement = el; }}
           style={this.props.containerStyles || {}}
           className={this.props.className}
           id="select-input__wrapper"
@@ -190,7 +193,7 @@ class SelectInput extends React.Component {
             <SelectInputLabel>{this.props.label}</SelectInputLabel>
           }
           <div
-            style={{width: '100%'}}
+            style={{ width: '100%' }}
             className='pb-test__selectInputDisplay'
             onClick={(e) => { if (!isDisabled) { this.toggleOptionsList(e); } }}>
             <SelectInputDisplay

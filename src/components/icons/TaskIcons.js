@@ -11,24 +11,24 @@ const TaskIcons = (props) => {
     case 'call':
     case 'phone':
     case 'phone-filled':
-      return (<PhoneFilledIcon {...props}/>);
+      return (<PhoneFilledIcon {...props} />);
     case 'email':
       if (props.autoEmail) {
         props.size = { width: '24px', height: '24px' };
-        return (<AutoEmailIcon {...props}/>);
+        return (<AutoEmailIcon {...props} />);
       }
-      return (<EmailFilledIcon {...props}/>);
+      return (<EmailFilledIcon {...props} />);
     case 'auto-email':
     case 'auto-email-filled':
-      return (<AutoEmailIcon {...props}/>);
+      return (<AutoEmailIcon {...props} />);
     case 'email-filled':
-      return (<EmailFilledIcon {...props}/>);
+      return (<EmailFilledIcon {...props} />);
     case 'callback-filled':
-      return (<CallbackIcon {...props}/>);
+      return (<CallbackIcon {...props} />);
     case 'other':
-      return (<OtherFilledIcon {...props}/>);
+      return (<OtherFilledIcon {...props} />);
     case 'other-filled':
-      return (<OtherFilledIcon {...props}/>);
+      return (<OtherFilledIcon {...props} />);
     default:
       return null;
   }

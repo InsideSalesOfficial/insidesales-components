@@ -114,7 +114,13 @@ const SelectOption = styled.div`
     if (props.visible) return 1;
     return 0;
   }};
-  padding: 0 ${props => props.lowPadding ? '4px' : '24px'};
+
+  padding: 0
+  ${(props) => {
+    if (props.noPadding) return '0';
+    else if (props.lowPadding) return '4px';
+    return '24px';
+  }};
 
   color:
   ${(props) => {
@@ -174,15 +180,15 @@ class SelectOptions extends React.Component {
     };
   }
 
-  optionElement = (keyID, value, optionDisplayItem, disabled) => {
+  optionElement = (keyID, option) => {
     const { onOptionUpdate, options, promotedOptions, multiSelect, selectedOptions } = this.props;
-    const clonedOptionItem = typeof (optionDisplayItem) === 'string' ? <OverflowWrapper>{optionDisplayItem}</OverflowWrapper> : optionDisplayItem;
+    const clonedOptionItem = typeof (option.label) === 'string' ? <OverflowWrapper>{option.label}</OverflowWrapper> : option.label;
     const optionsLength = _.get(options, 'length', 0) + _.get(promotedOptions, 'length', 0);
     const delay = {
       transition: `opacity 0.3s ease-in-out ${((keyID + 1) / (optionsLength + 1)) * 0.284}s, background 0.2s ease-in-out`
     };
 
-    const optionSelected = multiSelect && _.includes(selectedOptions, value);
+    const optionSelected = multiSelect && _.includes(selectedOptions, option.value);
 
     return (
       <SelectOption
@@ -190,19 +196,20 @@ class SelectOptions extends React.Component {
         key={keyID}
         visible={this.props.visible}
         style={delay}
-        disabled={disabled}
+        disabled={option.disabled}
+        noPadding={option.noPadding}
         lowPadding={this.props.lowPadding}
         onClick={() => {
-          if (!disabled) {
-            onOptionUpdate(value);
+          if (!option.disabled) {
+            onOptionUpdate(option.value);
           }
         }}>
           {multiSelect &&
           <Checkbox
             checked={optionSelected}
             onClick={() => {
-              if (!disabled) {
-                onOptionUpdate(value);
+              if (!option.disabled) {
+                onOptionUpdate(option.value);
               }
             }}/>
           }
@@ -214,11 +221,11 @@ class SelectOptions extends React.Component {
   renderOptions = () => {
     const { options, promotedOptions } = this.props;
     if (_.isEmpty(options) && _.isEmpty(promotedOptions)) {
-      return this.optionElement(undefined, 'select', 'Select', true);
+      return this.optionElement(undefined, { value: 'select', label: 'Select', disabled: true });
     }
     const numberOfPomoted = _.get(promotedOptions, 'length', 0);
     return (
-      options.map((option, idx) => this.optionElement(idx + numberOfPomoted, option.value, option.label))
+      options.map((option, idx) => this.optionElement(idx + numberOfPomoted, option))
     );
   };
 
@@ -227,7 +234,7 @@ class SelectOptions extends React.Component {
     if (_.get(promotedOptions, 'length')) {
       return (
         <PromotedOptions listLength={_.size(promotedOptions)} hideDivider={hideDivider}>
-          { promotedOptions.map((option, idx) => this.optionElement(idx, option.value, option.label, option.disabled)) }
+          { promotedOptions.map((option, idx) => this.optionElement(idx, option)) }
         </PromotedOptions>
       );
     }
@@ -237,7 +244,7 @@ class SelectOptions extends React.Component {
     if (!this.props.searchable) return null;
 
     return (
-      <div style={{padding: '0 24px'}}  >
+      <div style={{ padding: '0 24px' }} >
         <TextInput
           label="Label"
           name="selectSearch"
@@ -304,7 +311,7 @@ SelectOptions.defaultProps = {
   optionsCount: 0,
   visible: false,
   multiSelect: false,
-  maxHeight: "200px",
+  maxHeight: '200px',
   bottomActionArea: null,
   optionsRef: _.noop,
 };
