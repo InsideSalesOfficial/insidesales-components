@@ -30,7 +30,10 @@ export function openOptionsList() {
 
 export function closeOptionsList() {
   document.removeEventListener('click', this.checkDocumentEvent);
-  this.setState({ optionsListVisible: false });
+  this.setState({
+    optionsListVisible: false,
+    searchFilter: ''
+  });
 }
 
 export function toggleOptionsList() {
