@@ -115,11 +115,11 @@ const SelectOption = styled.div`
     return 0;
   }};
 
-  padding: 0
-  ${(props) => {
+  padding: ${(props) => {
     if (props.noPadding) return '0';
-    else if (props.lowPadding) return '4px';
-    return '24px';
+    if (props.lowPadding) return '0 4px';
+    if (props.theme.optionPadding) return props.theme.optionPadding;
+    return '0 24px';
   }};
 
   color:
