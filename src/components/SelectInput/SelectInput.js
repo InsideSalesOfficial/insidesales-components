@@ -25,7 +25,9 @@ export function checkDocumentEvent(event) {
 
 export function openOptionsList() {
   document.addEventListener('click', this.checkDocumentEvent);
-  this.setState({ optionsListVisible: true });
+  this.setState({
+    optionsListVisible: true
+   });
 }
 
 export function closeOptionsList() {
@@ -67,7 +69,13 @@ class SelectInput extends React.Component {
     selectArrowFollows: PropTypes.bool,
     theme: PropTypes.object,
     isDisabledOneOption: PropTypes.bool,
-    multiSelect: PropTypes.bool
+    multiSelect: PropTypes.bool,
+    closeAfterClick: PropTypes.bool,
+    primaryActionText: PropTypes.string,
+    secondaryActionText: PropTypes.string,
+    onPrimaryActionClick: PropTypes.func,
+    onSecondaryActionClick: PropTypes.func,
+    showButtonBar: PropTypes.bool
   };
 
   static defaultProps = {
@@ -77,12 +85,16 @@ class SelectInput extends React.Component {
     onChange: value => value,
     theme: lightSelectInputTheme,
     isDisabledOneOption: false, // Prop to disable the dropdown if only one option is present
-    multiSelect: false
+    multiSelect: false,
+    primaryActionText: '',
+    secondaryActionText: '',
+    onPrimaryActionClick: () => {},
+    onSecondaryActionClick: () => {},
+    showButtonBar: false
   }
 
   constructor() {
     super();
-
     this.state = {
       optionsListVisible: false,
       valid: false,
@@ -126,7 +138,7 @@ class SelectInput extends React.Component {
   }
 
   determineLabel = () => {
-    const { defaultLabel, options, promotedOptions, value, multiSelect } = this.props;
+    const { defaultLabel, options, promotedOptions, value, multiSelect, permanentLabel } = this.props;
 
     let copiedOptions = _.map(options, _.clone);
 
@@ -142,7 +154,7 @@ class SelectInput extends React.Component {
     }
 
     // Determine what the input label should be
-    if (!_.isNil(value)) {
+    if (!_.isNil(value) && !permanentLabel) {
       const optionObject = _.find(copiedOptions, { value });
 
       if (multiSelect && _.size(value)) {
@@ -177,7 +189,6 @@ class SelectInput extends React.Component {
 
     const options = this.filterOptionsWithSearch(this.props.options);
     const promotedOptions = this.filterOptionsWithSearch(this.props.promotedOptions);
-
     return (
       /*
        * Adding className to the outtermost element allows for users of this component to create a
@@ -211,16 +222,25 @@ class SelectInput extends React.Component {
           </div>
           <SelectOptions
             className='pb-test__selectInputOptions'
+            image={this.props.image}
             selectedOptions={this.props.value}
             onOptionUpdate={this.onChange}
             promotedOptions={promotedOptions}
             options={options}
             optionsCount={this.countOptions()}
+            optionsTitle={this.props.optionsTitle}
             searchable={this.props.searchable}
             onSearch={this.filterOptions}
             width={this.props.selectOptionsWidth}
             visible={this.state.optionsListVisible}
             multiSelect={this.props.multiSelect}
+            closeOptionsList={this.closeOptionsList}
+            closeAfterClick={this.props.closeAfterClick}
+            primaryActionText={this.props.primaryActionText}
+            secondaryActionText={this.props.secondaryActionText}
+            onPrimaryActionClick={this.props.onPrimaryActionClick}
+            onSecondaryActionClick={this.props.onSecondaryActionClick}
+            showButtonBar={this.props.showButtonBar}
             bottomActionArea={this.props.bottomActionArea}/>
         </SelectWrapper>
       </ThemeProvider>
