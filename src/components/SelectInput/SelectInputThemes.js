@@ -85,6 +85,13 @@ export const darkSelectInputTheme = {
   selectArrowColor: colors.black80
 };
 
+export const transparentCenterTheme = {
+  background: 'transparent',
+  iconColor: colors.tronC,
+  textPaddingLeft: '29px',
+  alignSelf: 'center'
+}
+
 export const lineSelectInputTheme = {
   background: 'transparent',
   borderColor: colors.lightGray,
