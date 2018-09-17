@@ -100,6 +100,7 @@ import TagsIcon from './TagsIcon';
 import TeamsIcon from './TeamsIcon';
 import UpdateFilledIcon from './UpdateFIlledIcon';
 import VerifyShieldIcon from './VerifyShieldIcon';
+import VideoLibraryIcon from './VideoLibraryIcon';
 import VoicemailIcon from './VoicemailIcon';
 
 export default {
@@ -205,5 +206,6 @@ export default {
   TrashIcon,
   UpdateFilledIcon,
   VerifyShieldIcon,
+  VideoLibraryIcon,
   VoicemailIcon
 };
