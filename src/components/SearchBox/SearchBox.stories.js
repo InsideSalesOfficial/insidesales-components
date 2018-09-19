@@ -30,7 +30,6 @@ storiesOf('Form', module)
                     searchText={''}
                     enabled={true}
                     onSearch={action('onSearch')}
-                    clearSearch={action('clearSearch')}
                     iconSize={20}
                 />
               </div>
@@ -48,7 +47,6 @@ storiesOf('Form', module)
                     searchText={'Hello world'}
                     enabled={true}
                     onSearch={action('onSearch')}
-                    clearSearch={action('clearSearch')}
                     iconSize={20}
                 />
               </div>
@@ -67,7 +65,6 @@ storiesOf('Form', module)
                     enabled={true}
                     theme={SearchBoxThemes.lightTheme}
                     onSearch={action('onSearch')}
-                    clearSearch={action('clearSearch')}
                     iconSize={20}
                 />
               </div>

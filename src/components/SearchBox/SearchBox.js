@@ -2,6 +2,7 @@ import { colors } from '../styles';
 import Icons from '../icons';
 import styled, { ThemeProvider } from 'styled-components';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -54,21 +55,46 @@ const SearchClearContent = styled(Icons.CloseIcon)`
     cursor: pointer;
 `;
 
-const SearchBox = (props) => {
-    const size = { width: `${props.iconSize}px`, height: `${props.iconSize}px` };
+class SearchBox extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      focused: false,
+      optionsListVisible: false,
+      value: this.props.value || ''
+    };
+  }
+
+  onChange = (e) => {
+    _.invoke(e, 'preventDefault');
+    const value =  _.get(e, 'target.value', this.textInputEl.value)
+    this.setState({ value });
+    _.invoke(this, 'props.onChange', value);
+  }
+
+  clearSearch = () => {
+    this.setState({ value: '' })
+    _.invoke(this, 'props.onChange', '')
+  }
+
+  render() {
+    const size = { width: `${this.props.iconSize}px`, height: `${this.props.iconSize}px` };
     return (
-        <ThemeProvider theme={props.theme}>
+        <ThemeProvider theme={this.props.theme}>
             <SearchBarContainer>
                 <SearchIconWrapper size={size} />
-                {props.enabled &&
+                {this.props.enabled &&
                     <SearchBarText
-                        value={props.value}
-                        placeholder={props.placeholder} onChange={(e) => props.onChange(e.target.value)}/>}
-                {props.value.length > 0 &&
-                <SearchClearContent onClick={props.clearSearch} fill={colors.white90}/>}
+                        value={this.state.value}
+                        placeholder={this.props.placeholder} onChange={this.onChange}
+                        ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}/>}
+                {_.size(this.state.value) > 0 &&
+                <SearchClearContent onClick={this.clearSearch} fill={colors.white90}/>}
             </SearchBarContainer>
         </ThemeProvider>
     );
+  }
 }
 
 SearchBox.propTypes = {
@@ -76,7 +102,6 @@ SearchBox.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  clearSearch: PropTypes.func,
   iconSize: PropTypes.number
 };
 
@@ -86,7 +111,6 @@ SearchBox.defaultProps = {
   theme: {},
   enabled: true,
   onChange: () => {},
-  clearSearch: () => {},
   iconSize: 20
 };
 
