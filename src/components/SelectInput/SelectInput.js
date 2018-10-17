@@ -178,6 +178,7 @@ class SelectInput extends React.Component {
   }
 
   filterOptionsWithSearch = options => _.filter(options, (option) => {
+    if (_.isUndefined(option)) return false;
     if (!_.isString(option.label)) {
       return true;
     }
