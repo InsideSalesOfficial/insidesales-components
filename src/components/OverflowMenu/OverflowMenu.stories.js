@@ -113,6 +113,17 @@ storiesOf('Menus', module)
 
                 return <DarkBackground><OverflowMenu options={options} stayOpen={true} /></DarkBackground>
               }
+            },
+            {
+              title: 'Example: second menu option disabled',
+              sectionFn: () => {
+                const options = [
+                  { action: action('click option'), label: 'Option 1' },
+                  { action: action('click option'), label: 'Option 2', isDisabled: true }
+                ];
+
+                return <DarkBackground><OverflowMenu options={options}/></DarkBackground>
+              }
             }
           ]
         }

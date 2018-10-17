@@ -18,7 +18,7 @@ const SelectOption = styled.div`
   transition: background .25s ease-in-out;
 
   ${typography.subhead1}
-  color: ${colors.selectItemColor};
+  color: ${props => props.isDisabled ? colors.grayC : colors.selectItemColor};
   background: ${props => props.isHighlighted ? colors.hoverGray : colors.white};
   text-align: left;
   text-overflow: ellipsis;
@@ -34,8 +34,8 @@ const SelectOption = styled.div`
   }
 
   &:hover {
-    background: ${colors.hoverGray};
-    color: ${colors.selectItemColor};
+    background: ${props => props.isDisabled ? colors.white : colors.hoverGray};
+    color: ${props => props.isDisabled ? colors.grayC : colors.selectItemColor};
   };
 `;
 
@@ -183,7 +183,12 @@ class OverflowMenu extends React.Component {
   renderMenu = (options, depthLevel = 0) => {
     const menu = options.map((option, idx) => {
       const positionText = {position: 'absolute', left: '101%',  width: 'auto'}
-      const mainMenu = <SelectOption key={idx} onMouseEnter={this.handleSelectedId(option.id, depthLevel)} onClick={option.action} isHighlighted={option.isHighlighted}>{option.label}</SelectOption>
+      const mainMenu = <SelectOption
+        key={idx}
+        onMouseEnter={this.handleSelectedId(option.id, depthLevel)}
+        onClick={option.isDisabled ? ()=> {} : option.action}
+        isHighlighted={option.isHighlighted}
+        isDisabled={option.isDisabled}>{option.label}</SelectOption>
 
       let submenu;
       if (this.state.selectedIds[depthLevel] === option.id && _.get(option,'subOptions.length',0) > 0) {
@@ -223,7 +228,7 @@ class OverflowMenu extends React.Component {
           <OptionsContainer>
             {this.renderMenu(this.props.options)}
           </OptionsContainer>}
-          
+
       </OverflowWrapper>
     );
   }
