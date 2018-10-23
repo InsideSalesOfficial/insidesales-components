@@ -2,7 +2,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import _ from 'lodash';
-
+import { RequiredText } from '../RequiredText/RequiredText';
 import { isValued } from './utils';
 
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsListOnSearch } from '../SelectInput';
@@ -74,11 +74,10 @@ export const Value = styled.div`
   width: 100%;
   text-align: left;
   ${typography.subhead1};
-  color: ${(props) => {
+  color: ${props => {
     if (props.error) {
       return colors.red;
     }
-
     if (props.isPlaceHolder) {
       return colors.black60;
     }
@@ -225,6 +224,15 @@ export default class SelectInputLabelBox extends React.Component {
     }
   }
 
+  renderRequiredText = () => {
+    const { required, value } = this.props;
+    const message = "Required";
+
+    if (!value && !_.isBoolean(value) && !this.state.optionsListVisible && required) {
+      return (<RequiredText>{message}{required}</RequiredText>);
+    }
+  }
+
   determineLabel = () => {
     const { defaultLabel, options, promotedOptions, value, multiSelect } = this.props;
 
@@ -283,6 +291,7 @@ export default class SelectInputLabelBox extends React.Component {
               error={this.props.error}
             >{optionLabel}</Value>
           </SelectToggle>
+          {this.renderRequiredText()}
           <SelectOptions
             selectedOptions={this.props.value}
             promotedOptions={promotedOptions}

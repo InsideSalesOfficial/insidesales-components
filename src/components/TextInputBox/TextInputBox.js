@@ -12,7 +12,7 @@ const TextBox = styled.div`
     background-color: ${props => props.theme.background};
     border-bottom: thin solid ${colors.black40};
     border-radius: 2px;
-    border-width: 2px; 
+    border-width: 2px;
     border-color: ${(props) => {
     if (props.error) {
         return colors.red;
@@ -40,7 +40,7 @@ const TextBox = styled.div`
     transition: border-color 0.14s ease-in-out;
     width: 100%;
     padding-left: 16px;
-    padding-right: ${(props) => { 
+    padding-right: ${(props) => {
         if (props.options) return '25px';
         return '16px';
     }};
@@ -86,7 +86,7 @@ const Caret = styled.div`
 `;
 
 const TextBoxLabel = styled(TextLabel)`
-    left: 16px; 
+    left: 16px;
 
     transform: ${(props) => {
         if (props.open || props.isFocused) {
@@ -99,10 +99,10 @@ const TextBoxLabel = styled(TextLabel)`
 
 
 const InputBoxItem = styled(InputItem)`
-    &[type=number]::-webkit-inner-spin-button, 
-    &[type=number]::-webkit-outer-spin-button { 
-        -webkit-appearance: none; 
-        margin: 0; 
+    &[type=number]::-webkit-inner-spin-button,
+    &[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
     ${(props) => {
         if(props.theme.valueColor){
@@ -158,17 +158,18 @@ export default class TextInputBox extends TextInput {
                     onChange={this.onChange}
                     placeholder={this.state.focused ? placeholder : ''} />
                 { this.props.label &&
-                    <TextBoxLabel 
-                        isFocused={this.state.focused} 
-                        labelColor={this.props.theme.labelColor || labelColor} 
-                        open={hasValue(this.getValue())} 
-                        htmlFor={name} 
+                    <TextBoxLabel
+                        isFocused={this.state.focused}
+                        labelColor={this.props.theme.labelColor || labelColor}
+                        open={hasValue(this.getValue())}
+                        htmlFor={name}
                         error={error}>{label}
                     </TextBoxLabel>
                 }
                 </TextBox>
                 {options && <Caret onClick={this.toggleOptionsList} open={this.state.optionsListVisible} className={'pb-caret'} />}
                 {this.renderHelperText()}
+                {this.renderRequiredText()}
                 {options && <SelectOptions
                     onOptionUpdate={this.onDropDownSelect}
                     promotedOptions={promotedOptions || this.getPromotedOptions() }
