@@ -225,7 +225,7 @@ class OverflowMenu extends React.Component {
           {this.props.icon}
         </InteractiveElement>
         {(this.state.menuVisible || this.props.stayOpen) &&
-          <OptionsContainer>
+          <OptionsContainer openUp={this.props.openUp} openRight={this.props.openRight}>
             {this.renderMenu(this.props.options)}
           </OptionsContainer>}
 
