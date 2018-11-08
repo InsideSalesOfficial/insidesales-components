@@ -7,7 +7,8 @@ import OverflowMenuButton from './OverflowMenuButton';
 import styled from 'styled-components';
 import { colors, typography } from '../styles';
 import NeuralIcon from '../icons/NeuralIcon';
-import { neuralSendTheme } from './OverflowMenuButtonThemes';
+import ClockIcon from '../icons/ClockIcon';
+import { regularScheduledEmailTheme, neuralSendEmailTheme, neuralScheduledEmailTheme } from './OverflowMenuButtonThemes';
 
 const EmailSendButtonText = styled.div`
   color: ${colors.white};
@@ -16,6 +17,7 @@ const EmailSendButtonText = styled.div`
 
 const NeuralSendWrapper = styled.div`
   display: flex;
+  ${props => props.scheduled ? 'cursor: default;' : ''}
 `;
 
 const NeuralSendButtonText = styled.div`
@@ -56,7 +58,7 @@ storiesOf('Components', module)
             {
               title: 'Manual Email Send Button',
               sectionFn: () => (
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{background: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px'}}>
                   <OverflowMenuButton
                     shouldHover={true}
                     openDirection={'up'}
@@ -95,15 +97,29 @@ storiesOf('Components', module)
               )
             },
             {
+              title: 'Regular Email Scheduled Button',
+              sectionFn: () => (
+                <div style={{background: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px'}}>
+                  <OverflowMenuButton
+                    shouldHover={false}
+                    openDirection={'up'}
+                    options={options}
+                    theme={regularScheduledEmailTheme}
+                    content={<NeuralSendWrapper scheduled><ClockIcon fill={colors.white}/><NeuralSendButtonText>SENDING AT 12:45 PM PST</NeuralSendButtonText></NeuralSendWrapper>}
+                  />
+                </div>
+              )
+            },
+            {
               title: 'Neural Email Send Button',
               sectionFn: () => (
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{background: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px'}}>
                   <OverflowMenuButton
                     shouldHover={true}
                     openDirection={'up'}
                     options={options}
-                    theme={neuralSendTheme}
-                    content={<NeuralSendWrapper><NeuralIcon /><NeuralSendButtonText>SEND AT 12:45 PM</NeuralSendButtonText></NeuralSendWrapper>}
+                    theme={neuralSendEmailTheme}
+                    content={<NeuralSendWrapper><NeuralIcon /><NeuralSendButtonText>SEND AT 12:45 PM PST</NeuralSendButtonText></NeuralSendWrapper>}
                   />
                 </div>
               )
@@ -116,8 +132,8 @@ storiesOf('Components', module)
                     shouldHover={true}
                     openDirection={'up'}
                     options={options}
-                    theme={neuralSendTheme}
-                    content={<NeuralSendWrapper><NeuralIcon fillOpacity={0.4}/><NeuralSendButtonText>SEND AT 12:45 PM</NeuralSendButtonText></NeuralSendWrapper>}
+                    theme={neuralSendEmailTheme}
+                    content={<NeuralSendWrapper><NeuralIcon fillOpacity={0.4}/><NeuralSendButtonText>SEND AT 12:45 PM PST</NeuralSendButtonText></NeuralSendWrapper>}
                     disabled
                   />
                 </div>
@@ -131,9 +147,23 @@ storiesOf('Components', module)
                     shouldHover={true}
                     openDirection={'up'}
                     options={options}
-                    theme={neuralSendTheme}
-                    content={<NeuralSendWrapper><NeuralIcon /><NeuralSendButtonText>SEND AT 12:45 PM</NeuralSendButtonText></NeuralSendWrapper>}
+                    theme={neuralSendEmailTheme}
+                    content={<NeuralSendWrapper><NeuralIcon /><NeuralSendButtonText>SEND AT 12:45 PM PST</NeuralSendButtonText></NeuralSendWrapper>}
                     loading
+                  />
+                </div>
+              )
+            },
+            {
+              title: 'Neural Email Scheduled Send Button',
+              sectionFn: () => (
+                <div style={{background: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px'}}>
+                  <OverflowMenuButton
+                    shouldHover={false}
+                    openDirection={'up'}
+                    options={options}
+                    theme={neuralScheduledEmailTheme}
+                    content={<NeuralSendWrapper scheduled><NeuralIcon /><NeuralSendButtonText>SENDING AT 12:45 PM PST</NeuralSendButtonText></NeuralSendWrapper>}
                   />
                 </div>
               )
