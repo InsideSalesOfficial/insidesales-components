@@ -205,25 +205,28 @@ class SelectOptions extends React.Component {
 
     const optionSelected = multiSelect && _.includes(selectedOptions, option.value);
 
+    const disabled = option.disabled || this.props.isDisabled;
+
     return (
       <SelectOption
         className={'pb-option'}
         key={keyID}
         visible={this.props.visible}
         style={delay}
-        disabled={option.disabled}
+        disabled={disabled}
         noPadding={option.noPadding}
         lowPadding={this.props.lowPadding}
         onClick={() => {
-          if (!option.disabled) {
+          if (!disabled) {
             onOptionUpdate(option.value);
           }
         }}>
           {multiSelect &&
           <Checkbox
+            disabled={disabled}
             checked={optionSelected}
             onClick={() => {
-              if (!option.disabled) {
+              if (!disabled) {
                 onOptionUpdate(option.value);
               }
             }}/>

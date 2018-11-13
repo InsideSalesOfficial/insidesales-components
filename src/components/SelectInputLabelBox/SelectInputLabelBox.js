@@ -158,10 +158,6 @@ export const Wrapper = styled.div`
 
     return 'auto';
   }};
-
-  ${props => props.isDisabled && `
-    opacity: 0.6;
-  `}
 `;
 
 export const SelectToggle = styled.button`
@@ -174,6 +170,9 @@ export const SelectToggle = styled.button`
   outline: 0;
   cursor: pointer;
   ${typography.subhead1}
+  ${props => props.isDisabled && `
+    opacity: 0.6;
+  `}
 `;
 
 export default class SelectInputLabelBox extends React.Component {
@@ -215,8 +214,10 @@ export default class SelectInputLabelBox extends React.Component {
     if(this.props.multiSelect) {
       if(_.includes(this.props.value, newValue)) {
         this.props.onChange(_.without(this.props.value, newValue));
-      } else {
+      } else if (_.isArray(this.props.value)) {
         this.props.onChange(_.concat(this.props.value, [newValue]));
+      } else {
+        this.props.onChange([newValue]);
       }
     } else {
       this.props.onChange(newValue);
@@ -253,7 +254,7 @@ export default class SelectInputLabelBox extends React.Component {
     if (!_.isNil(value)) {
       const optionObject = _.find(copiedOptions, { value });
 
-      if (multiSelect && _.size(value)) {
+      if (multiSelect && _.isArray(value) && _.size(value)) {
         inputLabel = `${_.size(value)} Selected`;
       } else if (optionObject && optionObject.label) {
         inputLabel = optionObject.label;
@@ -279,7 +280,7 @@ export default class SelectInputLabelBox extends React.Component {
           {...this.props}
           ref={(el) => { this.clickEventElement = el }}
           >
-          <SelectToggle onClick={this.toggleOptionsList}>
+          <SelectToggle onClick={this.toggleOptionsList} isDisabled={this.props.isDisabled}>
             <Caret open={this.state.optionsListVisible} />
             <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
             <Value
@@ -293,6 +294,7 @@ export default class SelectInputLabelBox extends React.Component {
           </SelectToggle>
           {this.renderRequiredText()}
           <SelectOptions
+            isDisabled={this.props.isDisabled}
             selectedOptions={this.props.value}
             promotedOptions={promotedOptions}
             onOptionUpdate={this.onChange}

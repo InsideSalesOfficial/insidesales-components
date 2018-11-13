@@ -56,7 +56,7 @@ export function toggleOptionsListOnSearch(e) {
       return;
     }
     this.closeOptionsList();
-  } else if (!this.props.isDisabled && !this.state.optionsListVisible) {
+  } else if ((!this.props.isDisabled || (this.props.multiSelect && !_.isEmpty(this.props.value))) && !this.state.optionsListVisible) {
     this.openOptionsList();
   }
 }
@@ -110,8 +110,10 @@ class SelectInput extends React.Component {
     if (this.props.multiSelect) {
       if (_.includes(this.props.value, newValue)) {
         this.props.onChange(_.without(this.props.value, newValue));
-      } else {
+      } else if (_.isArray(this.props.value)) {
         this.props.onChange(_.concat(this.props.value, [newValue]));
+      } else {
+        this.props.onChange([newValue]);
       }
     } else {
       this.props.onChange(newValue);
