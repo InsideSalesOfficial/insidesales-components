@@ -80,6 +80,7 @@ import PhoneIcon from './PhoneIcon';
 import PlaybookIcon from './PlaybookIcon';
 import PlayIcon from './PlayIcon';
 import PlusIcon from './PlusIcon';
+import QueueMusicIcon from './QueueMusicIcon';
 import RadioboxBlankIcon from './RadioboxBlankIcon';
 import RadioboxMarkedIcon from './RadioboxMarkedIcon';
 import RefreshIcon from './RefreshIcon';
@@ -191,6 +192,7 @@ export default {
   PlaybookIcon,
   PlayIcon,
   PlusIcon,
+  QueueMusicIcon,
   RadioboxBlankIcon,
   RadioboxMarkedIcon,
   RefreshIcon,
