@@ -54,6 +54,9 @@ const PrimaryButtonElement = styled(Button)`
   min-width: 88px;
 `;
 
+const SECONDARY_TEST_CLASSNAME = 'pb-test__secondary';
+const PRIMARY_TEST_CLASSNAME = 'pb-test__primary';
+
 const ButtonBar = ({
   primaryActionStyle,
   primaryActionText,
@@ -70,7 +73,7 @@ const ButtonBar = ({
     if (primaryActionStyle === 'button') {
       return (
         <PrimaryButtonElement
-          className={'pb-test__decline'}
+          className={PRIMARY_TEST_CLASSNAME}
           onClick={(event) => {
             if (event) { event.stopPropagation(); }
             onPrimaryActionClick();
@@ -83,7 +86,7 @@ const ButtonBar = ({
     }
     return (
       <PrimaryActionElement
-        className={'pb-test__decline'}
+        className={PRIMARY_TEST_CLASSNAME}
         onClick={(event) => {
           if (event) { event.stopPropagation(); }
           onPrimaryActionClick();
@@ -101,7 +104,7 @@ const ButtonBar = ({
     if (secondaryActionStyle === 'button') {
       return (
         <SecondaryActionButton
-          className={'pb-test__decline'}
+          className={SECONDARY_TEST_CLASSNAME}
           id="secondary-button"
           flat
           onClick={(event) => {
@@ -114,7 +117,7 @@ const ButtonBar = ({
     }
     return (
       <SecondaryActionElement
-        className={'pb-test__decline'}
+        className={SECONDARY_TEST_CLASSNAME}
         onClick={(event) => {
           if (event) { event.stopPropagation(); }
           onSecondaryActionClick();
