@@ -106,6 +106,8 @@ import VoicemailIcon from './VoicemailIcon';
 import Notes from './Notes';
 import CallForward from './CallForward';
 import ArrowForward from './ArrowForward';
+import HeadsetMicOffIcon from './HeadsetMicOffIcon.js';
+import HeadsetMicOnIcon from './HeadsetMicOnIcon.js';
 
 export default {
   AddCircleIcon,
@@ -215,5 +217,7 @@ export default {
   VoicemailIcon,
   Notes,
   CallForward,
-  ArrowForward
+  ArrowForward,
+  HeadsetMicOffIcon,
+  HeadsetMicOnIcon
 };
