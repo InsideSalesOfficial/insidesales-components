@@ -213,7 +213,7 @@ class TextInput extends React.Component {
   componentDidMount() {
     const {value} = this.props;
 
-    if (value) {
+    if (value !== undefined && value !== '') {
       this.setState({
         value
       });
@@ -409,7 +409,6 @@ class TextInput extends React.Component {
           onClick={this.focusOnTextInput}
           isFocused={this.state.focused}
           error={error}
-          open={this.getValue()}
           disabled={disabled}
           lineColor={lineColor}
           collapsed={collapsed}>
@@ -431,7 +430,7 @@ class TextInput extends React.Component {
             <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
           }
           { !this.props.search &&
-            <TextLabel isFocused={this.state.focused} labelColor={labelColor} open={this.getValue()} htmlFor={name} error={error}>{label}</TextLabel>
+            <TextLabel isFocused={this.state.focused} labelColor={labelColor} open={this.getValue() !== '' && this.getValue() !== undefined} htmlFor={name} error={error}>{label}</TextLabel>
           }
         </TextBox>
         { options && <Caret onClick={this.toggleOptionsList} open={this.state.optionsListVisible} className={'pb-caret'} />}
