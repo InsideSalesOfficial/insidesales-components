@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { colors, fontSizes, typography } from '../styles';
-import Modal from '../Modal' 
+import Modal from '../Modal'
 import ButtonBar from '../ButtonBar';
 
 const Title = styled.div`
@@ -52,14 +52,14 @@ class MessageDialog extends React.Component {
         <Modal {...props}>
           <ContentWrapper>
             { dialogTitle &&
-              <Title title={dialogTitle}>{dialogTitle}</Title>
+              <Title className='MessageDialog__Title' title={dialogTitle}>{dialogTitle}</Title>
             }
-            <BodyDisplay dialogTitle={dialogTitle}>
+            <BodyDisplay className='MessageDialog__BodyDisplay' dialogTitle={dialogTitle}>
               {bodyElement}
             </BodyDisplay>
           </ContentWrapper>
           {canRenderButtonBar &&
-            <ButtonBar {...this.props} />
+            <ButtonBar className='MessageDialog__ButtonBar' {...this.props} />
           }
         </Modal>
     );
