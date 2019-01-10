@@ -449,7 +449,6 @@ class TextareaInput extends React.Component {
 }
 
 TextareaInput.defaultProps = {
-  name: 'Name',
   label: 'Label',
   charLimit: 0,
   error: '',

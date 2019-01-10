@@ -192,7 +192,6 @@ export default class TextInputBox extends TextInput {
 
 
 TextInput.defaultProps = {
-    name: 'Name',
     label: '',
     theme: defaultTheme
 };
