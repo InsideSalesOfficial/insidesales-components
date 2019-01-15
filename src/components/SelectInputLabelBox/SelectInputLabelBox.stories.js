@@ -107,6 +107,7 @@ const genericOptions = [
   { value: '9', label: 'Option Nine' },
   { value: '10', label: 'Option Ten' },
   { value: '11', label: 'A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string' },
+  { value: 12, label: `I'm a number` },
 ];
 
 const optionsToPromote = [
@@ -246,7 +247,7 @@ storiesOf('Form', module)
                   <SelectInputLabelBox
                     isDisabled={true}
                     label="Hello World!"
-                    value="11"
+                    value={12}
                     options={genericOptions} />
                 </div>
               )
