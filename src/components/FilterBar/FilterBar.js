@@ -70,6 +70,12 @@ class FilterBar extends React.Component {
     });
   }
 
+  onKeyUp = (e) => {
+    if(_.get(e, 'key') === 'Enter') {
+      this.props.onSearchComplete();
+    }
+  }
+
   hideSearch = () => {
     this.props.onSearchChange('');
     this.setState({
@@ -112,12 +118,15 @@ class FilterBar extends React.Component {
     if(this.state.showSearch) {
     return (
         <SearchBarWrapper {...this.props}>
-          <Icons.SearchMaterialIcon fill={colors.black60}/>
+          <InteractiveElement onClick={this.props.onSearchComplete}>
+            <Icons.SearchMaterialIcon fill={colors.black60}/>
+          </InteractiveElement>
           <StyledInputItem
             type={'text'}
             className='pb-test__search-bar'
             onChange={this.onSearchChange}
             placeholder={this.props.searchPlaceholder}
+            onKeyUp={this.onKeyUp}
             autoFocus/>
           <StyledInteractiveElement onClick={this.hideSearch}>
             <Icons.CloseIcon fill={colors.black60}/>
@@ -160,7 +169,8 @@ FilterBar.defaultProps = {
   sortLabel: 'Sort By',
   selectedSortOption: {},
   onSearchChange: _.noop,
-  searchPlaceholder: 'Search'
+  searchPlaceholder: 'Search',
+  onSearchComplete: _.noop,
 };
 
 FilterBar.propTypes = {
@@ -172,7 +182,8 @@ FilterBar.propTypes = {
   selectedSortOption: PropTypes.any,
   onSearchChange: PropTypes.func.isRequired,
   searchPlaceholder: PropTypes.string,
-  hideFilter: PropTypes.bool
+  hideFilter: PropTypes.bool,
+  onSearchComplete: PropTypes.func
 };
 
 export default FilterBar;
