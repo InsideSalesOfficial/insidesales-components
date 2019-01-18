@@ -77,6 +77,7 @@ class FilterBar extends React.Component {
   }
 
   hideSearch = () => {
+    this.props.onSearchClear();
     this.props.onSearchChange('');
     this.setState({
       showSearch: false
@@ -171,6 +172,7 @@ FilterBar.defaultProps = {
   onSearchChange: _.noop,
   searchPlaceholder: 'Search',
   onSearchComplete: _.noop,
+  onSearchClear: _.noop,
 };
 
 FilterBar.propTypes = {
@@ -183,7 +185,8 @@ FilterBar.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   searchPlaceholder: PropTypes.string,
   hideFilter: PropTypes.bool,
-  onSearchComplete: PropTypes.func
+  onSearchComplete: PropTypes.func,
+  onSearchClear: PropTypes.func,
 };
 
 export default FilterBar;

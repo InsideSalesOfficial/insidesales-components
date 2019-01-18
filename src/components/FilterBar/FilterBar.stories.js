@@ -47,6 +47,7 @@ class FilterBarWrapper extends React.PureComponent {
         this.setState({ sortValue: value})
       }}
       onClickFilter={action('on clicked filter')}
+      onSearchClear={action('on search clear')}
       onSearchChange={
         (value) => {
           this.setState({ searchValue: value})
@@ -76,7 +77,7 @@ storiesOf('Components', module)
             subtitle: '',
             sectionFn: () => (
               <div style={darkExample}>
-                <FilterBarWrapper onSearchComplete={() => alert('You have searched')}/>
+                <FilterBarWrapper onSearchComplete={action('You have searched')}/>
               </div>
             )
           },
