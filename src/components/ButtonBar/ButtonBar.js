@@ -60,6 +60,7 @@ const PRIMARY_TEST_CLASSNAME = 'pb-test__primary';
 const ButtonBar = ({
   primaryActionStyle,
   primaryActionText,
+  primaryActionDanger,
   onPrimaryActionClick,
   actionLoading,
   isActionDisabled,
@@ -81,6 +82,7 @@ const ButtonBar = ({
           loading={actionLoading}
           disabled={isActionDisabled}
           label={primaryActionText}
+          danger={primaryActionDanger}
         />
       );
     }
@@ -140,6 +142,7 @@ const ButtonBar = ({
 
 ButtonBar.defaultProps = {
   primaryActionStyle: 'button',
+  primaryActionDanger: false,
   secondaryActionStyle: 'button',
   theme: {},
 };
