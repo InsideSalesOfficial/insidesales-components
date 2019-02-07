@@ -47,4 +47,8 @@ export {
   default as OverflowMenuButton,
   OverflowMenuButtonThemes
 } from './OverflowMenuButton';
+export {
+  default as MiniInput,
+  MiniInputThemes
+} from './MiniInput';
 export { colors, boxShadows, scrollbars, typography } from './styles'
