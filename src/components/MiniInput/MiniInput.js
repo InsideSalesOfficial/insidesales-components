@@ -16,6 +16,7 @@ const StyledMiniInput = styled.input`
     background: transparent;
     box-sizing: border-box;
     border: 1px solid ${props => props.theme.borderColor};
+    ${props => props.disabled && `opacity: 0.4;`}
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -29,15 +30,18 @@ const StyledMiniInput = styled.input`
     ${typography.body2}
 `;
 
-const MiniInput = ({theme, value, onChange, onEnter, type}) =>
+const MiniInput = ({theme, value, onChange, onEnterUp, type, disabled, onFocus, onBlur}) =>
     <StyledMiniInput
         theme={theme}
         value={value}
         type={type}
+        disabled={disabled}
+        onFocus={onFocus}
+        onBlur={onBlur}
         onKeyUp={(e) => {
             e.stopPropagation();
             if (e.key === 'Enter') {
-            onEnter();
+                onEnterUp();
             }
         }}
         onChange={(e) => {
