@@ -7,6 +7,15 @@ import InteractiveElement from '../InteractiveElement';
 import Icons from '../icons';
 import { boxShadows, colors, typography } from '../styles';
 
+const OverflowParent = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const FlexInteractiveElement = styled(InteractiveElement)`
+  display: flex;
+`;
+
 const SelectOption = styled.div`
   cursor: pointer;
 
@@ -25,13 +34,7 @@ const SelectOption = styled.div`
   white-space: nowrap;
   align-items: center;
 
-  &:first-child {
-    margin-top: 8px;
-  }
 
-  &:last-child {
-    margin-bottom: 8px;
-  }
 
   &:hover {
     background: ${props => props.isDisabled ? colors.white : colors.hoverGray};
@@ -39,10 +42,40 @@ const SelectOption = styled.div`
   };
 `;
 
+const caretSize = 11;
+const caretDiagonal = Math.round(Math.sqrt(Math.pow(caretSize, 2) * 2));
+
+
+const DropdownCaret = styled.div`
+  overflow: hidden;
+  position: absolute;
+  ${props => props.openUp ? 'bottom' : 'top'}: calc(100% - ${caretSize / 2 - 1}px);
+  width: ${caretDiagonal + 15}px;
+  height: ${caretDiagonal}px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+
+  &:before {
+    content: '';
+    width: ${caretSize}px;
+    height: ${caretSize}px;
+    transform: translateY(${props => props.openUp ? '-' : ''}50%) rotate(45deg);
+    transform-origin: center;
+    background: ${colors.white};
+    box-shadow: ${boxShadows.lvl20};
+    display: block;
+    position: absolute;
+    ${props => props.openUp ? 'top' : 'bottom'}: 0;
+  }
+`
+
 const OptionsContainer = styled.div`
   position: absolute;
-  top: ${props => props.openUp ? 'initial' : '31px'};
-  bottom: ${props => props.openUp ? '31px' : 'initial'};
+  top: ${props => props.openUp ? 'initial' : `calc(100% + ${caretSize}px)`};
+  bottom: ${props => props.openUp ? `calc(100% + ${caretSize}px)` : 'initial'};
   right: ${props => props.openRight ? 'auto' : '-6px'};
   left: ${props => props.openRight ? '-6px' : 'auto'};
 
@@ -50,35 +83,6 @@ const OptionsContainer = styled.div`
   background-color: transparent;
   overflow: visible;
   z-index: 1;
-
-  &:before {
-    position: absolute;
-    content: '';
-    right: ${props => props.openRight ? 'auto' : '10px'};
-    left: ${props => props.openRight ? '10px' : 'auto'};
-    top: ${props => props.openUp ? 'auto' : '-5px'};
-    bottom: ${props => props.openUp ? '-5px' : 'auto'};
-    width: 14px;
-    height: 14px;
-    transform: rotate(-45deg);
-    box-shadow: ${boxShadows.lvl20};
-    z-index: -1;
-  }
-
-  &:after {
-    position: absolute;
-    content: '';
-    right: ${props => props.openRight ? 'auto' : '10px'};
-    left: ${props => props.openRight ? '10px' : 'auto'};
-    top: ${props => props.openUp ? 'auto' : '-16px'};
-    bottom: ${props => props.openUp ? '-16px' : 'auto'};
-    width: 0;
-    height: 0;
-    border-top: 8px solid ${props => props.openUp ? colors.white : 'transparent'};
-    border-bottom: 8px solid ${props => props.openUp ? 'transparent' : colors.white};
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-  }
 `;
 
 const OptionsWrapper = styled.div`
@@ -93,6 +97,13 @@ const SubmenuOptionsWrapper = styled.div`
   display: flex;
   background-color: ${colors.white};
 
+  &:first-child ${SelectOption} {
+    margin-top: 8px;
+  }
+
+  &:last-child ${SelectOption} {
+    margin-bottom: 8px;
+  }
 `;
 
 const OverflowWrapper = styled.div`
@@ -221,14 +232,17 @@ class OverflowMenu extends React.Component {
       <OverflowWrapper
         {...this.props}
         ref={(el) => { this.clickEventElement = el }}>
-        <InteractiveElement onClick={() => { this.toggleMenu(); }}>
-          {this.props.icon}
-        </InteractiveElement>
-        {(this.state.menuVisible || this.props.stayOpen) &&
-          <OptionsContainer openUp={this.props.openUp} openRight={this.props.openRight}>
-            {this.renderMenu(this.props.options)}
-          </OptionsContainer>}
-
+        <OverflowParent>
+          <FlexInteractiveElement onClick={() => { this.toggleMenu(); }}>
+            {this.props.icon}
+          </FlexInteractiveElement>
+          {(this.state.menuVisible || this.props.stayOpen) &&
+              [<DropdownCaret {..._.pick(this.props, ['openUp', 'openDown'])} />,
+              <OptionsContainer openUp={this.props.openUp} openRight={this.props.openRight}>
+                {this.renderMenu(this.props.options)}
+              </OptionsContainer>]
+          }
+        </OverflowParent>
       </OverflowWrapper>
     );
   }
