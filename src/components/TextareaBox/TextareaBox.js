@@ -180,7 +180,6 @@ class TextareaBox extends TextInput {
 }
 
 TextareaBox.defaultProps = {
-  max: 256,
 }
 
 TextareaBox.propTypes = {
