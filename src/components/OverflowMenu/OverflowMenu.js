@@ -21,7 +21,7 @@ const SelectOption = styled.div`
 
   box-sizing: border-box;
   display: flex;
-  padding: 0 10px;
+  padding: 0 24px 0 10px;
   width: 100%;
   height: 38px;
   transition: background .25s ease-in-out;
@@ -78,7 +78,6 @@ const OptionsContainer = styled.div`
   bottom: ${props => props.openUp ? `calc(100% + ${caretSize}px)` : 'initial'};
   right: ${props => props.openRight ? 'auto' : '-6px'};
   left: ${props => props.openRight ? '-6px' : 'auto'};
-
   min-width: 120px;
   background-color: transparent;
   overflow: visible;
@@ -90,11 +89,12 @@ const OptionsWrapper = styled.div`
   width: 100%;
   align-items: flex-start;
   background-color: ${colors.white};
-  border-radius: 2px;
+  border-radius: 3px;
 `;
 
 const SubmenuOptionsWrapper = styled.div`
   display: flex;
+  border-radius: 3px;
   background-color: ${colors.white};
 
   &:first-child ${SelectOption} {
@@ -207,8 +207,8 @@ class OverflowMenu extends React.Component {
         submenu = this.renderMenu(option.subOptions, newDepthLevel);
       }
       return (
-        <SubmenuOptionsWrapper>
-          <OptionsWrapper >
+        <SubmenuOptionsWrapper key={idx}>
+          <OptionsWrapper>
             {mainMenu}
           </OptionsWrapper>
           {!_.isUndefined(submenu) &&

@@ -125,7 +125,7 @@ storiesOf('Menus', module)
 
                 return <DarkBackground><OverflowMenu options={options}/></DarkBackground>
               }
-            }
+            },
           ]
         }
       ]
