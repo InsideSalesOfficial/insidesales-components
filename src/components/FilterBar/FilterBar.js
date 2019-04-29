@@ -36,7 +36,6 @@ const ButtonsWrapper = styled.div`
   align-items: center;
   justify-content: space-evenly;
   flex-basis: 0;
-  flex-grow: ${props => props.buttonsSize};
   border-left: 1px ${colors.black20} solid;
   height: 100%;
 `;
@@ -44,7 +43,9 @@ const ButtonsWrapper = styled.div`
 const StyledInteractiveElement = styled(InteractiveElement)`
   cursor: pointer;
   display: flex;
+  width: 48px;
   fill: ${colors.white60};
+  justify-content: center;
   &:hover {
     fill: ${colors.white90};
   }
@@ -109,7 +110,7 @@ class FilterBar extends React.Component {
       ))
     }
     return (
-      <ButtonsWrapper buttonsSize={_.size(buttons)}>
+      <ButtonsWrapper>
         {buttons}
       </ButtonsWrapper>
     );
@@ -144,6 +145,7 @@ class FilterBar extends React.Component {
           onChange={this.props.onSortOptionChange}
           headerLabel={this.props.sortLabel}
           value={this.props.selectedSortOption}
+          selectOptionsWidth={330}
           theme={{
             background: 'transparent',
             noLeftPadding: true,
