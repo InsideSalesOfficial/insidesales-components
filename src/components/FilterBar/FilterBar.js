@@ -120,7 +120,10 @@ class FilterBar extends React.Component {
     if(this.state.showSearch) {
     return (
         <SearchBarWrapper {...this.props}>
-          <InteractiveElement onClick={this.props.onSearchComplete}>
+          <InteractiveElement
+            onClick={this.props.onSearchComplete}
+            className="pb-test__filter-bar-complete-search"
+          >
             <Icons.SearchMaterialIcon fill={colors.black60}/>
           </InteractiveElement>
           <StyledInputItem
@@ -130,7 +133,10 @@ class FilterBar extends React.Component {
             placeholder={this.props.searchPlaceholder}
             onKeyUp={this.onKeyUp}
             autoFocus/>
-          <StyledInteractiveElement onClick={this.hideSearch}>
+          <StyledInteractiveElement
+            onClick={this.hideSearch}
+            className="pb-test__hide-search"
+          >
             <Icons.CloseIcon fill={colors.black60}/>
           </StyledInteractiveElement>
         </SearchBarWrapper>
