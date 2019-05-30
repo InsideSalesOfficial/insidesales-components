@@ -120,6 +120,8 @@ import PlayOutlined from './PlayOutlined';
 import Record from './Record';
 import PauseOutlined from './PauseOutlined.js';
 import EmptyStateIcon from './EmptyStateIcon.js';
+import MonetizationOnIcon from './MonetizationOnIcon.js';
+import DescriptionIcon from './DescriptionIcon.js';
 
 export default {
   AddCircleIcon,
@@ -243,5 +245,7 @@ export default {
   PlayOutlined,
   Record,
   PauseOutlined,
-  EmptyStateIcon
+  EmptyStateIcon,
+  MonetizationOnIcon,
+  DescriptionIcon
 };
