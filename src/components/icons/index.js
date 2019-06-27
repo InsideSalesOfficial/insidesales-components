@@ -106,6 +106,8 @@ import InfoOutlineIcon from './InfoOutlineIcon';
 import StarFilledIcon from './StarFilledIcon';
 import TagsIcon from './TagsIcon';
 import TeamsIcon from './TeamsIcon';
+import ThumbsDown from './ThumbsDown';
+import ThumbsUp from './ThumbsUp';
 import UpdateFilledIcon from './UpdateFIlledIcon';
 import VerifyFilledIcon from './VerifyFilledIcon';
 import VerifyIcon from './VerifyIcon';
@@ -232,6 +234,8 @@ export default {
   TemplateIcon,
   TodayIcon,
   TrashIcon,
+  ThumbsDown,
+  ThumbsUp,
   TrophyIcon,
   UpdateFilledIcon,
   VerifyFilledIcon,
