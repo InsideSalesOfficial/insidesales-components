@@ -24,7 +24,7 @@ const FlyoutContainer = styled.div`
   width: 360px;
   background-color: ${white.white};
   overflow: visible;
-  z-index: 1;
+  z-index: 100;
   box-shadow: 0 2px 4px 0 ${black.black14}, 0 3px 4px 0 ${black.black12}, 0 1px 5px 0 ${black.black20};
   padding: 24px;
   color: ${black.black90};
@@ -145,7 +145,7 @@ export class NeuralVerifyFlyout extends React.Component {
       case verifiedStates.MOBILE_VERIFIED:
         return 'This mobile phone number has been verified as working within the last 60 days and you have a high likelihood of making contact.';
       case verifiedStates.MOBILE_NOT_ANSWERED:
-        return 'Calls to his mobile phone number are not typically answered.';
+        return 'Calls to this mobile phone number are not typically answered.';
       default:
         return '';
     }
