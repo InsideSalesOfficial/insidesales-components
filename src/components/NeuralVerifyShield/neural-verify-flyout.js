@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import Icons from '../icons';
 import _ from 'lodash';
 
-import { colors, typography } from '../styles';
+import { typography } from '../styles/typography';
+import { white, black } from '../styles/colors';
 
 import { verifiedStates } from './constants';
 
@@ -19,14 +20,15 @@ const FlyoutContainer = styled.div`
   bottom: ${props => props.type === 'email' ? 'initial' : '35px'};
   right: ${props => props.type === 'email' ? '-48px' : '0px'};
   border-radius: 3px;
-  height: 154px;
+  min-height: 100px;
   width: 360px;
-  background-color: ${colors.white};
+  background-color: ${white.white};
   overflow: visible;
-  z-index: 1;
-  box-shadow: 0 2px 4px 0 ${colors.black14}, 0 3px 4px 0 ${colors.black12}, 0 1px 5px 0 ${colors.black20};
+  z-index: 100;
+  box-shadow: 0 2px 4px 0 ${black.black14}, 0 3px 4px 0 ${black.black12}, 0 1px 5px 0 ${black.black20};
   padding: 24px;
-  color: ${colors.black90};
+  color: ${black.black90};
+  white-space: normal;
 
   &:before {
     position: absolute;
@@ -49,9 +51,9 @@ const FlyoutContainer = styled.div`
     transform: rotate(-45deg);
     box-shadow: ${(props) => {
       if (props.type === 'email') {
-        return `2px -3px 4px 0 ${colors.black10}`;
+        return `2px -3px 4px 0 ${black.black10}`;
       }
-      return `-2px 3px 4px 0 ${colors.black20}`;
+      return `-2px 3px 4px 0 ${black.black20}`;
     }};
     z-index: -1;
   }
@@ -78,11 +80,11 @@ const FlyoutContainer = styled.div`
       if (props.type === 'email') {
         return '8px solid transparent';
       }
-      return `8px solid ${colors.white}`;
+      return `8px solid ${white.white}`;
     }};
     border-bottom: ${(props) => {
       if (props.type === 'email') {
-        return `8px solid ${colors.white}`;
+        return `8px solid ${white.white}`;
       }
       return '8px solid transparent';
     }};
@@ -143,7 +145,7 @@ export class NeuralVerifyFlyout extends React.Component {
       case verifiedStates.MOBILE_VERIFIED:
         return 'This mobile phone number has been verified as working within the last 60 days and you have a high likelihood of making contact.';
       case verifiedStates.MOBILE_NOT_ANSWERED:
-        return 'Calls to his mobile phone number are not typically answered.';
+        return 'Calls to this mobile phone number are not typically answered.';
       default:
         return '';
     }
