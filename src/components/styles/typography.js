@@ -16,7 +16,7 @@ export const lineHeights = {
 
 export const fontFamilies = {
   robotoCondensed: '"Roboto Condensed", "Open Sans"',
-  roboto: '"Roboto", "Open Sans"'
+  roboto: '"Roboto", Helvetica, Arial, sans-serif'
 };
 
 export const fontWeights = {

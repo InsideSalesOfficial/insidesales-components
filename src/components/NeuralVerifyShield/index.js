@@ -102,6 +102,8 @@ class NeuralVerifyShield extends React.Component {
             type={this.props.type}
             verifiedState={verifiedState}
             verifiedDetail={detailData}
+            displaysAboveIcon={this.props.displaysAboveIcon}
+            flyoutOffset={this.props.flyoutOffset}
           />
         }
       </NeuralVerifiedContainer>
@@ -113,7 +115,9 @@ NeuralVerifyShield.defaultProps = {
   location: '',
   hoverAction: () => {},
   iconSize: '24px',
-  allowOverflow: false
+  allowOverflow: false,
+  displaysAboveIcon: true,
+  flyoutOffset: 0
 };
 
 export default NeuralVerifyShield;
