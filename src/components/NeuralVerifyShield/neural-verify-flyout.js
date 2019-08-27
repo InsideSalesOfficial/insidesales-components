@@ -29,6 +29,7 @@ const FlyoutContainer = styled.div`
   padding: 24px;
   color: ${black.black90};
   white-space: normal;
+  font-family: ${fontFamilies.roboto};
 
   &:before {
     position: absolute;
@@ -95,23 +96,29 @@ const FlyoutContainer = styled.div`
   }
 `;
 
-const HeaderBar = styled.div`
+const TopContainer = styled.div`
   padding-left: 2px;
+  padding-bottom: 20px;
   display: flex;
 `;
 
 const Header = styled.div`
   ${typography.title};
-  font-family: ${fontFamilies.roboto};
-  letter-spacing: 0px
+  letter-spacing: 0px;
   line-height: 24px;
-  padding-left: 17.33px;
-  padding-bottom: 16px;
+`;
+
+const SubHeader = styled.div`
+  ${fontFamilies.subhead3};
+  color: ${black.black40};
+`;
+
+const HeaderContainer = styled.div`
+  padding-left: 17px;
 `;
 
 const NeuralMessageWrapper = styled.div`
-  ${typography.body1}
-  font-family: ${fontFamilies.roboto};
+  ${typography.body1};
   letter-spacing: 0px;
 `;
 
@@ -189,12 +196,13 @@ export class NeuralVerifyFlyout extends React.Component {
   render() {
     return (
       <FlyoutContainer flyoutOffset={this.props.flyoutOffset} displaysAboveIcon={this.props.displaysAboveIcon}>
-        <HeaderBar>
+        <TopContainer>
           <NeuralIcon/>
-          <Header>
-            {this.getHeader()}
-          </Header>
-        </HeaderBar>
+          <HeaderContainer>
+            <Header>{this.getHeader()}</Header>
+            {this.props.location === 'crm' && <SubHeader>Powered by Playbooks</SubHeader>}
+          </HeaderContainer>
+        </TopContainer>
         <NeuralMessageWrapper>
           {this.getMessage()}
         </NeuralMessageWrapper>

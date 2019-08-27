@@ -60,6 +60,11 @@ export const typography = {
     font-weight: ${fontWeights.regular};
     letter-spacing: 0.5px;
   `,
+  subhead3: `
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: ${fontWeights.regular};
+  `,
   body2: `
     font-size: 14px;
     line-height: 24px;
