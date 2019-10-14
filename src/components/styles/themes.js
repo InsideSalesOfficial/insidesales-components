@@ -1,4 +1,4 @@
-import { tint, shade } from 'polished';
+import { tint, shade, transparentize } from 'polished';
 
 const hotPinkDerivableTransparencies = {
   brand: '#F53E73',
@@ -36,6 +36,10 @@ function createTintAndShadeVersions(color, colorName) {
     [`${colorName}Shade40`]: shade(.60, color),
     [`${colorName}Shade60`]: shade(.40, color),
     [`${colorName}Shade90`]: shade(.10, color),
+    [`${colorName}Transparent10`]: transparentize(.90, color),
+    [`${colorName}Transparent40`]: transparentize(.60, color),
+    [`${colorName}Transparent60`]: transparentize(.40, color),
+    [`${colorName}Transparent90`]: transparentize(.10, color),
   }
 }
 
