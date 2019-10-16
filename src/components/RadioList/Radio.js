@@ -11,7 +11,6 @@ import {
   ifThemeInPropsIsPresentUse
 } from '../styles';
 
-
 const size = 16;
 
 function renderThemedLabelActiveBackground(props) {
