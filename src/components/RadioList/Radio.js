@@ -15,13 +15,18 @@ import {
 const size = 16;
 
 function renderThemedLabelActiveBackground(props) {
-  if (!props.theme.brand01) return '';
+  if (props.theme.lightRadio || !props.theme.brand01) return '';
   return transparentize(0.9, props.theme.brand01)
+}
+
+function renderThemedLabelBackground(props) {
+  if (props.theme.lightRadio) return 'transparent';
+  return props.theme.white10;
 }
 
 const RadioLabel = styled.label`
   ${typography.bodyCompact}
-  background: ${props => ifThemeInPropsIsPresentUse({ props, value: props.theme.white10, defaultValue: props.theme.background })};
+  background: ${props => ifThemeInPropsIsPresentUse({ props, value: renderThemedLabelBackground(props), defaultValue: props.theme.background })};
   display: flex;
   align-items: center;
   width: 100%;
