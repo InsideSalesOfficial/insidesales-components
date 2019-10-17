@@ -4,5 +4,5 @@ export * from './scrollbars';
 export * from './typography';
 
 export function generateFlexedThemeBackground(props, otherStyles) {
-  return { background: props.theme.primary01, ...otherStyles, display: 'flex', alignItems: 'center' };
+  return { background: props.theme.primary01, ...otherStyles };
 };
