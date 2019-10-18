@@ -17,7 +17,7 @@ const Button = styled.button`
   padding-top: 2px;
   border-radius: 50%;
   border: none;
-  background-color: ${colors.green};
+  background-color: ${colors.renderThemeIfPresentOrDefault({key: 'brand01', defaultValue: colors.green})};
   cursor: pointer;
   transition: box-shadow 150ms ease-in-out, background-color 100ms ease-in-out;
   &:focus {
@@ -31,7 +31,7 @@ const Button = styled.button`
   }
   &:hover {
     box-shadow: ${boxShadows.lvl2};
-    background-color: ${colors.greenDarker};
+    background-color:${colors.renderThemeIfPresentOrDefault({key: 'brand02', defaultValue: colors.greenDarker})};
   }
   &:disabled {
     opacity: 0.4;

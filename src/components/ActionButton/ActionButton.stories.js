@@ -3,8 +3,12 @@ import {
   storiesOf,
   action
 } from '@storybook/react';
+import { ThemeProvider } from 'styled-components';
 
 import ActionButton from './ActionButton';
+
+import { colors } from '../styles/colors';
+import { generateFlexedThemeBackground } from "../styles/index.js";
 
 // wrapper just for toggle state handling in storybook
 class ActionButtonWrapper extends React.PureComponent {
@@ -27,54 +31,75 @@ class ActionButtonWrapper extends React.PureComponent {
   }
 }
 
+function wrapComponentWithContainerAndTheme(theme, Component) {
+  const storyContainerStyle = generateFlexedThemeBackground(
+    { theme },
+    { width: "100%", padding: "16px 0" }
+  );
+  return (
+    <ThemeProvider theme={theme}>
+      <div style={storyContainerStyle}>{Component}</div>
+    </ThemeProvider>
+  );
+}
+
+function renderChapterWithTheme(theme){
+  return {
+    info: `
+      Usage
+
+      ~~~
+      import React from 'react';
+      import {ActionButton} from 'insidesales-components';
+      ~~~
+    `,
+    chapters: [
+      {
+        sections: [
+          {
+            title: 'Example: Plain button, no toggle',
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
+              <ActionButton
+                icon="AddIcon"
+                onClick={action('clicked')}
+              />
+            )
+          },
+          {
+            title: 'Example: Plain button with toggle',
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
+            <ActionButtonWrapper />)
+          },
+          {
+            title: 'Example: Alternate icon with toggle',
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
+              <ActionButtonWrapper
+                icon="GroupAddIcon"
+              />
+            )
+          },
+          {
+            title: 'Example: Disabled',
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
+              <ActionButton
+                icon="AddIcon"
+                toggle
+                disabled
+              />
+            )
+          },
+        ]
+      }
+    ]
+  }
+}
+
 storiesOf('Base', module)
   .addWithChapters(
     'ActionButton',
-    {
-      info: `
-        Usage
-
-        ~~~
-        import React from 'react';
-        import {ActionButton} from 'insidesales-components';
-        ~~~
-      `,
-      chapters: [
-        {
-          sections: [
-            {
-              title: 'Example: Plain button, no toggle',
-              sectionFn: () => (
-                <ActionButton
-                  icon="AddIcon"
-                  onClick={action('clicked')}
-                />
-              )
-            },
-            {
-              title: 'Example: Plain button with toggle',
-              sectionFn: () => (<ActionButtonWrapper />)
-            },
-            {
-              title: 'Example: Alternate icon with toggle',
-              sectionFn: () => (
-                <ActionButtonWrapper
-                  icon="GroupAddIcon"
-                />
-              )
-            },
-            {
-              title: 'Example: Disabled',
-              sectionFn: () => (
-                <ActionButton
-                  icon="AddIcon"
-                  toggle
-                  disabled
-                />
-              )
-            },
-          ]
-        }
-      ]
-    }
+    renderChapterWithTheme({})
+  )
+  .addWithChapters(
+    'ActionButton w/ BlueYellowTheme',
+    renderChapterWithTheme(colors.blueYellowTheme)
   );
