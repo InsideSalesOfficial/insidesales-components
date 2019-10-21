@@ -4,5 +4,19 @@ export * from './scrollbars';
 export * from './typography';
 
 export function generateFlexedThemeBackground(props, otherStyles) {
-  return { background: props.theme.primary01, ...otherStyles, display: 'flex', alignItems: 'center' };
+  return { background: props.theme.primary01, ...otherStyles };
 };
+
+export function wrapComponentWithContainerAndTheme(theme, Component, wrapperStyling) {
+  const storyContainerStyle = generateFlexedThemeBackground(
+    { theme },
+    { padding: "16px 16px" }
+  );
+  return (
+    <ThemeProvider theme={theme}>
+      <div style={{ ...storyContainerStyle, ...wrapperStyling }}>
+        {Component}
+      </div>
+    </ThemeProvider>
+  );
+}

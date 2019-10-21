@@ -3,13 +3,20 @@ import styled, { keyframes } from 'styled-components';
 import * as _ from 'lodash';
 
 import Loader from '../Loader';
-import { colors, typography, boxShadows } from '../styles';
+import {
+  colors,
+  typography,
+  boxShadows,
+  renderThemeIfPresentOrDefault,
+  renderThemeKeyOrDefaultValue,
+  ifThemeInPropsIsPresentUse,
+} from '../styles';
 
 export const buttonAnimationTimeSeconds = 2;
 
 const fade = keyframes`
   0%   {
-    background: ${colors.green};
+    background: ${renderThemeIfPresentOrDefault({ key: 'brand01', defaultValue: colors.green})};
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
   }
   100% {
@@ -37,7 +44,7 @@ const ButtonBase = styled.button`
     }
 
     if (props.danger) {
-      return colors.red;
+      return renderThemeKeyOrDefaultValue({ props, key: 'warning01', defaultValue: colors.red });
     }
 
     if (props.outline || props.flat || props.flatAlt) {
@@ -45,10 +52,10 @@ const ButtonBase = styled.button`
     }
 
     if (props.neuralytics) {
-      return colors.tron;
+      return renderThemeKeyOrDefaultValue({ props, key: 'tron01', defaultValue: colors.tron});
     }
 
-    return colors.green;
+    return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: colors.green});
   }};
   background: var(--background);
 
@@ -160,7 +167,7 @@ const ButtonBase = styled.button`
     if (props.flatAlt) {
       return colors.green;
     }
-    return colors.white90;
+    return renderThemeKeyOrDefaultValue({ props, key: 'primary01', defaultValue: colors.white90});
   }};
 
   height: 36px;

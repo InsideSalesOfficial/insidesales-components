@@ -1,8 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import Button from './';
+
+import { generateFlexedThemeBackground } from "../styles/index.js";
 import { colors } from '../styles/colors';
 
 const ButtonWrapper = styled.div`
@@ -23,10 +25,21 @@ const DarkWrapper = styled(LightWrapper)`
   background-color: ${colors.darkBlue};
 `;
 
-storiesOf('Base', module)
-.addWithChapters(
-  'Button',
-  {
+
+function wrapComponentWithContainerAndTheme(theme, Component) {
+  const storyContainerStyle = generateFlexedThemeBackground(
+    { theme },
+    { width: "100%", padding: "16px 0" }
+  );
+  return (
+    <ThemeProvider theme={theme}>
+      <div style={storyContainerStyle}>{Component}</div>
+    </ThemeProvider>
+  );
+}
+
+function renderChapterWithTheme(theme) {
+  return {
     info: `
       Usage
 
@@ -43,7 +56,7 @@ storiesOf('Base', module)
             options: {
               showSource: false
             },
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <ButtonWrapper>
                 <LightWrapper>
                   <Button label='Button'/>
@@ -61,7 +74,7 @@ storiesOf('Base', module)
             options: {
               showSource: false
             },
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <ButtonWrapper>
                 <LightWrapper>
                   <Button label='Button' disabled/>
@@ -79,7 +92,7 @@ storiesOf('Base', module)
             options: {
               showSource: false
             },
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <ButtonWrapper>
                 <LightWrapper>
                   <Button label='Button' flat/>
@@ -97,7 +110,7 @@ storiesOf('Base', module)
             options: {
               showSource: false
             },
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <ButtonWrapper>
                 <LightWrapper>
                   <Button label='Button' flat disabled/>
@@ -115,7 +128,7 @@ storiesOf('Base', module)
             options: {
               showSource: false
             },
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <ButtonWrapper>
                 <LightWrapper>
                   <Button label='Button' outline/>
@@ -131,7 +144,7 @@ storiesOf('Base', module)
             options: {
               showSource: false
             },
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <ButtonWrapper>
                 <LightWrapper>
                   <Button label='Button' outline disabled/>
@@ -144,19 +157,27 @@ storiesOf('Base', module)
           },
           {
             title: 'Neuralytics',
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <Button label='Button' neuralytics/>
             )
           },
           {
             title: 'Loading',
-            sectionFn: () => (
+            sectionFn: () => wrapComponentWithContainerAndTheme(theme,
               <Button label='Button' loading/>
             )
           },
         ]
       }
     ]
-  }
-);
+  };
+}
 
+storiesOf('Base', module)
+.addWithChapters(
+  'Default Button',
+ renderChapterWithTheme({})
+).addWithChapters(
+  'Button w/ BlueYellowTheme',
+  renderChapterWithTheme(colors.blueYellowTheme)
+)
