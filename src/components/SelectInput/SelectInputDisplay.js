@@ -231,7 +231,7 @@ class SelectInputDisplay extends React.Component {
     const clonedLabel = typeof (label) === 'string' ? <OverflowWrapper>{label}</OverflowWrapper> : React.cloneElement(label, { isClickable: true, allowOverflow: true });
 
     return (
-      <div style={{ width: '100%' }}>
+      <div className="select-input-display" style={{ width: '100%' }}>
 
         {this.props.addButtonList &&
           <AddButton><Icons.AddCircleIcon fill={colors.green} size={{ width: 24, height: 24 }} /> {defaultLabel}</AddButton>
