@@ -127,7 +127,7 @@
     "predeploy:docs": "npm-run-all --parallel build:docs build:storybook",
     "deploy:docs": "gh-pages -d build",
     "build:commonjs": "cross-env NODE_ENV=development babel ./src/components --out-dir ./lib --ignore spec.js,stories.js",
-    "build:storybook": "build-storybook -c .storybook -o ./build/storybook && cp -r ./build/storybook ./docs",
+    "build:storybook": "build-storybook -c .storybook -o ./build/storybook && cp -r ./build/storybook ./docs/",
     "prepublish": "npm run build:lib",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
