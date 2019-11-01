@@ -58,7 +58,7 @@ export const TextBox = styled.div`
     }
     return '0';
   }};
-  background-color: ${colors.renderThemeIfPresentOrDefault({key: 'primary01', defaultValue: colors.white})};
+  background-color: ${colors.renderThemeIfPresentOrDefault({key: 'primary05', defaultValue: colors.white})};
   border-bottom: thin solid ${colors.black40};
   border-color: ${(props) => {
     if (props.error) {

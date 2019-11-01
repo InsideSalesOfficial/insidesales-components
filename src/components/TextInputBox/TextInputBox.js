@@ -10,7 +10,7 @@ import { hasValue } from './utils';
 import SelectOptions from '../SelectInput/SelectOptions';
 
 const TextBox = styled.div`
-    background-color: ${props => colors.renderThemeIfPresentOrDefault({key: 'primary03', defaultValue: props.background})};
+    background-color: ${props => colors.renderThemeIfPresentOrDefault({key: 'primary05', defaultValue: props.background})};
     border-bottom: thin solid ${colors.renderThemeIfPresentOrDefault({key: 'white40', defaultValue: colors.black40})};
     border-radius: 2px;
     border-width: 2px;
