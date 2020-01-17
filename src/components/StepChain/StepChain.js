@@ -14,34 +14,21 @@ const StepChainWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-  &::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    top: 20px;
-    border-bottom: thin solid ${renderThemeIfPresentOrDefault({ key: 'white40', defaultValue: colors.black20 })};
-  }
+`;
+
+const Line = styled.div`
+  width: 100%;
+  align-self: flex-start;
+  padding-top: 20px;
+  border-bottom: 2px solid ${renderThemeIfPresentOrDefault({ key: 'white60', defaultValue: colors.black20 })};
 `;
 
 const StepWrapper = styled.div`
   position: relative;
-  &:first-child::before {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 40px;
-    top: 0;
-    background-color: ${renderThemeIfPresentOrDefault({ key: 'primary03', defaultValue: colors.white })};
-  }
-  &:last-child::before {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 40px;
-    top: 0;
-    right: 0;
-    background-color: ${renderThemeIfPresentOrDefault({ key: 'primary03', defaultValue: colors.white })};
-  }
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StepItem = styled.div`
@@ -49,14 +36,14 @@ const StepItem = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: ${renderThemeIfPresentOrDefault({ key: 'brand01', defaultValue: colors.aluminum })};
-  margin: auto;
-  margin-bottom: 8px;
-  border: 8px solid ${renderThemeIfPresentOrDefault({ key: 'primary03', defaultValue: colors.white })};
+  color: ${renderThemeIfPresentOrDefault({ key: 'white60', defaultValue: colors.white })};
+  background-color: ${renderThemeIfPresentOrDefault({ key: 'white10', defaultValue: colors.aluminum })};
+  margin: 8px;
   box-sizing: content-box;
 `;
 
 const ColoredStep = styled(StepItem)`
+  color: ${renderThemeIfPresentOrDefault({ key: 'primary03', defaultValue: colors.white })};
   background-color: ${renderThemeIfPresentOrDefault({ key: 'brand01', defaultValue: colors.green })};
 `;
 
@@ -69,7 +56,6 @@ const StepText = styled.span`
   margin: auto;
   width: 100%;
   text-align: center;
-  color: ${renderThemeIfPresentOrDefault({ key: 'primary03', defaultValue: colors.white })};
   ${typography.caption}
 `;
 
@@ -93,7 +79,6 @@ const DarkStepName = styled(StepName)`
   color: ${renderThemeIfPresentOrDefault({ key: 'white90', defaultValue: colors.black90 })};
 `;
 
-
 class StepChain extends React.Component {
   constructor(props) {
     super(props);
@@ -107,10 +92,10 @@ class StepChain extends React.Component {
 
   chainItems = () => {
     const { stepLabels, currentStep } = this.props;
-    return _.map(stepLabels, (text, key) => {
+    return stepLabels.reduce((array, text, key) => {
       const keyPlus = key + 1;
-
-      if (currentStep >= keyPlus) {
+      const step = () => {
+        if (currentStep >= keyPlus) {
         const checkOrKey = (currentStep === keyPlus) ? keyPlus : this.checkMark();
         return (
           <StepWrapper key={key}>
@@ -130,7 +115,11 @@ class StepChain extends React.Component {
         </StepWrapper>
       );
     }
-  )};
+    array.push(step());
+    stepLabels.length - 1 !== key && array.push(<Line />);
+    return array
+  }, [])
+  };
 
   render() {
     return (
