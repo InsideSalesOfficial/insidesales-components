@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import _ from 'lodash';
@@ -14,13 +13,13 @@ import {
 const size = 16;
 
 function renderThemedLabelActiveBackground(props) {
-  if (props.theme.lightRadio || !props.theme.brand01) return '';
-  return transparentize(0.9, props.theme.brand01)
+  if (props.theme.lightRadio || !props.theme.brand05) return '';
+  return props.theme.primary05;
 }
 
 function renderThemedLabelBackground(props) {
   if (props.theme.lightRadio) return 'transparent';
-  return props.theme.white10;
+  return props.theme.primary05;
 }
 
 const RadioLabel = styled.label`
@@ -41,10 +40,23 @@ const RadioLabel = styled.label`
   }};
   margin: ${props => props.theme.margin} 0;
   
-  ${props => props.active && css`
-    background: ${props => ifThemeInPropsIsPresentUse({ props, value: renderThemedLabelActiveBackground(props), defaultValue: props.theme.backgroundFocused })};
-    color: ${renderThemeIfPresentOrDefault({ key: 'brand01', defaultValue: colors.black90 })};
-  `}
+  ${props => {
+    if (props.active) {
+      return css`
+        background: ${props => ifThemeInPropsIsPresentUse({ props, value: renderThemedLabelActiveBackground(props), defaultValue: props.theme.backgroundFocused })};
+        color: ${renderThemeIfPresentOrDefault({ key: 'brand01', defaultValue: colors.black90 })};
+      `;
+    }
+
+    return css`
+      &:hover {
+        color: ${renderThemeIfPresentOrDefault({ key: 'white', defaultValue: colors.black })};
+        span {
+          border-color: ${renderThemeIfPresentOrDefault({ key: 'white', defaultValue: colors.black })};
+        }
+      }
+    `
+  }}
 `;
 
 const RadioInput = styled.input`
