@@ -13,7 +13,7 @@ import {
 const size = 16;
 
 function renderThemedLabelActiveBackground(props) {
-  if (props.theme.lightRadio || !props.theme.brand05) return '';
+  if (props.theme.lightRadio || !props.theme.primary05) return '';
   return props.theme.primary05;
 }
 
