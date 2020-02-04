@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { transparentize } from 'polished';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import _ from 'lodash';
@@ -13,8 +14,8 @@ import {
 const size = 16;
 
 function renderThemedLabelActiveBackground(props) {
-  if (props.theme.lightRadio || !props.theme.primary05) return '';
-  return props.theme.primary05;
+  if (props.theme.lightRadio || !props.theme.brand01) return '';
+  return transparentize(0.9, props.theme.brand01)
 }
 
 function renderThemedLabelBackground(props) {
