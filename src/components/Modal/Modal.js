@@ -23,26 +23,26 @@ const DialogWrapper = styled.div`
     }
     return 'flex-start';
   }};
-  width: 100%;
-  height: 100%;
   top: 0;
-  left: 0;
+  left: calc(50% - ${props => props.theme.width / 2}px);
+  overflow-y: scroll;
   padding: ${(props) => {
     if (props.center) {
       return '0';
     }
-    return '70px 0 50px 0;';
+    return '0'; //'70px 0 50px 0;';
   }};
   z-index: 900050;
 `;
 
 const DialogBackground = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   left: 0;
   background-color: ${renderThemeIfPresentOrDefault({ key: 'black60', defaultValue: colors.black50})};
+  z-index: 900050;
 `;
 
 const DialogBase = styled.div`
@@ -145,14 +145,16 @@ class Modal extends React.Component {
       ...props
     } = this.props;
     return (
-      <DialogWrapper ref="message_dialog_wrapper" center={center} {...props}>
-        <DialogBackground ref="message_dialog_background" onClick={onModalBackgroundClick}/>
-        <ThemeProvider theme={theme}>
-          <DialogBase ref="message_dialog_component" center={center}>
-            {children}
-          </DialogBase>
-        </ThemeProvider>
-      </DialogWrapper>
+      <ThemeProvider theme={theme}>
+        <div>
+          <DialogBackground ref="message_dialog_background" onClick={onModalBackgroundClick}/>
+          <DialogWrapper ref="message_dialog_wrapper" center={center} {...props}>
+              <DialogBase ref="message_dialog_component" center={center}>
+                {children}
+              </DialogBase>
+          </DialogWrapper>
+        </div>
+      </ThemeProvider>
     );
   }
 }
