@@ -26,12 +26,7 @@ const DialogWrapper = styled.div`
   top: 0;
   left: calc(50% - ${props => props.theme.width / 2}px);
   overflow-y: scroll;
-  padding: ${(props) => {
-    if (props.center) {
-      return '0';
-    }
-    return '0'; //'70px 0 50px 0;';
-  }};
+  padding: 0;
   z-index: 900050;
 `;
 
