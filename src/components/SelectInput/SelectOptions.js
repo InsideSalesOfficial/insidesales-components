@@ -37,6 +37,10 @@ const SelectOptionsContainer = styled.div`
     if (props.theme.optionListPosition) return props.theme.optionListPosition;
     return 'calc(100%)';
   }};
+  ${props => {
+    if (!props.theme.optionListPositionLeft) return '';
+    return `left: ${props.theme.optionListPositionLeft};`;
+  }}
   width: ${props => props.width ? `${props.width}px` : '100%'};
   z-index: 2;
   box-shadow: ${(props) => {

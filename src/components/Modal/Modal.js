@@ -9,7 +9,7 @@ import {
   renderThemeIfPresentOrDefault,
 } from '../styles';
 
-const DialogWrapper = styled.div`
+const FixedDialogWrapper = styled.div`
   position: ${(props) => {
     if (props.onStoryBook) {
       return 'relative';
@@ -23,14 +23,13 @@ const DialogWrapper = styled.div`
     }
     return 'flex-start';
   }};
-  top: 0;
+  top: calc(0px + 10%);
   left: calc(50% - ${props => props.theme.width / 2}px);
-  overflow-y: scroll;
   padding: 0;
   z-index: 900050;
 `;
 
-const DialogBackground = styled.div`
+const FixedDialogBackground = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -50,12 +49,7 @@ const DialogBase = styled.div`
   flex-grow: 0;
   padding: 16px;
   margin: 0 auto;
-  margin-top: ${(props) => {
-    if (props.center) {
-      return '0';
-    }
-    return '102px';
-  }};
+  margin-top: 0;
 
   background: ${renderThemeIfPresentOrDefault({ key: 'primary03', defaultValue: colors.white})};
   box-shadow: 0 15px 12px 0 rgba(0,0,0,0.12), 0 19px 38px 0 rgba(0,0,0,0.3);
@@ -139,15 +133,16 @@ class Modal extends React.Component {
       onModalBackgroundClick = _.noop,
       ...props
     } = this.props;
+
     return (
       <ThemeProvider theme={theme}>
         <div>
-          <DialogBackground ref="message_dialog_background" onClick={onModalBackgroundClick}/>
-          <DialogWrapper ref="message_dialog_wrapper" center={center} {...props}>
-              <DialogBase ref="message_dialog_component" center={center}>
-                {children}
-              </DialogBase>
-          </DialogWrapper>
+          <FixedDialogBackground ref="message_dialog_background" onClick={onModalBackgroundClick}/>
+          <FixedDialogWrapper ref="message_dialog_wrapper" center={center} {...props}>
+            <DialogBase ref="message_dialog_component" center={center}>
+              {children}
+            </DialogBase>
+          </FixedDialogWrapper>
         </div>
       </ThemeProvider>
     );
