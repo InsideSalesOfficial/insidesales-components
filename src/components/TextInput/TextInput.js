@@ -239,12 +239,12 @@ class TextInput extends React.Component {
   }
 
   blurred = () => {
-    document.removeEventListener('keyup', this.handleCursorPositionChange)
-    if (!this.state.cancelBlur) {
-      this.setState({
-        focused: false
-      });
-    }
+    document.removeEventListener('keyup', this.handleCursorPositionChange);
+    if(this.state.cancelBlur) return;
+
+    if(typeof this.props.onBlur === 'function') this.props.onBlur();
+
+    this.setState({ focused: false });
   }
 
   componentWillUnmount() {
