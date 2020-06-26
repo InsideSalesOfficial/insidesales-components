@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { fontWeights, typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
 
 import Dropdown from './Dropdown';
+import Caret from './Caret';
 
 const Wrapper = styled.div``;
 
@@ -18,36 +19,6 @@ const Label = styled.label`
 
 const Value = styled.span`
   padding: 22px 26px 0 16px;
-`;
-
-const Caret = styled.div`
-  position: absolute;
-  right: 24px;
-  top: ${(props) => {
-    if (props.theme.caretTopPosition) {
-      return props.theme.caretTopPosition;
-    }
-
-    return '50%';
-  }};
-  transform: translateY(-50%);
-  cursor: pointer;
-
-  &::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    margin: auto;
-    border-left: 5px transparent solid;
-    border-right: 5px transparent solid;
-    border-${props => props.open ? 'bottom' : 'top'}: 5px ${props => {
-      if (props.theme.borderColor){
-        return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: props.theme.borderColor });
-      }
-      return props.open ? renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black90 }) : renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
-    }} solid;
-  }
 `;
 
 const Button = styled.button`
@@ -92,13 +63,20 @@ function buttonBorderColor(props) {
 
 
 class Select extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      open: false
+    }
+  }
+
   render() {
     return (
       <Wrapper>
 
         <Button>
           <Label>{this.props.label}</Label>
-          <Caret />
+          <Caret open={this.state.open} />
           <Value>Value</Value>
         </Button>
         <Dropdown options={this.props.options} />
