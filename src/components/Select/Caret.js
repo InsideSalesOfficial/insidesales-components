@@ -26,7 +26,7 @@ ${caretStyles}
 &::after {
   border-top:
     5px
-    ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor })}
+    ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor })}
     solid;
 }
 `;
@@ -36,7 +36,7 @@ ${caretStyles}
 &::after {
   border-bottom:
     5px
-    ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor })}
+    ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor })}
     solid;
 }
 `;

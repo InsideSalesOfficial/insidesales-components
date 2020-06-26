@@ -70,11 +70,18 @@ class Select extends React.Component {
     }
   }
 
+  handleButtonClick = (event) => {
+    this.setState(prevState => ({
+      open: !prevState.open
+    }));
+  }
+
   render() {
     return (
       <Wrapper>
-
-        <Button>
+        <Button
+          onClick={this.handleButtonClick}
+        >
           <Label>{this.props.label}</Label>
           <Caret open={this.state.open} />
           <Value>Value</Value>
