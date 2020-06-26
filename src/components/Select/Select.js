@@ -86,7 +86,10 @@ class Select extends React.Component {
           <Caret open={this.state.open} />
           <Value>Value</Value>
         </Button>
-        <Dropdown options={this.props.options} />
+        <Dropdown
+          open={this.state.open}
+          options={this.props.options}
+        />
       </Wrapper>
     );
   }
@@ -94,10 +97,6 @@ class Select extends React.Component {
 
 Select.propTypes = {
   options: PropTypes.array.isRequired
-};
-
-Select.defaultProps = {
-  options: []
 };
 
 export default Select;
