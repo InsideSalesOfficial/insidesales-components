@@ -7,15 +7,57 @@ import Dropdown from './Dropdown';
 
 const Wrapper = styled.div``;
 
-const Label = styled.label``;
+const Label = styled.label`
+  left: 16px;
+  top: 30%;
+  position: absolute;
+  transition: all 200ms;
+  transform: translateY(-50%);
+  ${typography.caption}
+`;
+
+const Value = styled.span`
+  padding: 22px 26px 0 16px;
+`;
+
+const Caret = styled.div`
+  position: absolute;
+  right: 24px;
+  top: ${(props) => {
+    if (props.theme.caretTopPosition) {
+      return props.theme.caretTopPosition;
+    }
+
+    return '50%';
+  }};
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: auto;
+    border-left: 5px transparent solid;
+    border-right: 5px transparent solid;
+    border-${props => props.open ? 'bottom' : 'top'}: 5px ${props => {
+      if (props.theme.borderColor){
+        return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: props.theme.borderColor });
+      }
+      return props.open ? renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black90 }) : renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
+    }} solid;
+  }
+`;
 
 const Button = styled.button`
+  position: relative;
   display: flex;
   align-items: normal;
   outline: none;
   width: 100%;
   height: 56px;
-  padding: 22px 26px 0 16px;
+  padding: 0;
   text-align: left;
   box-sizing: border-box;
   white-space: nowrap;
@@ -53,8 +95,12 @@ class Select extends React.Component {
   render() {
     return (
       <Wrapper>
-        <Label>{this.props.label}</Label>
-        <Button>Value</Button>
+
+        <Button>
+          <Label>{this.props.label}</Label>
+          <Caret />
+          <Value>Value</Value>
+        </Button>
         <Dropdown options={this.props.options} />
       </Wrapper>
     );
