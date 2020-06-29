@@ -6,7 +6,7 @@ import Option from './Option';
 
 const Options = styled.ul`
   background: ${optionsBackground}
-  display: ${props => props.open ? 'block' : 'none'}
+  display: ${props => props.isOpen ? 'block' : 'none'}
   width: 100%;
   max-height: 240px;
   margin: 0;
@@ -24,7 +24,7 @@ class Dropdown extends React.Component {
     return (this.props.options.map((option) => {
       return (
         <Option
-          onClick={this.props.onChange}
+          onClick={this.props.onSelect}
           option={option}
         />
       );
@@ -33,7 +33,7 @@ class Dropdown extends React.Component {
 
   render() {
     return (
-      <Options open={this.props.open} >
+      <Options isOpen={this.props.isOpen} >
         {this.renderOptions()}
       </Options>
     );
@@ -41,8 +41,8 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   options: PropTypes.array.isRequired
 };
 

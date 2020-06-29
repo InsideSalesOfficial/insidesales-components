@@ -63,37 +63,66 @@ class Select extends React.Component {
   constructor() {
     super();
     this.state = {
-      open: false,
+      isFocused: false,
+      isOpen: false,
       selectedOption: undefined
     }
   }
 
+  handleBlur = (event) => {
+    console.log('>>', 'handleBlur');
+    this.timeoutID = setTimeout(() => {
+      if(this.state.isFocused) {
+        this.setState({
+          isFocused: false,
+          isOpen: false
+        });
+      }
+    }, 0);
+  }
+
+  handleFocus = (event) => {
+    console.log('>>', 'handleFocus');
+    clearTimeout(this.timeoutID);
+    if(!this.state.isFocused) {
+      this.setState({
+        isFocused: true
+      });
+    }
+  }
+
   handleButtonClick = (event) => {
+    console.log('>>', 'handleButtonClick');
     this.setState(prevState => ({
-      open: !prevState.open
+      isOpen: !prevState.isOpen
     }));
   }
 
-  handleOptionsChange = (option) => {
+  handleOptionSelected = (option) => {
+    console.log('>>', 'handleOptionSelected');
     this.setState({
-      open: false,
-      selectedOption: option
+      selectedOption: option,
+      isOpen: false,
     });
   }
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper
+        tabIndex={1}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+      >
         <Button
           onClick={this.handleButtonClick}
         >
           <Label>{this.props.label}</Label>
-          <Caret open={this.state.open} />
+          <Caret isOpen={this.state.isOpen} />
           <SelectedOption option={this.state.selectedOption} />
         </Button>
         <Dropdown
-          onChange={this.handleOptionsChange}
-          open={this.state.open}
+          onSelect={this.handleOptionSelected}
+          isOpen={this.state.isOpen}
           options={this.props.options}
         />
       </Wrapper>

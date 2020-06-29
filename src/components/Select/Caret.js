@@ -44,13 +44,13 @@ ${caretStyles}
 class Caret extends React.Component {
   render() {
     return (
-      this.props.open ? <CaretDown /> : <CaretUp />
+      this.props.isOpen ? <CaretDown /> : <CaretUp />
     );
   }
 }
 
 Caret.propTypes = {
-  open: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default Caret;
