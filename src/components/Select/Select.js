@@ -114,6 +114,7 @@ class Select extends React.Component {
         onFocus={this.handleFocus}
       >
         <Button
+          tabIndex={-1}
           onClick={this.handleButtonClick}
         >
           <Label>{this.props.label}</Label>
