@@ -9,7 +9,7 @@ padding: 22px 26px 0 16px;
 
 class SelectedOption extends React.Component {
   render() {
-    return <Label>{this.props.label}</Label>
+    return <Label>{this.props.option && this.props.option.label}</Label>
   }
 }
 
