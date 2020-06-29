@@ -7,7 +7,9 @@ import SelectedOption from './SelectedOption';
 import Dropdown from './Dropdown';
 import Caret from './Caret';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  outline: none;
+`;
 
 const Label = styled.label`
   left: 16px;
@@ -55,6 +57,9 @@ function buttonBackground(props) {
 }
 
 function buttonBorderColor(props) {
+  if(props.isFocused) {
+    return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
+  }
   return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
 }
 
@@ -116,6 +121,7 @@ class Select extends React.Component {
         <Button
           tabIndex={-1}
           onClick={this.handleButtonClick}
+          isFocused={this.state.isFocused}
         >
           <Label>{this.props.label}</Label>
           <Caret isOpen={this.state.isOpen} />
