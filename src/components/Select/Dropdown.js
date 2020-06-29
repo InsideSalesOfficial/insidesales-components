@@ -19,21 +19,29 @@ function optionsBackground(props) {
   return renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background });
 }
 
-function renderOptions(options) {
-  return options.map(({ label, value }) => <Option label={label} value={value} />)
-}
-
 class Dropdown extends React.Component {
+  renderOptions = () => {
+    return (this.props.options.map((option) => {
+      return (
+        <Option
+          onClick={this.props.onChange}
+          option={option}
+        />
+      );
+    }));
+  }
+
   render() {
     return (
       <Options open={this.props.open} >
-        {renderOptions(this.props.options)}
+        {this.renderOptions()}
       </Options>
     );
   }
 }
 
 Dropdown.propTypes = {
+  onChange: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   options: PropTypes.array.isRequired
 };

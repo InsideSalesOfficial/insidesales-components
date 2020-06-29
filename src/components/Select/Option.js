@@ -26,16 +26,18 @@ function hoverBackgroundColor(props) {
 
 class Option extends React.Component {
   render() {
-    console.log('>>', this.props);
-    const {value, label} = this.props;
-
-    return (<ListItem>{label}</ListItem>);
+    return (
+      <ListItem
+        onClick={() => this.props.onClick(this.props.option)}
+      >
+        {this.props.option.label}
+      </ListItem>);
   }
 }
 
 Option.propTypes = {
-  value: PropTypes.any,
-  label: PropTypes.string
+  onClick: PropTypes.func.isRequired,
+  option: PropTypes.object.isRequired
 };
 
 export default Option;

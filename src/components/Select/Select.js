@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { fontWeights, typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
 
+import SelectedOption from './SelectedOption';
 import Dropdown from './Dropdown';
 import Caret from './Caret';
 
@@ -15,10 +16,6 @@ const Label = styled.label`
   transition: all 200ms;
   transform: translateY(-50%);
   ${typography.caption}
-`;
-
-const Value = styled.span`
-  padding: 22px 26px 0 16px;
 `;
 
 const Button = styled.button`
@@ -66,7 +63,8 @@ class Select extends React.Component {
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
+      selectedOption: undefined
     }
   }
 
@@ -74,6 +72,13 @@ class Select extends React.Component {
     this.setState(prevState => ({
       open: !prevState.open
     }));
+  }
+
+  handleOptionsChange = (option) => {
+    this.setState({
+      open: false,
+      selectedOption: option
+    });
   }
 
   render() {
@@ -84,9 +89,10 @@ class Select extends React.Component {
         >
           <Label>{this.props.label}</Label>
           <Caret open={this.state.open} />
-          <Value>Value</Value>
+          <SelectedOption option={this.state.selectedOption} />
         </Button>
         <Dropdown
+          onChange={this.handleOptionsChange}
           open={this.state.open}
           options={this.props.options}
         />
