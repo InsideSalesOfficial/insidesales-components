@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { fontWeights, typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
 
-import SelectedOption from './SelectedOption';
 import Dropdown from './Dropdown';
 import Caret from './Caret';
 
@@ -12,15 +11,21 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.label`
-  left: 16px;
-  top: 30%;
-  position: absolute;
   transition: all 200ms;
   transform: translateY(-50%);
-  ${typography.caption}
+  position: absolute;
+  left: 16px;
+  top: ${props => props.isOptionSelected ? '30%' : '50%'};
+  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 })};
+  ${props => props.isOptionSelected && typography.caption}
 `;
 
-const Button = styled.button`
+const SelectedOption = styled.span`
+  padding: 22px 26px 0 16px;
+  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 })};
+`;
+
+const Button = styled.div`
   position: relative;
   display: flex;
   align-items: normal;
@@ -37,32 +42,21 @@ const Button = styled.button`
   border: 0;
   border-bottom-width: 2px;
   border-bottom-style: solid;
-  border-bottom-color: ${buttonBorderColor};
   border-radius: 2px;
+  border-bottom-color: ${props => {
+    if(props.isFocused) {
+      return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
+    }
+    return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
+  }};
 
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
 
+  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.black60 })};
+  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary03', defaultValue: props.theme.background })};
+
   ${typography.subhead1};
-
-  color: ${buttonColor};
-  background: ${buttonBackground};
 `;
-
-function buttonColor(props) {
-  return renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.black60 });
-}
-
-function buttonBackground(props) {
-  return renderThemeKeyOrDefaultValue({ props, key: 'primary03', defaultValue: props.theme.background });
-}
-
-function buttonBorderColor(props) {
-  if(props.isFocused) {
-    return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
-  }
-  return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
-}
-
 
 class Select extends React.Component {
   constructor() {
@@ -96,11 +90,20 @@ class Select extends React.Component {
     }
   }
 
+  handleKeyDown = (event) => {
+    console.log('>>', event.key);
+    switch(event.key) {
+      case 'Enter':
+        this.toggleOpenState();
+        break;
+      default:
+        break;
+    }
+  }
+
   handleButtonClick = (event) => {
     console.log('>>', 'handleButtonClick');
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
-    }));
+    this.toggleOpenState();
   }
 
   handleOptionSelected = (option) => {
@@ -111,21 +114,32 @@ class Select extends React.Component {
     });
   }
 
+  toggleOpenState = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
+  }
+
+  isOptionSelected = () => {
+    return (typeof this.state.selectedOption === 'object');
+  }
+
   render() {
     return (
       <Wrapper
         tabIndex={1}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
+        onKeyDown={this.handleKeyDown}
       >
         <Button
           tabIndex={-1}
           onClick={this.handleButtonClick}
           isFocused={this.state.isFocused}
         >
-          <Label>{this.props.label}</Label>
+          <Label isOptionSelected={this.isOptionSelected()} >{this.props.label}</Label>
           <Caret isOpen={this.state.isOpen} />
-          <SelectedOption option={this.state.selectedOption} />
+          <SelectedOption>{this.state.selectedOption && this.state.selectedOption.label}</SelectedOption>
         </Button>
         <Dropdown
           onSelect={this.handleOptionSelected}
