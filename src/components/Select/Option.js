@@ -28,14 +28,17 @@ function focusedBackground(props) {
     return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: props.theme.background });
   }
 }
+
 class Option extends React.Component {
   render() {
     console.log('isFocused: ', this.props.isFocused)
+    if (this.props.isFocused) this.element.scrollIntoViewIfNeeded();
     return (
       <ListItem
         tabIndex={1}
         onClick={() => this.props.onClick(this.props.option)}
         isFocused={this.props.isFocused}
+        innerRef={element => this.element = element}
       >
         {this.props.option.label}
       </ListItem>);

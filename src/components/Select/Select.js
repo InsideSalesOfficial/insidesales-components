@@ -59,6 +59,18 @@ const Button = styled.div`
   ${typography.subhead1};
 `;
 
+function getNextFocusedOption({isOpen, focusedOption, optionsLength, direction}) {
+  if (!isOpen) return 0;
+  if (direction === 'next') {
+    return (focusedOption + 1) % optionsLength;
+  } else {
+    if (focusedOption === 0) {
+      return optionsLength - 1;
+    }
+    return (focusedOption - 1);
+  }
+}
+
 class Select extends React.Component {
   constructor() {
     super();
@@ -111,15 +123,27 @@ class Select extends React.Component {
         break;
       case 'ArrowDown':
         event.preventDefault();
+
         this.setState(prevState => ({
           isOpen: true,
-          focusedOption: this.state.isOpen ? this.state.focusedOption + 1 : 0
+          focusedOption: getNextFocusedOption({
+            isOpen: this.state.isOpen,
+            focusedOption: this.state.focusedOption,
+            optionsLength: this.props.options.length,
+            direction: 'next'
+          })
         }));
         break;
       case 'ArrowUp':
         event.preventDefault();
         this.setState(prevState => ({
-          isOpen: true
+          isOpen: true,
+          focusedOption: getNextFocusedOption({
+            isOpen: this.state.isOpen,
+            focusedOption: this.state.focusedOption,
+            optionsLength: this.props.options.length,
+            direction: 'previous'
+          })
         }));
         break;
       default:
