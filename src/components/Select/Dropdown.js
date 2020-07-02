@@ -5,7 +5,7 @@ import { fontWeights, colors, renderThemeKeyOrDefaultValue } from "../styles";
 import Option from './Option';
 
 const Options = styled.ul`
-  background: ${optionsBackground}
+  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })}
   display: ${props => props.isOpen ? 'block' : 'none'}
   width: 100%;
   max-height: 240px;
@@ -15,17 +15,15 @@ const Options = styled.ul`
   overflow-y: auto;
 `;
 
-function optionsBackground(props) {
-  return renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background });
-}
-
 class Dropdown extends React.Component {
   renderOptions = () => {
-    return (this.props.options.map((option) => {
+    return (this.props.options.map((option, index) => {
       return (
         <Option
+          key={index}
           onClick={this.props.onSelect}
           option={option}
+          isFocused={this.props.focusedOption === index}
         />
       );
     }));
@@ -43,7 +41,8 @@ class Dropdown extends React.Component {
 Dropdown.propTypes = {
   onSelect: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  options: PropTypes.array.isRequired
+  options: PropTypes.array.isRequired,
+  focusedOption: PropTypes.number
 };
 
 export default Dropdown;

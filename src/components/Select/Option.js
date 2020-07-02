@@ -6,29 +6,35 @@ import {fontWeights, colors, renderThemeKeyOrDefaultValue} from "../styles";
 const ListItem = styled.li`
   display: flex;
   align-items: center;
-  color: ${listItemColor};
+  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: props.theme.white90 })};
   padding: 0 24px;
   line-height: 36px;
   cursor: pointer;
 
   &:hover {
-    background: ${hoverBackgroundColor};
+    background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: props.theme.background })};
+  }
+
+  &:focus {
+    outline: none;
+    background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.background })};
   }
 `;
 
-function listItemColor(props) {
-  return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: props.theme.white90 });
-}
-
-function hoverBackgroundColor(props) {
-  return renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: props.theme.background });
-}
-
 class Option extends React.Component {
+  focusSelf = () => {
+    if (this.optionElement) {
+      console.log('Focusing');
+      this.optionElement.focus();
+    }
+  }
+
   render() {
     return (
       <ListItem
+        tabIndex={1}
         onClick={() => this.props.onClick(this.props.option)}
+        innerRef={element => this.optionElement = element}
       >
         {this.props.option.label}
       </ListItem>);
@@ -36,6 +42,7 @@ class Option extends React.Component {
 }
 
 Option.propTypes = {
+  isFocused: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   option: PropTypes.object.isRequired
 };

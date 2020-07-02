@@ -8,6 +8,7 @@ import Caret from './Caret';
 
 const Wrapper = styled.div`
   outline: none;
+  user-select: none;
 `;
 
 const Label = styled.label`
@@ -64,8 +65,16 @@ class Select extends React.Component {
     this.state = {
       isFocused: false,
       isOpen: false,
-      selectedOption: undefined
+      selectedOption: undefined,
+      focusedOption: undefined
     }
+  }
+
+  handleButtonClick = (event) => {
+    console.log('>>', 'handleButtonClick');
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
   }
 
   handleBlur = (event) => {
@@ -94,16 +103,27 @@ class Select extends React.Component {
     console.log('>>', event.key);
     switch(event.key) {
       case 'Enter':
-        this.toggleOpenState();
+      case ' ':
+        event.preventDefault();
+        this.setState(prevState => ({
+          isOpen: !prevState.isOpen
+        }));
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.setState(prevState => ({
+          isOpen: true
+        }));
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.setState(prevState => ({
+          isOpen: true
+        }));
         break;
       default:
         break;
     }
-  }
-
-  handleButtonClick = (event) => {
-    console.log('>>', 'handleButtonClick');
-    this.toggleOpenState();
   }
 
   handleOptionSelected = (option) => {
@@ -112,12 +132,6 @@ class Select extends React.Component {
       selectedOption: option,
       isOpen: false,
     });
-  }
-
-  toggleOpenState = () => {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
-    }));
   }
 
   isOptionSelected = () => {
@@ -145,6 +159,7 @@ class Select extends React.Component {
           onSelect={this.handleOptionSelected}
           isOpen={this.state.isOpen}
           options={this.props.options}
+          focusedOption={2}
         />
       </Wrapper>
     );
