@@ -112,7 +112,8 @@ class Select extends React.Component {
       case 'ArrowDown':
         event.preventDefault();
         this.setState(prevState => ({
-          isOpen: true
+          isOpen: true,
+          focusedOption: this.state.isOpen ? this.state.focusedOption + 1 : 0
         }));
         break;
       case 'ArrowUp':
@@ -159,7 +160,7 @@ class Select extends React.Component {
           onSelect={this.handleOptionSelected}
           isOpen={this.state.isOpen}
           options={this.props.options}
-          focusedOption={2}
+          focusedOption={this.state.focusedOption}
         />
       </Wrapper>
     );

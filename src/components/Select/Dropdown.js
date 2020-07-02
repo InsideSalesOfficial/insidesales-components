@@ -18,6 +18,7 @@ const Options = styled.ul`
 class Dropdown extends React.Component {
   renderOptions = () => {
     return (this.props.options.map((option, index) => {
+      console.log('this.props.focusedOption', this.props.focusedOption);
       return (
         <Option
           key={index}

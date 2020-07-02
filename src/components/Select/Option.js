@@ -10,6 +10,8 @@ const ListItem = styled.li`
   padding: 0 24px;
   line-height: 36px;
   cursor: pointer;
+  background: ${props => focusedBackground(props)};
+
 
   &:hover {
     background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: props.theme.background })};
@@ -17,24 +19,23 @@ const ListItem = styled.li`
 
   &:focus {
     outline: none;
-    background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.background })};
   }
 `;
 
-class Option extends React.Component {
-  focusSelf = () => {
-    if (this.optionElement) {
-      console.log('Focusing');
-      this.optionElement.focus();
-    }
+function focusedBackground(props) {
+  console.log('focusedBackground - isFocused', props);
+  if(props.isFocused) {
+    return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: props.theme.background });
   }
-
+}
+class Option extends React.Component {
   render() {
+    console.log('isFocused: ', this.props.isFocused)
     return (
       <ListItem
         tabIndex={1}
         onClick={() => this.props.onClick(this.props.option)}
-        innerRef={element => this.optionElement = element}
+        isFocused={this.props.isFocused}
       >
         {this.props.option.label}
       </ListItem>);
