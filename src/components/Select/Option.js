@@ -25,7 +25,7 @@ const ListItem = styled.li`
 function focusedBackground(props) {
   console.log('focusedBackground - isFocused', props);
   if(props.isFocused) {
-    return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: props.theme.background });
+    return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.background });
   }
 }
 

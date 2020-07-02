@@ -60,7 +60,7 @@ const Button = styled.div`
 `;
 
 function getNextFocusedOption({isOpen, focusedOption, optionsLength, direction}) {
-  if (!isOpen) return 0;
+  if (!isOpen || !(typeof focusedOption === 'number')) return 0;
   if (direction === 'next') {
     return (focusedOption + 1) % optionsLength;
   } else {
@@ -123,7 +123,6 @@ class Select extends React.Component {
         break;
       case 'ArrowDown':
         event.preventDefault();
-
         this.setState(prevState => ({
           isOpen: true,
           focusedOption: getNextFocusedOption({
