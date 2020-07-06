@@ -1,7 +1,7 @@
 import React from "react";
-import _ from "lodash";
 import { storiesOf, action } from "@storybook/react";
 import SelectInputLabelBox from "./SelectInputLabelBox";
+import Button from "../Button";
 import styled from "styled-components";
 
 import {
@@ -15,6 +15,14 @@ import { SelectInputLabelBoxThemes } from "../index";
 const OptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 6px;
+  padding-bottom: 6px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   padding-top: 6px;
   padding-bottom: 6px;
 `;
@@ -39,15 +47,40 @@ class WrapperComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: ""
+      value: "",
+      error: false,
+      disabled: false
     };
   }
+
+  toggle = (param) => {
+    this.setState(prevState => ({
+      [param]: !prevState[param]
+    }))
+  }
+
   render = () => (
-    <SelectInputLabelBox
-      {...this.props}
-      value={this.state.value}
-      onChange={value => this.setState({ value })}
-    />
+    <div>
+      <SelectInputLabelBox
+        {...this.props}
+        value={this.state.value}
+        error={this.state.error}
+        isDisabled={this.state.disabled}
+        onChange={value => this.setState({ value })}
+      />
+      <ButtonWrapper>
+        <Button
+          outline
+          label="Toggle Error"
+          onClick={() => this.toggle("error")}
+        />
+        <Button
+          outline
+          label="Toggle Disabled"
+          onClick={() => this.toggle("disabled")}
+        />
+      </ButtonWrapper>
+    </div>
   );
 }
 
@@ -66,45 +99,6 @@ class MultiselectWrapperComponent extends React.Component {
         this.setState({ value });
       }}
       multiSelect
-    />
-  );
-}
-
-class WrapperEmailThreadComponent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      label: "",
-      value: "Send as a reply to",
-      isPlaceHolder: true
-    };
-  }
-
-  onOptionChange = value => {
-    if (value === "p1") {
-      this.setState({
-        label: "",
-        value: "Send as a reply to",
-        isPlaceHolder: true
-      });
-      return;
-    }
-
-    const selectedOption = _.find(htmlOptions, o => o.value === value);
-    this.setState({
-      label: `Send as a reply to ${selectedOption.optionLabel}`,
-      value: selectedOption.optionValue,
-      isPlaceHolder: false
-    });
-  };
-
-  render = () => (
-    <SelectInputLabelBox
-      {...this.props}
-      label={this.state.label}
-      value={this.state.value}
-      isPlaceHolder={this.state.isPlaceHolder}
-      onChange={this.onOptionChange}
     />
   );
 }
@@ -171,30 +165,14 @@ function renderChapterWithTheme(theme) {
       {
         sections: [
           {
-            title: "SelectInputLabelBox",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
             title: "SelectInputLabelBox with Stateful wrapper",
             sectionFn: () =>
               wrapComponentWithContainerAndTheme(
                 theme,
-                <div>
-                  <WrapperComponent
-                    label="Hello World!"
-                    options={genericOptions}
-                  />
-                </div>
+                <WrapperComponent
+                  label="Hello World!"
+                  options={genericOptions}
+                />
               )
           },
           {
@@ -217,13 +195,11 @@ function renderChapterWithTheme(theme) {
             sectionFn: () =>
               wrapComponentWithContainerAndTheme(
                 theme,
-                <div>
-                  <WrapperComponent
-                    label="Hello World!"
-                    required
-                    options={genericOptions}
-                  />
-                </div>
+                <WrapperComponent
+                  label="Hello World!"
+                  required
+                  options={genericOptions}
+                />
               )
           },
           {
@@ -255,35 +231,6 @@ function renderChapterWithTheme(theme) {
               )
           },
           {
-            title: "Disabled SelectInputLabelBox",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    isDisabled={true}
-                    label="Hello World!"
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "Disabled SelectInputLabelBox with value",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    isDisabled={true}
-                    label="Hello World!"
-                    value={12}
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
             title:
               "SelectInputLabelBoxTransparent with value and promotedOption",
             sectionFn: () =>
@@ -297,20 +244,6 @@ function renderChapterWithTheme(theme) {
                     theme={
                       SelectInputLabelBoxThemes.lineSelectInputBoxTransparentTheme
                     }
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBox with darkTheme",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    theme={SelectInputLabelBoxThemes.darkTheme}
-                    onChange={action("Option Selected")}
-                    options={genericOptions}
                   />
                 </div>
               )
@@ -342,105 +275,6 @@ function renderChapterWithTheme(theme) {
                     value={selectedOptions}
                     options={genericOptions}
                     multiSelect
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabel with multiselect and no selected values",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    value={[]}
-                    options={genericOptions}
-                    multiSelect
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabel with boolean value",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    value={true}
-                    options={[
-                      { value: true, label: "true" },
-                      { value: false, label: "false" }
-                    ]}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabel with boolean value",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    value={false}
-                    options={[
-                      { value: true, label: "true" },
-                      { value: false, label: "false" }
-                    ]}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabel with no selected values",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    value={""}
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBox with darkTheme with value",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    theme={SelectInputLabelBoxThemes.darkTheme}
-                    value="Hi world"
-                    onChange={action("Option Selected")}
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBox with error",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label={"error"}
-                    value="NO!"
-                    error
-                    onChange={action("Option Selected")}
-                    options={genericOptions}
                   />
                 </div>
               )
