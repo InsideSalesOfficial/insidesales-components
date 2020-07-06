@@ -46,29 +46,31 @@ const OptionValue = styled.div`
   })};
 `;
 
-
-class MultiselectWrapperComponent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      value: []
-    };
-  }
-  render = () => (
-    <SelectInputLabelBox
-      {...this.props}
-      value={this.state.value}
-      onChange={value => {
-        this.setState({ value });
-      }}
-      multiSelect
-    />
-  );
-}
+const optionsToPromote = [{ value: "p1", label: "Clear Selection" }];
 
 const genericOptions = [
-  { value: "1", label: "Option One" },
-  { value: "2", label: "Option Two" },
+  {
+    value: "1",
+    optionLabel: "option one label",
+    optionValue: "option one",
+    label: (
+      <OptionWrapper>
+        <OptionLabel>option one label</OptionLabel>
+        <OptionValue>option one</OptionValue>
+      </OptionWrapper>
+    )
+  },
+  {
+    value: "2",
+    optionLabel: "option two label",
+    optionValue: "option two",
+    label: (
+      <OptionWrapper>
+        <OptionLabel>option two label</OptionLabel>
+        <OptionValue>option two</OptionValue>
+      </OptionWrapper>
+    )
+  },
   { value: "3", label: "Option Three" },
   { value: "4", label: "Option Four" },
   { value: "5", label: "Option Five" },
@@ -84,8 +86,6 @@ const genericOptions = [
   },
   { value: 12, label: `I'm a number` }
 ];
-
-const optionsToPromote = [{ value: "p1", label: "Clear Selection" }];
 
 const htmlOptions = [
   {
@@ -112,17 +112,12 @@ const htmlOptions = [
   }
 ];
 
-const selectedOptions = ["1", "2"];
-
 class WrapperComponent extends React.Component {
   constructor() {
     super();
     this.state = {
       value: "",
-      error: false,
-      isDisabled: false,
-      isPlaceholder: false,
-      required: false,
+
     };
   }
 
@@ -140,11 +135,6 @@ class WrapperComponent extends React.Component {
 
   render = () => (
     <div>
-      <SelectInputLabelBox
-        {...this.props}
-        {...this.state}
-        onChange={value => this.setState({ value })}
-      />
       <ButtonWrapper>
         <Button flat label="Clear Value" onClick={() => this.setState({ value: "" })} />
         <Button flat={!this.state.error} label="error" onClick={() => this.toggle("error")} />
@@ -153,7 +143,13 @@ class WrapperComponent extends React.Component {
         <Button flat={!this.state.searchable} label="searchable" onClick={() => this.toggle("searchable")} />
         <Button flat={!this.state.multiSelect} label="multiSelect" onClick={() => this.toggle("multiSelect")} />
         <Button flat={!this.state.optionsWidth} label="optionsWidth" onClick={() => this.toggleValue("optionsWidth", "240")} />
+        <Button flat={!this.state.promotedOptions} label="promotedOptions" onClick={() => this.toggleValue("promotedOptions", optionsToPromote)} />
       </ButtonWrapper>
+      <SelectInputLabelBox
+        {...this.props}
+        {...this.state}
+        onChange={value => this.setState({ value })}
+      />
     </div>
   );
 }
@@ -173,62 +169,19 @@ function renderChapterWithTheme(theme) {
         sections: [
           {
             title: "SelectInputLabelBox",
+            options: {
+              showSource: false
+            },
             sectionFn: () =>
               wrapComponentWithContainerAndTheme(
                 theme,
                 <WrapperComponent
-                  label="Hello World!"
+                  label="Input Label"
                   options={genericOptions}
                 />
               )
+
           },
-          {
-            title: "SelectInputLabelBox with Stateful wrapper and multiselect",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <MultiselectWrapperComponent
-                    label="multiselect"
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
-            title:
-              "SelectInputLabelBoxTransparent with value and promotedOption",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello world"
-                    options={htmlOptions}
-                    promotedOptions={optionsToPromote}
-                    theme={
-                      SelectInputLabelBoxThemes.lineSelectInputBoxTransparentTheme
-                    }
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBox with multiselect",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    value={selectedOptions}
-                    options={genericOptions}
-                    multiSelect
-                  />
-                </div>
-              )
-          }
         ]
       }
     ]
