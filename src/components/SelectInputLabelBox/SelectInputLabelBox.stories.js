@@ -129,7 +129,13 @@ class WrapperComponent extends React.Component {
   toggle = (param) => {
     this.setState(prevState => ({
       [param]: !prevState[param]
-    }))
+    }));
+  }
+
+  toggleValue = (param, value) => {
+    this.setState(prevState => ({
+      [param]: prevState[param] === value ? null : value
+    }));
   }
 
   render = () => (
@@ -141,9 +147,12 @@ class WrapperComponent extends React.Component {
       />
       <ButtonWrapper>
         <Button flat label="Clear Value" onClick={() => this.setState({ value: "" })} />
-        <Button flat label="Toggle error" onClick={() => this.toggle("error")} />
-        <Button flat label="Toggle isDisabled" onClick={() => this.toggle("isDisabled")} />
-        <Button flat label="Toggle required" onClick={() => this.toggle("required")} />
+        <Button flat={!this.state.error} label="error" onClick={() => this.toggle("error")} />
+        <Button flat={!this.state.isDisabled} label="isDisabled" onClick={() => this.toggle("isDisabled")} />
+        <Button flat={!this.state.required} label="required" onClick={() => this.toggle("required")} />
+        <Button flat={!this.state.searchable} label="searchable" onClick={() => this.toggle("searchable")} />
+        <Button flat={!this.state.multiSelect} label="multiSelect" onClick={() => this.toggle("multiSelect")} />
+        <Button flat={!this.state.optionsWidth} label="optionsWidth" onClick={() => this.toggleValue("optionsWidth", "240")} />
       </ButtonWrapper>
     </div>
   );
@@ -174,33 +183,6 @@ function renderChapterWithTheme(theme) {
               )
           },
           {
-            title: "SelectInputLabelBox with custom options width",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    optionsWidth="240"
-                    onChange={action("Option Selected")}
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBox with Stateful wrapper and required",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <WrapperComponent
-                  label="Hello World!"
-                  required
-                  options={genericOptions}
-                />
-              )
-          },
-          {
             title: "SelectInputLabelBox with Stateful wrapper and multiselect",
             sectionFn: () =>
               wrapComponentWithContainerAndTheme(
@@ -208,21 +190,6 @@ function renderChapterWithTheme(theme) {
                 <div>
                   <MultiselectWrapperComponent
                     label="multiselect"
-                    options={genericOptions}
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBox with custom options width",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    optionsWidth="240"
-                    onChange={action("Option Selected")}
                     options={genericOptions}
                   />
                 </div>
@@ -242,21 +209,6 @@ function renderChapterWithTheme(theme) {
                     theme={
                       SelectInputLabelBoxThemes.lineSelectInputBoxTransparentTheme
                     }
-                  />
-                </div>
-              )
-          },
-          {
-            title: "SelectInputLabelBoxTransparent with searchable dropdown",
-            sectionFn: () =>
-              wrapComponentWithContainerAndTheme(
-                theme,
-                <div>
-                  <SelectInputLabelBox
-                    label="Hello World!"
-                    onChange={action("Option Selected")}
-                    options={genericOptions}
-                    searchable
                   />
                 </div>
               )
