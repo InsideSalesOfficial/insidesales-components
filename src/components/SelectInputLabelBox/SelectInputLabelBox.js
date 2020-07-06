@@ -141,6 +141,8 @@ export const Value = styled.div`
 
 
 export const Wrapper = styled.div`
+  outline: none;
+  user-select: none;
   position: relative;
   ${typography.subhead1};
   width: ${(props) => {
@@ -183,7 +185,8 @@ export default class SelectInputLabelBox extends React.Component {
     super();
     this.state = {
       optionsListVisible: false,
-      searchFilter: ''
+      searchFilter: '',
+      isFocused: false
     }
   }
 
@@ -279,12 +282,15 @@ export default class SelectInputLabelBox extends React.Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <Wrapper
+          tabIndex={1}
           className={this.props.className}
           ref={(el) => { this.clickEventElement = el }}
-          >
+        >
           <SelectToggle
-          onClick={this.toggleOptionsList} isDisabled={this.props.isDisabled}
-          className="pb-test__select-input"
+            tabIndex={-1}
+            onClick={this.toggleOptionsList} isDisabled={this.props.isDisabled}
+            className="pb-test__select-input"
+            isFocused={this.state.isFocused}
           >
             <Caret open={this.state.optionsListVisible} />
             <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
