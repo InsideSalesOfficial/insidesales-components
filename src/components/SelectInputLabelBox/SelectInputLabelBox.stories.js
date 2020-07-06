@@ -25,6 +25,9 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
   padding-top: 6px;
   padding-bottom: 6px;
+  button {
+    margin-right: 4px;
+  }
 `;
 
 const OptionLabel = styled.div`
@@ -43,46 +46,6 @@ const OptionValue = styled.div`
   })};
 `;
 
-class WrapperComponent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      value: "",
-      error: false,
-      disabled: false
-    };
-  }
-
-  toggle = (param) => {
-    this.setState(prevState => ({
-      [param]: !prevState[param]
-    }))
-  }
-
-  render = () => (
-    <div>
-      <SelectInputLabelBox
-        {...this.props}
-        value={this.state.value}
-        error={this.state.error}
-        isDisabled={this.state.disabled}
-        onChange={value => this.setState({ value })}
-      />
-      <ButtonWrapper>
-        <Button
-          outline
-          label="Toggle Error"
-          onClick={() => this.toggle("error")}
-        />
-        <Button
-          outline
-          label="Toggle Disabled"
-          onClick={() => this.toggle("disabled")}
-        />
-      </ButtonWrapper>
-    </div>
-  );
-}
 
 class MultiselectWrapperComponent extends React.Component {
   constructor() {
@@ -151,6 +114,41 @@ const htmlOptions = [
 
 const selectedOptions = ["1", "2"];
 
+class WrapperComponent extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: "",
+      error: false,
+      isDisabled: false,
+      isPlaceholder: false,
+      required: false,
+    };
+  }
+
+  toggle = (param) => {
+    this.setState(prevState => ({
+      [param]: !prevState[param]
+    }))
+  }
+
+  render = () => (
+    <div>
+      <SelectInputLabelBox
+        {...this.props}
+        {...this.state}
+        onChange={value => this.setState({ value })}
+      />
+      <ButtonWrapper>
+        <Button flat label="Clear Value" onClick={() => this.setState({ value: "" })} />
+        <Button flat label="Toggle error" onClick={() => this.toggle("error")} />
+        <Button flat label="Toggle isDisabled" onClick={() => this.toggle("isDisabled")} />
+        <Button flat label="Toggle required" onClick={() => this.toggle("required")} />
+      </ButtonWrapper>
+    </div>
+  );
+}
+
 function renderChapterWithTheme(theme) {
   return {
     info: `
@@ -165,7 +163,7 @@ function renderChapterWithTheme(theme) {
       {
         sections: [
           {
-            title: "SelectInputLabelBox with Stateful wrapper",
+            title: "SelectInputLabelBox",
             sectionFn: () =>
               wrapComponentWithContainerAndTheme(
                 theme,

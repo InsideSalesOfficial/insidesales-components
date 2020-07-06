@@ -331,6 +331,7 @@ SelectInputLabelBox.defaultProps = {
   theme: {},
   isPlaceHolder: false,
   error: false,
+  required: false,
   onChange: _.noop
 }
 
@@ -344,6 +345,7 @@ SelectInputLabelBox.propTypes = {
   label: PropTypes.string,
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
+  required: PropTypes.bool,
   multiSelect: PropTypes.bool,
   searchable: PropTypes.bool,
   error: PropTypes.bool
