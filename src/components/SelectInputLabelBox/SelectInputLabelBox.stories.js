@@ -10,7 +10,6 @@ import {
   colors,
   typography
 } from "../styles";
-import { SelectInputLabelBoxThemes } from "../index";
 
 const OptionWrapper = styled.div`
   display: flex;
@@ -46,7 +45,7 @@ const OptionValue = styled.div`
   })};
 `;
 
-const optionsToPromote = [{ value: "p1", label: "Clear Selection" }];
+const promotedOption = [{ value: "p1", label: "Promoted Option" }];
 
 const genericOptions = [
   {
@@ -87,31 +86,6 @@ const genericOptions = [
   { value: 12, label: `I'm a number` }
 ];
 
-const htmlOptions = [
-  {
-    value: "1",
-    optionLabel: "option one label",
-    optionValue: "option one",
-    label: (
-      <OptionWrapper>
-        <OptionLabel>option one label</OptionLabel>
-        <OptionValue>option one</OptionValue>
-      </OptionWrapper>
-    )
-  },
-  {
-    value: "2",
-    optionLabel: "option two label",
-    optionValue: "option two",
-    label: (
-      <OptionWrapper>
-        <OptionLabel>option two label</OptionLabel>
-        <OptionValue>option two</OptionValue>
-      </OptionWrapper>
-    )
-  }
-];
-
 class WrapperComponent extends React.Component {
   constructor() {
     super();
@@ -133,6 +107,11 @@ class WrapperComponent extends React.Component {
     }));
   }
 
+  handleSelectInputChange = (value) => {
+    action("Option Selected")(value);
+    this.setState({ value });
+  }
+
   render = () => (
     <div>
       <ButtonWrapper>
@@ -143,12 +122,12 @@ class WrapperComponent extends React.Component {
         <Button flat={!this.state.searchable} label="searchable" onClick={() => this.toggle("searchable")} />
         <Button flat={!this.state.multiSelect} label="multiSelect" onClick={() => this.toggle("multiSelect")} />
         <Button flat={!this.state.optionsWidth} label="optionsWidth" onClick={() => this.toggleValue("optionsWidth", "240")} />
-        <Button flat={!this.state.promotedOptions} label="promotedOptions" onClick={() => this.toggleValue("promotedOptions", optionsToPromote)} />
+        <Button flat={!this.state.promotedOptions} label="promotedOptions" onClick={() => this.toggleValue("promotedOptions", promotedOption)} />
       </ButtonWrapper>
       <SelectInputLabelBox
         {...this.props}
         {...this.state}
-        onChange={value => this.setState({ value })}
+        onChange={this.handleSelectInputChange}
       />
     </div>
   );
