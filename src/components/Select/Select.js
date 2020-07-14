@@ -167,7 +167,7 @@ class Select extends React.Component {
   render() {
     return (
       <Wrapper
-        tabIndex={1}
+        tabIndex={0}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown.bind(this)}
