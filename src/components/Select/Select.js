@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import _ from 'lodash';
 import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
 
 import Dropdown from './Dropdown';
@@ -141,16 +142,37 @@ function handleKeyDown(event) {
   }
 }
 
-function isOptionSelected(selectedOption) {
-  return (typeof selectedOption === 'object');
+function handleOptionSelected(isMultiSelect, onChangeFunction, option) {
+  console.log('>>', 'handleOptionSelected');
+
+  this.setState({
+    isOpen: false
+  });
+
+  onChangeFunction(option.label);
+  // if(isMultiSelect) {
+  //   if(_.includes(this.props.value, newValue)) {
+  //     this.props.onChange(_.without(this.props.value, newValue));
+  //   } else if (_.isArray(this.props.value)) {
+  //     this.props.onChange(_.concat(this.props.value, [newValue]));
+  //   } else {
+  //     this.props.onChange([newValue]);
+  //   }
+  // } else {
+  //   this.props.onChange(newValue);
+  //   this.closeOptionsList();
+  // }
 }
 
-function handleOptionSelected(option) {
-  console.log('>>', 'handleOptionSelected');
-  this.setState({
-    selectedOption: option,
-    isOpen: false,
-  });
+export function isValued(value) {
+  if(value === undefined || value === null) return false;
+  else if (typeof value === 'boolean') return true;
+  else if (typeof value === 'number') return true;
+  else if (typeof value === 'string' && value.length > 0) return true;
+  else if (Array.isArray(value) && value.length > 0) return true;
+  else if (typeof x === 'symbol') return true;
+
+  return typeof value === 'object' && Object.keys(value).length > 0;
 }
 
 class Select extends React.Component {
@@ -177,12 +199,12 @@ class Select extends React.Component {
           onClick={handleButtonClick.bind(this)}
           isFocused={this.state.isFocused}
         >
-          <Label isOptionSelected={isOptionSelected(this.state.selectedOption)} >{this.props.label}</Label>
+          <Label isOptionSelected={isValued(this.props.value)} >{this.props.label}</Label>
           <Caret isOpen={this.state.isOpen} />
-          <SelectedOption>{this.state.selectedOption && this.state.selectedOption.label}</SelectedOption>
+          <SelectedOption>{this.props.value}</SelectedOption>
         </Button>
         <Dropdown
-          onSelect={handleOptionSelected.bind(this)}
+          onSelect={handleOptionSelected.bind(this, this.props.multiSelect, this.props.onChange)}
           isOpen={this.state.isOpen}
           options={this.props.options}
           focusedOption={this.state.focusedOption}
@@ -192,8 +214,31 @@ class Select extends React.Component {
   }
 }
 
+Select.defaultProps = {
+  value: '',
+  label: '',
+  isDisabled: false,
+  theme: {},
+  isPlaceHolder: false,
+  error: false,
+  required: false,
+  onChange: _.noop
+}
+
 Select.propTypes = {
-  options: PropTypes.array.isRequired
-};
+  value: PropTypes.any,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.any,
+  })).isRequired,
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+  isDisabled: PropTypes.bool,
+  isPlaceHolder: PropTypes.bool,
+  required: PropTypes.bool,
+  multiSelect: PropTypes.bool,
+  searchable: PropTypes.bool,
+  error: PropTypes.bool
+}
 
 export default Select;
