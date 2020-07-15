@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { fontWeights, colors, renderThemeKeyOrDefaultValue } from "../styles";
 import Option from './Option';
+import _ from 'lodash';
 
 const Options = styled.ul`
   background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })}
@@ -33,13 +34,20 @@ class Dropdown extends React.Component {
     return (
       <Options isOpen={this.props.isOpen} >
         {renderOptions({
-          options: this.props.options,
+          options: [...this.props.promotedOptions, ...this.props.options],
           onSelect: this.props.onSelect,
           focusedOption: this.props.focusedOption
         })}
       </Options>
     );
   }
+}
+
+Dropdown.defaultProps = {
+  onSelect: _.noop,
+  isOpen: false,
+  options: [],
+  promotedOptions: [],
 }
 
 Dropdown.propTypes = {

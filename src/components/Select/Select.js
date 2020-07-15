@@ -93,8 +93,10 @@ function handleFocus(event) {
   }
 }
 
-function handleKeyDown(event) {
-  console.log('>>', event.key);
+function handleKeyDown({
+  options
+}, event) {
+  console.log('>>', event.key, options);
   switch(event.key) {
     case 'Enter':
     case ' ':
@@ -102,7 +104,7 @@ function handleKeyDown(event) {
       handleOptionSelected.bind(this)(
         this.props.multiSelect,
         this.props.onChange,
-        this.props.options[this.state.focusedOption]
+        options[this.state.focusedOption]
       );
       break;
     case 'ArrowDown':
@@ -112,7 +114,7 @@ function handleKeyDown(event) {
         focusedOption: getNextFocusedOption({
           isOpen: this.state.isOpen,
           focusedOption: this.state.focusedOption,
-          optionsLength: this.props.options.length,
+          optionsLength: options.length,
           direction: 'next'
         })
       });
@@ -124,7 +126,7 @@ function handleKeyDown(event) {
         focusedOption: getNextFocusedOption({
           isOpen: this.state.isOpen,
           focusedOption: this.state.focusedOption,
-          optionsLength: this.props.options.length,
+          optionsLength: options.length,
           direction: 'previous'
         })
       });
@@ -183,7 +185,9 @@ class Select extends React.Component {
         tabIndex={0}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
-        onKeyDown={handleKeyDown.bind(this)}
+        onKeyDown={handleKeyDown.bind(this, {
+          options: [...this.props.promotedOptions, ...this.props.options]
+        })}
       >
         <SelectToggle
           tabIndex={-1}
@@ -212,6 +216,8 @@ class Select extends React.Component {
 Select.defaultProps = {
   value: '',
   label: '',
+  options: [],
+  promotedOptions: [],
   isDisabled: false,
   theme: {},
   isPlaceHolder: false,
@@ -222,6 +228,7 @@ Select.defaultProps = {
 
 Select.propTypes = {
   value: PropTypes.any,
+  label: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.any,
@@ -231,7 +238,6 @@ Select.propTypes = {
     label: PropTypes.any,
   })),
   onChange: PropTypes.func,
-  label: PropTypes.string,
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
   required: PropTypes.bool,
