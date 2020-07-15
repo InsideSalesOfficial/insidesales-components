@@ -94,7 +94,11 @@ function handleFocus(event) {
 }
 
 function handleKeyDown({
-  options
+  options,
+  isMultiSelect,
+  onChange,
+  focusedOption,
+  isOpen
 }, event) {
   console.log('>>', event.key, options);
   switch(event.key) {
@@ -102,9 +106,9 @@ function handleKeyDown({
     case ' ':
       event.preventDefault();
       handleOptionSelected.bind(this)(
-        this.props.multiSelect,
-        this.props.onChange,
-        options[this.state.focusedOption]
+        isMultiSelect,
+        onChange,
+        options[focusedOption]
       );
       break;
     case 'ArrowDown':
@@ -112,8 +116,8 @@ function handleKeyDown({
       this.setState({
         isOpen: true,
         focusedOption: getNextFocusedOption({
-          isOpen: this.state.isOpen,
-          focusedOption: this.state.focusedOption,
+          isOpen: isOpen,
+          focusedOption: focusedOption,
           optionsLength: options.length,
           direction: 'next'
         })
@@ -124,8 +128,8 @@ function handleKeyDown({
       this.setState({
         isOpen: true,
         focusedOption: getNextFocusedOption({
-          isOpen: this.state.isOpen,
-          focusedOption: this.state.focusedOption,
+          isOpen: isOpen,
+          focusedOption: focusedOption,
           optionsLength: options.length,
           direction: 'previous'
         })
@@ -186,7 +190,11 @@ class Select extends React.Component {
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown.bind(this, {
-          options: [...this.props.promotedOptions, ...this.props.options]
+          options: [...this.props.promotedOptions, ...this.props.options],
+          isMultiSelect: this.props.multiSelect,
+          onChange: this.props.onChange,
+          focusedOption: this.state.focusedOption,
+          isOpen: this.state.isOpen
         })}
       >
         <SelectToggle
