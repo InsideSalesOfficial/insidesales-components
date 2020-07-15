@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
 
 import Dropdown from './Dropdown';
+import Label from './Label';
 import Caret from './Caret';
 
 const Wrapper = styled.div`
@@ -12,22 +13,12 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-const Label = styled.label`
-  transition: all 200ms;
-  transform: translateY(-50%);
-  position: absolute;
-  left: 16px;
-  top: ${props => props.isOptionSelected ? '30%' : '50%'};
-  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 })};
-  ${props => props.isOptionSelected && typography.caption}
-`;
-
 const SelectedOption = styled.span`
   padding: 22px 26px 0 16px;
   color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 })};
 `;
 
-const Button = styled.div`
+const SelectToggle = styled.div`
   position: relative;
   display: flex;
   align-items: normal;
@@ -161,7 +152,7 @@ function handleOptionSelected(isMultiSelect, onChangeFunction, option) {
   // }
 }
 
-export function isValued(value) {
+function isValued(value) {
   if(value === undefined || value === null) return false;
   else if (typeof value === 'boolean') return true;
   else if (typeof value === 'number') return true;
@@ -190,15 +181,18 @@ class Select extends React.Component {
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown.bind(this)}
       >
-        <Button
+        <SelectToggle
           tabIndex={-1}
           onClick={handleButtonClick.bind(this)}
           isFocused={this.state.isFocused}
         >
-          <Label isOptionSelected={isValued(this.props.value)} >{this.props.label}</Label>
+          <Label
+            isOptionSelected={isValued(this.props.value)}
+            label={this.props.label}
+          />
           <Caret isOpen={this.state.isOpen} />
           <SelectedOption>{this.props.value}</SelectedOption>
-        </Button>
+        </SelectToggle>
         <Dropdown
           onSelect={handleOptionSelected.bind(this, this.props.multiSelect, this.props.onChange)}
           isOpen={this.state.isOpen}

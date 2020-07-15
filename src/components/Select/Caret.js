@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { fontWeights, typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
+import {renderThemeKeyOrDefaultValue } from "../styles";
 
 const caretStyles = `
 position: absolute;
