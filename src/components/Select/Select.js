@@ -99,7 +99,11 @@ function handleKeyDown(event) {
     case 'Enter':
     case ' ':
       event.preventDefault();
-      handleOptionSelected.bind(this)(this.props.multiSelect, this.props.onChange, this.props.options[this.state.focusedOption]);
+      handleOptionSelected.bind(this)(
+        this.props.multiSelect,
+        this.props.onChange,
+        this.props.options[this.state.focusedOption]
+      );
       break;
     case 'ArrowDown':
       event.preventDefault();
@@ -197,6 +201,7 @@ class Select extends React.Component {
           onSelect={handleOptionSelected.bind(this, this.props.multiSelect, this.props.onChange)}
           isOpen={this.state.isOpen}
           options={this.props.options}
+          promotedOptions={this.props.promotedOptions}
           focusedOption={this.state.focusedOption}
         />
       </Wrapper>
@@ -221,6 +226,10 @@ Select.propTypes = {
     value: PropTypes.any,
     label: PropTypes.any,
   })).isRequired,
+  promotedOptions: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.any,
+  })),
   onChange: PropTypes.func,
   label: PropTypes.string,
   isDisabled: PropTypes.bool,

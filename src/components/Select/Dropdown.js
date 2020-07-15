@@ -15,25 +15,28 @@ const Options = styled.ul`
   overflow-y: auto;
 `;
 
+function renderOptions({options, onSelect, focusedOption}) {
+  return (options.map((option, index) => {
+    console.log('focusedOption', focusedOption);
+    return (
+      <Option
+        key={index}
+        onClick={onSelect}
+        option={option}
+        isFocused={focusedOption === index}
+      />
+    );
+  }));
+}
 class Dropdown extends React.Component {
-  renderOptions = () => {
-    return (this.props.options.map((option, index) => {
-      console.log('this.props.focusedOption', this.props.focusedOption);
-      return (
-        <Option
-          key={index}
-          onClick={this.props.onSelect}
-          option={option}
-          isFocused={this.props.focusedOption === index}
-        />
-      );
-    }));
-  }
-
   render() {
     return (
       <Options isOpen={this.props.isOpen} >
-        {this.renderOptions()}
+        {renderOptions({
+          options: this.props.options,
+          onSelect: this.props.onSelect,
+          focusedOption: this.props.focusedOption
+        })}
       </Options>
     );
   }
@@ -42,7 +45,14 @@ class Dropdown extends React.Component {
 Dropdown.propTypes = {
   onSelect: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.any,
+  })).isRequired,
+  promotedOptions: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.any,
+  })),
   focusedOption: PropTypes.number
 };
 
