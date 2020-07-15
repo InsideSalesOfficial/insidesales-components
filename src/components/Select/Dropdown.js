@@ -16,15 +16,22 @@ const Options = styled.ul`
   overflow-y: auto;
 `;
 
-function renderOptions({options, onSelect, focusedOption}) {
+function renderOptions({
+  options,
+  onSelect,
+  focusedOption,
+  selectedOptions,
+  isMultiSelect
+}) {
   return (options.map((option, index) => {
-    console.log('focusedOption', focusedOption);
     return (
       <Option
         key={index}
         onClick={onSelect}
         option={option}
         isFocused={focusedOption === index}
+        isMultiSelect={isMultiSelect}
+        isSelected={isMultiSelect && _.includes(selectedOptions, option.value)}
       />
     );
   }));
@@ -36,7 +43,9 @@ class Dropdown extends React.Component {
         {renderOptions({
           options: [...this.props.promotedOptions, ...this.props.options],
           onSelect: this.props.onSelect,
-          focusedOption: this.props.focusedOption
+          focusedOption: this.props.focusedOption,
+          selectedOptions: this.props.selectedOptions,
+          isMultiSelect: this.props.isMultiSelect
         })}
       </Options>
     );
@@ -48,6 +57,7 @@ Dropdown.defaultProps = {
   isOpen: false,
   options: [],
   promotedOptions: [],
+  isMultiSelect: false
 }
 
 Dropdown.propTypes = {
@@ -61,7 +71,9 @@ Dropdown.propTypes = {
     value: PropTypes.any,
     label: PropTypes.any,
   })),
-  focusedOption: PropTypes.number
+  focusedOption: PropTypes.number,
+  selectedOptions: PropTypes.any,
+  isMultiSelect: PropTypes.bool
 };
 
 export default Dropdown;

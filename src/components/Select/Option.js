@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {fontWeights, colors, renderThemeKeyOrDefaultValue} from "../styles";
 
+import Checkbox from '../Checkbox';
+
 const ListItem = styled.li`
   display: flex;
   align-items: center;
@@ -40,6 +42,10 @@ class Option extends React.Component {
         isFocused={this.props.isFocused}
         innerRef={element => this.element = element}
       >
+        {this.props.isMultiSelect && <Checkbox
+          disabled={false}
+          checked={this.props.isSelected}
+        />}
         {this.props.option.label}
       </ListItem>);
   }
@@ -48,7 +54,9 @@ class Option extends React.Component {
 Option.propTypes = {
   isFocused: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  option: PropTypes.object.isRequired
+  option: PropTypes.object.isRequired,
+  isSelected: PropTypes.bool,
+  isMultiSelect: PropTypes.bool
 };
 
 export default Option;

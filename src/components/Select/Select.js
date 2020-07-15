@@ -212,9 +212,11 @@ class Select extends React.Component {
         <Dropdown
           onSelect={handleOptionSelected.bind(this, this.props.multiSelect, this.props.onChange)}
           isOpen={this.state.isOpen}
+          isMultiSelect={this.props.multiSelect}
           options={this.props.options}
           promotedOptions={this.props.promotedOptions}
           focusedOption={this.state.focusedOption}
+          selectedOptions={this.props.value}
         />
       </Wrapper>
     );
