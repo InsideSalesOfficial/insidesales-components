@@ -108,10 +108,7 @@ function handleKeyDown(event) {
     case 'Enter':
     case ' ':
       event.preventDefault();
-      this.setState(prevState => ({
-        isOpen: !prevState.isOpen,
-        selectedOption: this.props.options[this.state.focusedOption]
-      }));
+      handleOptionSelected.bind(this)(this.props.multiSelect, this.props.onChange, this.props.options[this.state.focusedOption]);
       break;
     case 'ArrowDown':
       event.preventDefault();
@@ -143,13 +140,13 @@ function handleKeyDown(event) {
 }
 
 function handleOptionSelected(isMultiSelect, onChangeFunction, option) {
-  console.log('>>', 'handleOptionSelected');
+  console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, option);
 
   this.setState({
     isOpen: false
   });
 
-  onChangeFunction(option.label);
+  onChangeFunction(option.value);
   // if(isMultiSelect) {
   //   if(_.includes(this.props.value, newValue)) {
   //     this.props.onChange(_.without(this.props.value, newValue));
@@ -181,7 +178,6 @@ class Select extends React.Component {
     this.state = {
       isFocused: false,
       isOpen: false,
-      selectedOption: undefined,
       focusedOption: undefined
     }
   }
