@@ -105,12 +105,18 @@ function handleKeyDown({
     case 'Enter':
     case ' ':
       event.preventDefault();
-      handleOptionSelected.bind(this)({
-        isMultiSelect: isMultiSelect,
-        onChangeFunction: onChange,
-        currentOption: this.props.value},
-        options[focusedOption]
-      );
+      if (isOpen) {
+        handleOptionSelected.bind(this)({
+          isMultiSelect: isMultiSelect,
+          onChangeFunction: onChange,
+          currentOption: this.props.value},
+          options[focusedOption]
+        );
+      } else {
+        this.setState({
+          isOpen: true
+        });
+      }
       break;
     case 'ArrowDown':
       event.preventDefault();
