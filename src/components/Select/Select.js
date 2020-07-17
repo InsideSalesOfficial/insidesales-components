@@ -174,7 +174,7 @@ function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChange
       //   onChangeFunction([option.value]);
       // }
     } else {
-      onChangeFunction(option.value);
+      onChangeFunction(option.label);
     }
   }
 }
