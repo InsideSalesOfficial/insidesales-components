@@ -94,76 +94,81 @@ function handleFocus(event) {
 }
 
 function handleKeyDown({
+  setState,
   options,
   isMultiSelect,
   onChange,
   focusedOption,
   isOpen
-}, event) {
-  console.log('>>', event.key, options);
-  switch(event.key) {
-    case 'Enter':
-    case ' ':
-      event.preventDefault();
-      if (isOpen) {
-        handleOptionSelected.bind(this)({
-          isMultiSelect: isMultiSelect,
-          onChangeFunction: onChange,
-          currentOption: this.props.value},
-          options[focusedOption]
-        );
-      } else {
-        this.setState({
-          isOpen: true
+}) {
+  return function handleKeyDown1(event) {
+    console.log('>>', event.key, options);
+    switch(event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        if (isOpen) {
+          handleOptionSelected({
+            setState: setState,
+            isMultiSelect: isMultiSelect,
+            onChangeFunction: onChange,
+            currentOption: undefined
+          })(options[focusedOption]);
+        } else {
+          setState({
+            isOpen: true
+          });
+        }
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        setState({
+          isOpen: true,
+          focusedOption: getNextFocusedOption({
+            isOpen: isOpen,
+            focusedOption: focusedOption,
+            optionsLength: options.length,
+            direction: 'next'
+          })
         });
-      }
-      break;
-    case 'ArrowDown':
-      event.preventDefault();
-      this.setState({
-        isOpen: true,
-        focusedOption: getNextFocusedOption({
-          isOpen: isOpen,
-          focusedOption: focusedOption,
-          optionsLength: options.length,
-          direction: 'next'
-        })
-      });
-      break;
-    case 'ArrowUp':
-      event.preventDefault();
-      this.setState({
-        isOpen: true,
-        focusedOption: getNextFocusedOption({
-          isOpen: isOpen,
-          focusedOption: focusedOption,
-          optionsLength: options.length,
-          direction: 'previous'
-        })
-      });
-      break;
-    default:
-      break;
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        setState({
+          isOpen: true,
+          focusedOption: getNextFocusedOption({
+            isOpen: isOpen,
+            focusedOption: focusedOption,
+            optionsLength: options.length,
+            direction: 'previous'
+          })
+        });
+        break;
+      default:
+        break;
+    }
   }
 }
 
-function handleOptionSelected({isMultiSelect, onChangeFunction, currentOption}, option) {
-  console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, option);
+function handleOptionSelected({setState, isMultiSelect, onChangeFunction, currentOption}) {
+  return function x(option) {
+    console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, option);
 
-  this.setState({
-    isOpen: false
-  });
+    setState({
+      isOpen: false
+    });
 
-  if(isMultiSelect) {
-    // if(_.includes(this.props.value, newValue)) {
-    //   this.props.onChange(_.without(this.props.value, newValue));
-    // } else if (_.isArray(this.props.value)) {
-    //   this.props.onChange(_.concat(this.props.value, [newValue]));
-    // } else {
-    //   onChangeFunction([option.value]);
-    // }
-  } else {
-    onChangeFunction(option.value);
+    if(isMultiSelect) {
+      // if(_.includes(this.props.value, newValue)) {
+      //   this.props.onChange(_.without(this.props.value, newValue));
+      // } else if (_.isArray(this.props.value)) {
+      //   this.props.onChange(_.concat(this.props.value, [newValue]));
+      // } else {
+      //   onChangeFunction([option.value]);
+      // }
+    } else {
+      onChangeFunction(option.value);
+    }
   }
 }
 
@@ -196,7 +201,8 @@ class Select extends React.Component {
         tabIndex={0}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
-        onKeyDown={handleKeyDown.bind(this, {
+        onKeyDown={handleKeyDown({
+          setState: this.setState,
           options: [...this.props.promotedOptions, ...this.props.options],
           isMultiSelect: this.props.multiSelect,
           onChange: this.props.onChange,
@@ -217,7 +223,8 @@ class Select extends React.Component {
           <SelectedOption>{this.props.value}</SelectedOption>
         </SelectToggle>
         <Dropdown
-          onSelect={handleOptionSelected.bind(this, {
+          onSelect={handleOptionSelected({
+            setState: this.setState,
             isMultiSelect: this.props.multiSelect,
             onChangeFunction: this.props.onChange,
             currentOption: this.props.value
