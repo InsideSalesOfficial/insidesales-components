@@ -94,6 +94,8 @@ function handleFocus(event) {
   }
 }
 
+const validKeys = [' ', 'Enter', 'ArrowDown', 'ArrowUp'];
+
 function handleKeyDown({
   setState,
   wrapperElement,
@@ -105,51 +107,52 @@ function handleKeyDown({
 }) {
   return function (event) {
     console.log('>>', event.key, options);
-    switch(event.key) {
-      case 'Enter':
-      case ' ':
-        event.preventDefault();
-        if (isOpen) {
-          handleOptionSelected({
-            setState: setState,
-            wrapperElement: wrapperElement,
-            isMultiSelect: isMultiSelect,
-            onChangeFunction: onChange,
-            currentOption: undefined
-          })(options[focusedOption]);
-        } else {
-          setState({
-            isOpen: true
-          });
-        }
-        break;
-      case 'ArrowDown':
-        event.preventDefault();
-        setState({
-          isOpen: true,
-          focusedOption: getNextFocusedOption({
-            isOpen: isOpen,
-            focusedOption: focusedOption,
-            optionsLength: options.length,
-            direction: 'next'
-          })
-        });
-        break;
-      case 'ArrowUp':
-        event.preventDefault();
-        setState({
-          isOpen: true,
-          focusedOption: getNextFocusedOption({
-            isOpen: isOpen,
-            focusedOption: focusedOption,
-            optionsLength: options.length,
-            direction: 'previous'
-          })
-        });
-        break;
-      default:
-        break;
+    if (!validKeys.includes(event.key)) return;
+    if (!isOpen) {
+      setState({ isOpen: true });
+      return;
     }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleOptionSelected({
+        setState: setState,
+        wrapperElement: wrapperElement,
+        isMultiSelect: isMultiSelect,
+        onChangeFunction: onChange,
+        currentOption: undefined
+      })(options[focusedOption]);
+      return;
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setState({
+        isOpen: true,
+        focusedOption: getNextFocusedOption({
+          isOpen: isOpen,
+          focusedOption: focusedOption,
+          optionsLength: options.length,
+          direction: 'next'
+        })
+      });
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setState({
+        isOpen: true,
+        focusedOption: getNextFocusedOption({
+          isOpen: isOpen,
+          focusedOption: focusedOption,
+          optionsLength: options.length,
+          direction: 'previous'
+        })
+      });
+      return;
+    }
+
   }
 }
 
