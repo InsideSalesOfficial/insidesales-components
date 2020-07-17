@@ -158,7 +158,7 @@ function handleKeyDown({
 
 function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChangeFunction, currentOption}) {
   return function (option) {
-    console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, option);
+    console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, 'currentOption: ', currentOption, 'option: ', option);
 
     wrapperElement.focus();
     setState({
@@ -166,15 +166,13 @@ function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChange
     });
 
     if(isMultiSelect) {
-      // if(_.includes(this.props.value, newValue)) {
-      //   this.props.onChange(_.without(this.props.value, newValue));
-      // } else if (_.isArray(this.props.value)) {
-      //   this.props.onChange(_.concat(this.props.value, [newValue]));
-      // } else {
-      //   onChangeFunction([option.value]);
-      // }
+      if (currentOption.includes(option.value)) {
+        onChangeFunction(_.without(currentOption, option.value))
+      } else {
+        onChangeFunction([...currentOption, option.value]);
+      }
     } else {
-      onChangeFunction(option.label);
+      onChangeFunction(option.value);
     }
   }
 }
