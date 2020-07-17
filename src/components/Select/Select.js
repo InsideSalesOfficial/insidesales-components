@@ -105,9 +105,10 @@ function handleKeyDown({
     case 'Enter':
     case ' ':
       event.preventDefault();
-      handleOptionSelected.bind(this)(
-        isMultiSelect,
-        onChange,
+      handleOptionSelected.bind(this)({
+        isMultiSelect: isMultiSelect,
+        onChangeFunction: onChange,
+        currentOption: this.props.value},
         options[focusedOption]
       );
       break;
@@ -140,26 +141,24 @@ function handleKeyDown({
   }
 }
 
-function handleOptionSelected(isMultiSelect, onChangeFunction, option) {
+function handleOptionSelected({isMultiSelect, onChangeFunction, currentOption}, option) {
   console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, option);
 
   this.setState({
     isOpen: false
   });
 
-  onChangeFunction(option.value);
-  // if(isMultiSelect) {
-  //   if(_.includes(this.props.value, newValue)) {
-  //     this.props.onChange(_.without(this.props.value, newValue));
-  //   } else if (_.isArray(this.props.value)) {
-  //     this.props.onChange(_.concat(this.props.value, [newValue]));
-  //   } else {
-  //     this.props.onChange([newValue]);
-  //   }
-  // } else {
-  //   this.props.onChange(newValue);
-  //   this.closeOptionsList();
-  // }
+  if(isMultiSelect) {
+    // if(_.includes(this.props.value, newValue)) {
+    //   this.props.onChange(_.without(this.props.value, newValue));
+    // } else if (_.isArray(this.props.value)) {
+    //   this.props.onChange(_.concat(this.props.value, [newValue]));
+    // } else {
+    //   onChangeFunction([option.value]);
+    // }
+  } else {
+    onChangeFunction(option.value);
+  }
 }
 
 function isValued(value) {
@@ -181,6 +180,8 @@ class Select extends React.Component {
       isOpen: false,
       focusedOption: undefined
     }
+
+    this.setState = this.setState.bind(this);
   }
 
   render() {
@@ -210,7 +211,11 @@ class Select extends React.Component {
           <SelectedOption>{this.props.value}</SelectedOption>
         </SelectToggle>
         <Dropdown
-          onSelect={handleOptionSelected.bind(this, this.props.multiSelect, this.props.onChange)}
+          onSelect={handleOptionSelected.bind(this, {
+            isMultiSelect: this.props.multiSelect,
+            onChangeFunction: this.props.onChange,
+            currentOption: this.props.value
+          })}
           isOpen={this.state.isOpen}
           isMultiSelect={this.props.multiSelect}
           options={this.props.options}
