@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {fontWeights, colors, renderThemeKeyOrDefaultValue} from "../styles";
+import {renderThemeKeyOrDefaultValue} from "../styles";
 
 import Checkbox from '../Checkbox';
 
@@ -37,8 +37,8 @@ class Option extends React.Component {
     if (this.props.isFocused) this.element.scrollIntoViewIfNeeded();
     return (
       <ListItem
-        tabIndex={1}
-        onClick={() => this.props.onClick(this.props.option)}
+        tabIndex={-1}
+        onClick={(event) => this.props.onClick(this.props.option)}
         isFocused={this.props.isFocused}
         innerRef={element => this.element = element}
       >

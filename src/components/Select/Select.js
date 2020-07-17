@@ -64,11 +64,12 @@ function getNextFocusedOption({isOpen, focusedOption, optionsLength, direction})
   }
 }
 
-function handleButtonClick(event) {
-  console.log('>>', 'handleButtonClick');
-  this.setState(prevState => ({
-    isOpen: !prevState.isOpen
-  }));
+function handleButtonClick(setState) {
+  return function () {
+    setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
+  }
 }
 
 function handleBlur(event) {
@@ -95,13 +96,14 @@ function handleFocus(event) {
 
 function handleKeyDown({
   setState,
+  wrapperElement,
   options,
   isMultiSelect,
   onChange,
   focusedOption,
   isOpen
 }) {
-  return function handleKeyDown1(event) {
+  return function (event) {
     console.log('>>', event.key, options);
     switch(event.key) {
       case 'Enter':
@@ -110,6 +112,7 @@ function handleKeyDown({
         if (isOpen) {
           handleOptionSelected({
             setState: setState,
+            wrapperElement: wrapperElement,
             isMultiSelect: isMultiSelect,
             onChangeFunction: onChange,
             currentOption: undefined
@@ -150,10 +153,11 @@ function handleKeyDown({
   }
 }
 
-function handleOptionSelected({setState, isMultiSelect, onChangeFunction, currentOption}) {
-  return function x(option) {
+function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChangeFunction, currentOption}) {
+  return function (option) {
     console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, option);
 
+    wrapperElement.focus();
     setState({
       isOpen: false
     });
@@ -203,16 +207,18 @@ class Select extends React.Component {
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown({
           setState: this.setState,
+          wrapperElement: this.wrapperElement,
           options: [...this.props.promotedOptions, ...this.props.options],
           isMultiSelect: this.props.multiSelect,
           onChange: this.props.onChange,
           focusedOption: this.state.focusedOption,
           isOpen: this.state.isOpen
         })}
+        innerRef={wrapperElement => this.wrapperElement = wrapperElement}
       >
         <SelectToggle
           tabIndex={-1}
-          onClick={handleButtonClick.bind(this)}
+          onClick={handleButtonClick(this.setState)}
           isFocused={this.state.isFocused}
         >
           <Label
@@ -225,6 +231,7 @@ class Select extends React.Component {
         <Dropdown
           onSelect={handleOptionSelected({
             setState: this.setState,
+            wrapperElement: this.wrapperElement,
             isMultiSelect: this.props.multiSelect,
             onChangeFunction: this.props.onChange,
             currentOption: this.props.value
