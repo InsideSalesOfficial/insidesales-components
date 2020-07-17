@@ -60,6 +60,9 @@ const ButtonBase = styled.button`
   background: var(--background);
 
   transition: box-shadow .25s ease-in-out, background-color .25s ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 1px ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.green10})};
+  }
   &:hover {
     background-color: ${(props) => {
       if (props.flat || props.flatAlt || props.outline) {
@@ -108,7 +111,7 @@ const ButtonBase = styled.button`
       }
     }};
   }
-  
+
   &:disabled {
     box-shadow: ${(props) => {
       if (props.flat || props.flatAlt || props.outline) {
