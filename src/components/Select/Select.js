@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-const SelectedOption = styled.span`
+const OptionLabel = styled.span`
   padding: 22px 26px 0 16px;
   color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 })};
 `;
@@ -103,7 +103,8 @@ function handleKeyDown({
   isMultiSelect,
   onChange,
   focusedOption,
-  isOpen
+  isOpen,
+  currentOption
 }) {
   return function (event) {
     console.log('>>', event.key, options);
@@ -120,7 +121,7 @@ function handleKeyDown({
         wrapperElement: wrapperElement,
         isMultiSelect: isMultiSelect,
         onChangeFunction: onChange,
-        currentOption: undefined
+        currentOption: currentOption
       })(options[focusedOption]);
       return;
     }
@@ -188,6 +189,21 @@ function isValued(value) {
   return typeof value === 'object' && Object.keys(value).length > 0;
 }
 
+function SelectedOption(props) {
+  const label = () => {
+    if (props.isMultiSelect && props.selectedOptions.length > 0) {
+      return `${props.selectedOptions.length} Selected`;
+    }
+    return props.selectedOptions;
+  }
+
+  return (
+    <OptionLabel>
+      {label()}
+    </OptionLabel>
+  )
+}
+
 class Select extends React.Component {
   constructor() {
     super();
@@ -206,6 +222,7 @@ class Select extends React.Component {
         tabIndex={0}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
+        innerRef={wrapperElement => this.wrapperElement = wrapperElement}
         onKeyDown={handleKeyDown({
           setState: this.setState,
           wrapperElement: this.wrapperElement,
@@ -213,9 +230,9 @@ class Select extends React.Component {
           isMultiSelect: this.props.multiSelect,
           onChange: this.props.onChange,
           focusedOption: this.state.focusedOption,
-          isOpen: this.state.isOpen
+          isOpen: this.state.isOpen,
+          currentOption: this.props.value
         })}
-        innerRef={wrapperElement => this.wrapperElement = wrapperElement}
       >
         <SelectToggle
           tabIndex={-1}
@@ -227,7 +244,11 @@ class Select extends React.Component {
             label={this.props.label}
           />
           <Caret isOpen={this.state.isOpen} />
-          <SelectedOption>{this.props.value}</SelectedOption>
+          <SelectedOption
+            selectedOptions={this.props.value}
+            options={[...this.props.promotedOptions, ...this.props.options]}
+            isMultiSelect={this.props.multiSelect}
+          />
         </SelectToggle>
         <Dropdown
           onSelect={handleOptionSelected({
