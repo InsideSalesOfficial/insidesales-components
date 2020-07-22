@@ -107,7 +107,7 @@ function handleKeyDown({
   currentOption
 }) {
   return function (event) {
-    console.log('>>', event.key, options);
+    console.log('>>', 'handleKeyDown', event.key, options);
     if (!validKeys.includes(event.key)) return;
     if (!isOpen) {
       setState({ isOpen: true });
@@ -191,8 +191,14 @@ function isValued(value) {
 
 function SelectedOption(props) {
   const label = () => {
-    if (props.isMultiSelect && props.selectedOptions.length > 0) {
-      return `${props.selectedOptions.length} Selected`;
+    if (typeof props.selectedOptions === 'string') {
+      return props.options.reduce((label, option) => {
+        if(props.selectedOptions === option.value) return option.label;
+        return label;
+      }, '');
+    }
+    if (props.isMultiSelect) {
+      return props.selectedOptions.length < 1 ? '' : `${props.selectedOptions.length} Selected`;
     }
     return props.selectedOptions;
   }
