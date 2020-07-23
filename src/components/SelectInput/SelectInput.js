@@ -30,7 +30,7 @@ const StyledCloseIcon = styled(CloseIcon)`
 const SelectBaseWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: ${(props) => {
     if (props.theme.wrapperJustifyContent) {
       return props.theme.wrapperJustifyContent;
