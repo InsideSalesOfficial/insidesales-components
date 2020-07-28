@@ -43,6 +43,7 @@ class Option extends React.Component {
         innerRef={element => this.element = element}
       >
         {this.props.isMultiSelect && <Checkbox
+          tabIndex={-1}
           disabled={false}
           checked={this.props.isSelected}
         />}

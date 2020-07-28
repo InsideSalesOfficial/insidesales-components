@@ -162,7 +162,7 @@ function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChange
     console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, 'currentOption: ', currentOption, 'option: ', option);
 
     wrapperElement.focus();
-    setState({
+    if(!isMultiSelect) setState({
       isOpen: false
     });
 
