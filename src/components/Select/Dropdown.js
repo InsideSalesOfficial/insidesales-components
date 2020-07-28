@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { fontWeights, colors, renderThemeKeyOrDefaultValue } from "../styles";
+import { renderThemeKeyOrDefaultValue } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
 
@@ -58,8 +58,6 @@ class Dropdown extends React.Component {
 Dropdown.defaultProps = {
   onSelect: _.noop,
   isOpen: false,
-  options: [],
-  promotedOptions: [],
   isMultiSelect: false
 }
 
@@ -73,7 +71,7 @@ Dropdown.propTypes = {
   promotedOptions: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.any,
-  })),
+  })).isRequired,
   focusedOption: PropTypes.number,
   selectedOptions: PropTypes.any,
   isMultiSelect: PropTypes.bool

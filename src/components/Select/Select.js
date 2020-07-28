@@ -199,7 +199,7 @@ function SelectedOption(props) {
     return props.options.reduce((label, option) => {
       if(props.selectedOptions === option.value) return option.label;
       return label;
-    }, '');
+    }, props.selectedOptions);
   }
 
   return (
@@ -231,7 +231,7 @@ class Select extends React.Component {
         onKeyDown={handleKeyDown({
           setState: this.setState,
           wrapperElement: this.wrapperElement,
-          options: [...this.props.promotedOptions, ...this.props.options],
+          options: [...(this.props.promotedOptions || []), ...this.props.options],
           isMultiSelect: this.props.multiSelect,
           onChange: this.props.onChange,
           focusedOption: this.state.focusedOption,
@@ -251,7 +251,7 @@ class Select extends React.Component {
           <Caret isOpen={this.state.isOpen} />
           <SelectedOption
             selectedOptions={this.props.value}
-            options={[...this.props.promotedOptions, ...this.props.options]}
+            options={[...(this.props.promotedOptions || []), ...this.props.options]}
             isMultiSelect={this.props.multiSelect}
           />
         </SelectToggle>
@@ -266,7 +266,7 @@ class Select extends React.Component {
           isOpen={this.state.isOpen}
           isMultiSelect={this.props.multiSelect}
           options={this.props.options}
-          promotedOptions={this.props.promotedOptions}
+          promotedOptions={(this.props.promotedOptions || [])}
           focusedOption={this.state.focusedOption}
           selectedOptions={this.props.value}
         />
@@ -278,8 +278,6 @@ class Select extends React.Component {
 Select.defaultProps = {
   value: '',
   label: '',
-  options: [],
-  promotedOptions: [],
   isDisabled: false,
   theme: {},
   isPlaceHolder: false,
