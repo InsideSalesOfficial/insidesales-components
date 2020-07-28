@@ -42,6 +42,7 @@ class Option extends React.Component {
         isFocused={this.props.isFocused}
         innerRef={element => this.element = element}
       >
+        {this.props.isPromoted && <div>Promoted</div>}
         {this.props.isMultiSelect && <Checkbox
           tabIndex={-1}
           disabled={false}
@@ -57,7 +58,8 @@ Option.propTypes = {
   onClick: PropTypes.func.isRequired,
   option: PropTypes.object.isRequired,
   isSelected: PropTypes.bool,
-  isMultiSelect: PropTypes.bool
+  isMultiSelect: PropTypes.bool,
+  isPromoted: PropTypes.bool
 };
 
 export default Option;

@@ -167,7 +167,9 @@ function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChange
     });
 
     if(isMultiSelect) {
-      if (currentOption.includes(option.value)) {
+      if(!Array.isArray(currentOption)) {
+        onChangeFunction([option.value]);
+      } else if (currentOption.includes(option.value)) {
         onChangeFunction(_.without(currentOption, option.value))
       } else {
         onChangeFunction([...currentOption, option.value]);
@@ -191,8 +193,8 @@ function isValued(value) {
 
 function SelectedOption(props) {
   const label = () => {
-    if (props.isMultiSelect) {
-      return props.selectedOptions.length < 1 ? '' : `${props.selectedOptions.length} Selected`;
+    if (Array.isArray(props.selectedOptions) && props.selectedOptions.length > 0) {
+      return `${props.selectedOptions.length} Selected`;
     }
     return props.options.reduce((label, option) => {
       if(props.selectedOptions === option.value) return option.label;

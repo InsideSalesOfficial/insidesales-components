@@ -18,30 +18,33 @@ const Options = styled.ul`
 
 function renderOptions({
   options,
+  promotedOptions,
   onSelect,
   focusedOption,
   selectedOptions,
-  isMultiSelect
+  isMultiSelect,
 }) {
-  return (options.map((option, index) => {
+  return [...promotedOptions, ...options].map((option, index) => {
     return (
       <Option
-        key={index}
+        key={`${option.value}-${index}`}
         onClick={onSelect}
         option={option}
         isFocused={focusedOption === index}
         isMultiSelect={isMultiSelect}
         isSelected={isMultiSelect && _.includes(selectedOptions, option.value)}
+        isPromoted={false}
       />
     );
-  }));
+  });
 }
 class Dropdown extends React.Component {
   render() {
     return (
       <Options isOpen={this.props.isOpen} >
         {renderOptions({
-          options: [...this.props.promotedOptions, ...this.props.options],
+          options: this.props.options,
+          promotedOptions: this.props.promotedOptions,
           onSelect: this.props.onSelect,
           focusedOption: this.props.focusedOption,
           selectedOptions: this.props.selectedOptions,

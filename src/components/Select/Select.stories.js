@@ -45,31 +45,15 @@ const OptionValue = styled.div`
   })};
 `;
 
-const promotedOption = [{ value: "p1", label: "Promoted Option" }];
+const promotedOption = [
+  { value: "p1", label: "Promoted Option 1" },
+  { value: "p2", label: "Promoted Option 2" },
+  { value: "p3", label: "Promoted Option 3" }
+];
 
 const genericOptions = [
-  {
-    value: "1",
-    optionLabel: "option one label",
-    optionValue: "option one",
-    label: (
-      <OptionWrapper>
-        <OptionLabel>option one label</OptionLabel>
-        <OptionValue>option one</OptionValue>
-      </OptionWrapper>
-    )
-  },
-  {
-    value: "2",
-    optionLabel: "option two label",
-    optionValue: "option two",
-    label: (
-      <OptionWrapper>
-        <OptionLabel>option two label</OptionLabel>
-        <OptionValue>option two</OptionValue>
-      </OptionWrapper>
-    )
-  },
+  { value: "1", label: "Option One" },
+  { value: "2", label: "Option Two" },
   { value: "3", label: "Option Three" },
   { value: "4", label: "Option Four" },
   { value: "5", label: "Option Five" },
@@ -83,7 +67,20 @@ const genericOptions = [
     label:
       "A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string A really long string"
   },
-  { value: 12, label: `I'm a number` }
+  { value: 12, label: `I'm a number` },
+  {
+    value: "13",
+    label: (
+      <OptionWrapper>
+        <OptionLabel>HTML Label</OptionLabel>
+        <OptionValue>option 13</OptionValue>
+      </OptionWrapper>
+    ),
+    optionLabel: "option 13 label",
+    optionValue: "option 13",
+  },
+  { value: true, label: "True" },
+  { value: false, label: "False" },
 ];
 
 class WrapperComponent extends React.Component {
