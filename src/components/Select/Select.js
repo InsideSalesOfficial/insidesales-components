@@ -191,16 +191,13 @@ function isValued(value) {
 
 function SelectedOption(props) {
   const label = () => {
-    if (typeof props.selectedOptions === 'string') {
-      return props.options.reduce((label, option) => {
-        if(props.selectedOptions === option.value) return option.label;
-        return label;
-      }, '');
-    }
     if (props.isMultiSelect) {
       return props.selectedOptions.length < 1 ? '' : `${props.selectedOptions.length} Selected`;
     }
-    return props.selectedOptions;
+    return props.options.reduce((label, option) => {
+      if(props.selectedOptions === option.value) return option.label;
+      return label;
+    }, '');
   }
 
   return (
