@@ -175,6 +175,12 @@ function handleOptionSelected({ setState, wrapperElement, isMultiSelect, onChang
   }
 }
 
+function handleSearch({setState}) {
+  return function (searchText) {
+    console.log('>>', searchText);
+  }
+}
+
 function isValued(value) {
   if (value === undefined || value === null) return false;
   else if (typeof value === 'boolean') return true;
@@ -266,6 +272,9 @@ class Select extends React.Component {
             isMultiSelect: this.props.multiSelect,
             onChangeFunction: this.props.onChange,
             currentOption: this.props.value
+          })}
+          onSearch={handleSearch({
+            setState: this.setState
           })}
           isOpen={this.state.isOpen}
           isMultiSelect={this.props.multiSelect}

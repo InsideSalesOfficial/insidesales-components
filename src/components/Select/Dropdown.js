@@ -47,8 +47,7 @@ function renderSearch({onSearch}) {
         tabIndex={-1}
         label='Label'
         name='selectSearch'
-        onChange={onSearch}
-        search
+        onChange={(searchText) => onSearch(searchText)}
       />
     </SearchWrapper>
   );
@@ -83,7 +82,9 @@ class Dropdown extends React.Component {
   render() {
     return (
       <Options isOpen={this.props.isOpen} >
-        {renderSearch(() => {})}
+        {renderSearch({
+          onSearch: this.props.onSearch
+        })}
         {renderOptions({
           options: this.props.options,
           promotedOptions: this.props.promotedOptions,
@@ -99,12 +100,14 @@ class Dropdown extends React.Component {
 
 Dropdown.defaultProps = {
   onSelect: _.noop,
+  onSearch: _.noop,
   isOpen: false,
   isMultiSelect: false
 }
 
 Dropdown.propTypes = {
-  onSelect: PropTypes.func.isRequired,
+  onSelect: PropTypes.func,
+  onSearch: PropTypes.func,
   isOpen: PropTypes.bool.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
