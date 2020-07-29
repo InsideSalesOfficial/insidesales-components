@@ -45,9 +45,10 @@ function renderSearch({onSearch}) {
     <SearchWrapper tabIndex={-1}>
       <StyledSearchInput
         tabIndex={-1}
-        label='Label'
+        label='Search'
         name='selectSearch'
         onChange={(searchText) => onSearch(searchText)}
+        search
       />
     </SearchWrapper>
   );
