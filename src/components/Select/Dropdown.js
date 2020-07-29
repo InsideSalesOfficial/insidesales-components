@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import TextInput, { TextBox } from '../TextInput';
 import { renderThemeKeyOrDefaultValue, colors } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
@@ -28,6 +29,30 @@ const Spacer = styled.div`
   border-bottom: 1px solid ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 })};
   margin: 8px 0 8px 0;
 `;
+
+const StyledSearchInput = styled(TextInput)`
+  ${TextBox} {
+    'background-color: transparent;'
+  }
+`;
+
+const SearchWrapper = styled.div`
+  padding: 0 24px;
+`;
+
+function renderSearch({onSearch}) {
+  return (
+    <SearchWrapper tabIndex={-1}>
+      <StyledSearchInput
+        tabIndex={-1}
+        label='Label'
+        name='selectSearch'
+        onChange={onSearch}
+        search
+      />
+    </SearchWrapper>
+  );
+}
 
 function renderOptions({
   options,
@@ -58,6 +83,7 @@ class Dropdown extends React.Component {
   render() {
     return (
       <Options isOpen={this.props.isOpen} >
+        {renderSearch(() => {})}
         {renderOptions({
           options: this.props.options,
           promotedOptions: this.props.promotedOptions,
