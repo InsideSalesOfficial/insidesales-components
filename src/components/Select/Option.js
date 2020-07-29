@@ -48,6 +48,7 @@ class Option extends React.Component {
           tabIndex={-1}
           disabled={false}
           checked={this.props.isSelected}
+          name={this.props.option.label}
         />}
         {this.props.option.label}
       </ListItem>);
