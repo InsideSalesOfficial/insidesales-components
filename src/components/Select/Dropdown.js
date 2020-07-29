@@ -22,8 +22,11 @@ const Options = styled.ul`
   }
 `;
 
-const Spacer = styled.hr`
-  border-color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 })}
+const Spacer = styled.div`
+  height: 0;
+  width: 100%;
+  border-bottom: 1px solid ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 })};
+  margin: 8px 0 8px 0;
 `;
 
 function renderOptions({
