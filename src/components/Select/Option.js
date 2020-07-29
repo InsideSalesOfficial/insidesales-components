@@ -13,7 +13,7 @@ const ListItem = styled.li`
   line-height: 36px;
   cursor: pointer;
   background: ${props => focusedBackground(props)};
-
+  ${props => props.bottomBorder ? 'border-bottom: 1px solid white' : ''}
 
   &:hover {
     background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: props.theme.background })};
@@ -25,24 +25,25 @@ const ListItem = styled.li`
 `;
 
 function focusedBackground(props) {
-  console.log('focusedBackground - isFocused', props);
   if(props.isFocused) {
     return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.background });
   }
 }
 
 class Option extends React.Component {
-  render() {
-    console.log('isFocused: ', this.props.isFocused)
+  componentDidUpdate() {
     if (this.props.isFocused) this.element.scrollIntoViewIfNeeded();
+  }
+
+  render() {
     return (
       <ListItem
         tabIndex={-1}
         onClick={(event) => this.props.onClick(this.props.option)}
         isFocused={this.props.isFocused}
         innerRef={element => this.element = element}
+        bottomBorder={this.props.isPromoted}
       >
-        {this.props.isPromoted && <div>Promoted</div>}
         {this.props.isMultiSelect && <Checkbox
           tabIndex={-1}
           disabled={false}
@@ -59,7 +60,7 @@ Option.propTypes = {
   option: PropTypes.object.isRequired,
   isSelected: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
-  isPromoted: PropTypes.bool
+  isPromoted: PropTypes.bool,
 };
 
 export default Option;

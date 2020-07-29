@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { renderThemeKeyOrDefaultValue } from "../styles";
+import { renderThemeKeyOrDefaultValue, colors } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
 
@@ -14,6 +14,16 @@ const Options = styled.ul`
   padding: 0;
   transform: translateZ(0);
   overflow-y: auto;
+  li:first-child {
+    margin-top: 8px;
+  }
+  li:last-child {
+    margin-bottom: 8px;
+  }
+`;
+
+const Spacer = styled.hr`
+  border-color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 })}
 `;
 
 function renderOptions({
@@ -24,19 +34,22 @@ function renderOptions({
   selectedOptions,
   isMultiSelect,
 }) {
-  return [...promotedOptions, ...options].map((option, index) => {
+  const combinedOptions = [...promotedOptions, ...options].map((option, index) => {
     return (
       <Option
-        key={`${option.value}-${index}`}
+        key={`select-${option.value}`}
         onClick={onSelect}
         option={option}
         isFocused={focusedOption === index}
         isMultiSelect={isMultiSelect}
         isSelected={isMultiSelect && _.includes(selectedOptions, option.value)}
-        isPromoted={false}
       />
-    );
+    )
   });
+  if (promotedOptions.length > 0){
+    combinedOptions.splice(promotedOptions.length, 0, <Spacer/>)
+  }
+  return combinedOptions;
 }
 class Dropdown extends React.Component {
   render() {
