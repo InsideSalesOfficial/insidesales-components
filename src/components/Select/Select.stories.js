@@ -22,6 +22,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  flex-wrap: wrap;
   padding-top: 6px;
   padding-bottom: 6px;
   button {

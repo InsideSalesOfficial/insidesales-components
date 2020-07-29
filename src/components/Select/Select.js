@@ -37,7 +37,7 @@ const SelectToggle = styled.div`
   border-bottom-style: solid;
   border-radius: 2px;
   border-bottom-color: ${props => {
-    if(props.isFocused) {
+    if (props.isFocused) {
       return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
     }
     return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
@@ -51,7 +51,7 @@ const SelectToggle = styled.div`
   ${typography.subhead1};
 `;
 
-function getNextFocusedOption({isOpen, focusedOption, optionsLength, direction}) {
+function getNextFocusedOption({ isOpen, focusedOption, optionsLength, direction }) {
   if (!isOpen) return focusedOption;
   if (typeof focusedOption !== 'number') return 0;
   if (direction === 'next') {
@@ -73,9 +73,8 @@ function handleButtonClick(setState) {
 }
 
 function handleBlur(event) {
-  console.log('>>', 'handleBlur');
   this.timeoutID = setTimeout(() => {
-    if(this.state.isFocused) {
+    if (this.state.isFocused) {
       this.setState({
         isFocused: false,
         isOpen: false
@@ -85,9 +84,8 @@ function handleBlur(event) {
 }
 
 function handleFocus(event) {
-  console.log('>>', 'handleFocus');
   clearTimeout(this.timeoutID);
-  if(!this.state.isFocused) {
+  if (!this.state.isFocused) {
     this.setState({
       isFocused: true
     });
@@ -107,7 +105,6 @@ function handleKeyDown({
   currentOption
 }) {
   return function (event) {
-    console.log('>>', 'handleKeyDown', event.key, options);
     if (!validKeys.includes(event.key)) return;
     if (!isOpen) {
       setState({ isOpen: true });
@@ -157,17 +154,15 @@ function handleKeyDown({
   }
 }
 
-function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChangeFunction, currentOption}) {
+function handleOptionSelected({ setState, wrapperElement, isMultiSelect, onChangeFunction, currentOption }) {
   return function (option) {
-    console.log('>>', 'handleOptionSelected', isMultiSelect, onChangeFunction, 'currentOption: ', currentOption, 'option: ', option);
-
     wrapperElement.focus();
-    if(!isMultiSelect) setState({
-      isOpen: false
+    setState({
+      isOpen: !!isMultiSelect
     });
 
-    if(isMultiSelect) {
-      if(!Array.isArray(currentOption)) {
+    if (isMultiSelect) {
+      if (!Array.isArray(currentOption)) {
         onChangeFunction([option.value]);
       } else if (currentOption.includes(option.value)) {
         onChangeFunction(_.without(currentOption, option.value))
@@ -181,7 +176,7 @@ function handleOptionSelected({setState, wrapperElement, isMultiSelect, onChange
 }
 
 function isValued(value) {
-  if(value === undefined || value === null) return false;
+  if (value === undefined || value === null) return false;
   else if (typeof value === 'boolean') return true;
   else if (typeof value === 'number') return true;
   else if (typeof value === 'string' && value.length > 0) return true;
@@ -197,7 +192,7 @@ function SelectedOption(props) {
       return `${props.selectedOptions.length} Selected`;
     }
     return props.options.reduce((label, option) => {
-      if(props.selectedOptions === option.value) return option.label;
+      if (props.selectedOptions === option.value) return option.label;
       return label;
     }, props.selectedOptions);
   }
@@ -217,8 +212,17 @@ class Select extends React.Component {
       isOpen: false,
       focusedOption: undefined
     }
-
     this.setState = this.setState.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // If options props are updated, reset focused state
+    if (nextProps.options !== this.props.options || nextProps.promotedOptions !== this.props.promotedOptions) {
+      this.setState({
+        isOpen: false,
+        focusedOption: undefined
+      })
+    }
   }
 
   render() {
@@ -283,7 +287,8 @@ Select.defaultProps = {
   isPlaceHolder: false,
   error: false,
   required: false,
-  onChange: _.noop
+  multiSelect: false,
+  onChange: _.noop,
 }
 
 Select.propTypes = {

@@ -45,7 +45,11 @@ const OptionValue = styled.div`
   })};
 `;
 
-const promotedOption = [{ value: "p1", label: "Promoted Option" }];
+const promotedOption = [
+  { value: "p1", label: "Promoted Option 1" },
+  { value: "p2", label: "Promoted Option 2" },
+  { value: "p3", label: "Promoted Option 3" }
+];
 
 const genericOptions = [
   { value: "1", label: "Option One" },
