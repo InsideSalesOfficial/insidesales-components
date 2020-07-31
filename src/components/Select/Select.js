@@ -177,7 +177,9 @@ function handleOptionSelected({ setState, wrapperElement, isMultiSelect, onChang
 
 function handleSearch({setState}) {
   return function (searchText) {
-    console.log('>>', searchText);
+    setState({
+      searchText
+    });
   }
 }
 
@@ -216,7 +218,8 @@ class Select extends React.Component {
     this.state = {
       isFocused: false,
       isOpen: false,
-      focusedOption: undefined
+      focusedOption: undefined,
+      searchFilter: ""
     }
     this.setState = this.setState.bind(this);
   }
@@ -273,6 +276,7 @@ class Select extends React.Component {
             onChangeFunction: this.props.onChange,
             currentOption: this.props.value
           })}
+          searchable={this.props.searchable}
           onSearch={handleSearch({
             setState: this.setState
           })}

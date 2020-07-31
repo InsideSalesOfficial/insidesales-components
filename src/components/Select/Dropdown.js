@@ -83,7 +83,7 @@ class Dropdown extends React.Component {
   render() {
     return (
       <Options isOpen={this.props.isOpen} >
-        {renderSearch({
+        {this.props.searchable && renderSearch({
           onSearch: this.props.onSearch
         })}
         {renderOptions({
@@ -120,7 +120,8 @@ Dropdown.propTypes = {
   })).isRequired,
   focusedOption: PropTypes.number,
   selectedOptions: PropTypes.any,
-  isMultiSelect: PropTypes.bool
+  isMultiSelect: PropTypes.bool,
+  searchable: PropTypes.bool
 };
 
 export default Dropdown;
