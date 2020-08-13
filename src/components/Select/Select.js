@@ -175,7 +175,7 @@ function handleOptionSelected({ setState, wrapperElement, isMultiSelect, onChang
   }
 }
 
-function handleSearch({setState}) {
+function handleSearch({ setState }) {
   return function (searchFilter) {
     setState({
       searchFilter
@@ -216,7 +216,7 @@ function filterOptionsWithSearch({ options, searchFilter = '' }) {
   if (!_.isArray(options) || _.isEmpty(options)) return [];
   return options.filter(option => {
     if (!_.isObject(option)) return true;
-    if ( !(_.isString(option.label) || _.isObject(option.label)) ) return true;
+    if (!(_.isString(option.label) || _.isObject(option.label))) return true;
     if (_.isObject(option.label) && !_.isString(option.optionValue)) return true;
 
     const labelString = _.isString(option.label) ? option.label : option.optionValue;
@@ -264,25 +264,25 @@ class Select extends React.Component {
 
     return (
       <Wrapper
-        tabIndex={0}
+        innerRef={wrapperElement => this.wrapperElement = wrapperElement}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
-        innerRef={wrapperElement => this.wrapperElement = wrapperElement}
         onKeyDown={handleKeyDown({
+          currentOption: this.props.value,
+          focusedOption: this.state.focusedOption,
+          isMultiSelect: this.props.multiSelect,
+          isOpen: this.state.isOpen,
+          onChange: this.props.onChange,
+          options: [...(promotedOptions || []), ...options],
           setState: this.setState,
           wrapperElement: this.wrapperElement,
-          options: [...(promotedOptions || []), ...options],
-          isMultiSelect: this.props.multiSelect,
-          onChange: this.props.onChange,
-          focusedOption: this.state.focusedOption,
-          isOpen: this.state.isOpen,
-          currentOption: this.props.value
         })}
+        tabIndex={0}
       >
         <SelectToggle
-          tabIndex={-1}
-          onClick={handleButtonClick(this.setState)}
           isFocused={this.state.isFocused}
+          onClick={handleButtonClick(this.setState)}
+          tabIndex={-1}
         >
           <Label
             isOptionSelected={isValued(this.props.value)}
@@ -290,28 +290,26 @@ class Select extends React.Component {
           />
           <Caret isOpen={this.state.isOpen} />
           <SelectedOption
-            selectedOptions={this.props.value}
-            options={[...(this.props.promotedOptions || []), ...this.props.options]}
             isMultiSelect={this.props.multiSelect}
+            options={[...(this.props.promotedOptions || []), ...this.props.options]}
+            selectedOptions={this.props.value}
           />
         </SelectToggle>
         <Dropdown
+          focusedOption={this.state.focusedOption}
+          isMultiSelect={this.props.multiSelect}
+          isOpen={this.state.isOpen}
+          onSearch={handleSearch({ setState: this.setState })}
           onSelect={handleOptionSelected({
-            setState: this.setState,
-            wrapperElement: this.wrapperElement,
+            currentOption: this.props.value,
             isMultiSelect: this.props.multiSelect,
             onChangeFunction: this.props.onChange,
-            currentOption: this.props.value
+            setState: this.setState,
+            wrapperElement: this.wrapperElement,
           })}
-          searchable={this.props.searchable}
-          onSearch={handleSearch({
-            setState: this.setState
-          })}
-          isOpen={this.state.isOpen}
-          isMultiSelect={this.props.multiSelect}
           options={options}
           promotedOptions={(promotedOptions || [])}
-          focusedOption={this.state.focusedOption}
+          searchable={this.props.searchable}
           selectedOptions={this.props.value}
         />
       </Wrapper>
@@ -320,35 +318,30 @@ class Select extends React.Component {
 }
 
 Select.defaultProps = {
-  value: '',
-  label: '',
-  isDisabled: false,
-  theme: {},
-  isPlaceHolder: false,
   error: false,
-  required: false,
+  isDisabled: false,
+  isPlaceHolder: false,
+  label: '',
   multiSelect: false,
   onChange: _.noop,
+  required: false,
+  theme: {},
+  value: '',
 }
 
 Select.propTypes = {
-  value: PropTypes.any,
-  label: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.any,
-    label: PropTypes.any,
-  })).isRequired,
-  promotedOptions: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.any,
-    label: PropTypes.any,
-  })),
-  onChange: PropTypes.func,
+  error: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
-  required: PropTypes.bool,
+  label: PropTypes.string,
   multiSelect: PropTypes.bool,
+  onChange: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })).isRequired,
+  optionsWidth: PropTypes.number,
+  promotedOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })),
+  required: PropTypes.bool,
   searchable: PropTypes.bool,
-  error: PropTypes.bool
+  value: PropTypes.any,
 }
 
 export default Select;
