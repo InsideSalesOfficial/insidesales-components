@@ -308,6 +308,7 @@ class Select extends React.Component {
             wrapperElement: this.wrapperElement,
           })}
           options={options}
+          optionsWidth={this.props.optionsWidth}
           promotedOptions={(promotedOptions || [])}
           searchable={this.props.searchable}
           selectedOptions={this.props.value}

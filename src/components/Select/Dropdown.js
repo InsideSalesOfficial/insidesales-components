@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextInput, { TextBox } from '../TextInput';
-import { renderThemeKeyOrDefaultValue, colors } from "../styles";
+import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
 
 const Options = styled.ul`
+  max-width: ${props => props.optionsWidth}px
   background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })}
   display: ${props => props.isOpen ? 'block' : 'none'}
   width: 100%;
@@ -20,6 +21,27 @@ const Options = styled.ul`
   }
   li:last-child {
     margin-bottom: 8px;
+  }
+
+  &::-webkit-scrollbar {
+    background-color: ${renderThemeIfPresentOrDefault({ key: 'primary05', defaultValue: colors.white })};
+    border-left: none;
+    margin-right: 10px;
+    width: 10px;
+    height: 10px
+  }
+  &::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    background-color: ${renderThemeIfPresentOrDefault({ key: 'white40', defaultValue: colors.black40 })};
+    border: 1px solid transparent;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-corner {
+    background: transparent;
   }
 `;
 
@@ -82,7 +104,10 @@ function renderOptions({
 class Dropdown extends React.Component {
   render() {
     return (
-      <Options isOpen={this.props.isOpen} >
+      <Options
+        optionsWidth={this.props.optionsWidth}
+        isOpen={this.props.isOpen}
+      >
         {this.props.searchable && renderSearch({
           onSearch: this.props.onSearch
         })}
@@ -107,21 +132,16 @@ Dropdown.defaultProps = {
 }
 
 Dropdown.propTypes = {
-  onSelect: PropTypes.func,
-  onSearch: PropTypes.func,
-  isOpen: PropTypes.bool.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.any,
-    label: PropTypes.any,
-  })).isRequired,
-  promotedOptions: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.any,
-    label: PropTypes.any,
-  })).isRequired,
   focusedOption: PropTypes.number,
-  selectedOptions: PropTypes.any,
   isMultiSelect: PropTypes.bool,
-  searchable: PropTypes.bool
+  isOpen: PropTypes.bool.isRequired,
+  onSearch: PropTypes.func,
+  onSelect: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })).isRequired,
+  optionsWidth: PropTypes.number,
+  promotedOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })).isRequired,
+  searchable: PropTypes.bool,
+  selectedOptions: PropTypes.any,
 };
 
 export default Dropdown;
