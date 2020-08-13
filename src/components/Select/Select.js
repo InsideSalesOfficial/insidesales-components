@@ -176,9 +176,9 @@ function handleOptionSelected({ setState, wrapperElement, isMultiSelect, onChang
 }
 
 function handleSearch({setState}) {
-  return function (searchText) {
+  return function (searchFilter) {
     setState({
-      searchText
+      searchFilter
     });
   }
 }
@@ -212,6 +212,18 @@ function SelectedOption(props) {
   )
 }
 
+function filterOptionsWithSearch({ options, searchFilter = '' }) {
+  if (!_.isArray(options) || _.isEmpty(options)) return [];
+  return options.filter(option => {
+    if (!_.isObject(option)) return true;
+    if ( !(_.isString(option.label) || _.isObject(option.label)) ) return true;
+    if (_.isObject(option.label) && !_.isString(option.optionValue)) return true;
+
+    const labelString = _.isString(option.label) ? option.label : option.optionValue;
+    return _.includes(labelString.toLowerCase(), searchFilter.toLowerCase());
+  });
+}
+
 class Select extends React.Component {
   constructor() {
     super();
@@ -232,9 +244,24 @@ class Select extends React.Component {
         focusedOption: undefined
       })
     }
+    // If search prop is updated, reset search filter
+    if (nextProps.searchable !== this.props.searchable) {
+      this.setState({
+        searchFilter: ''
+      })
+    }
   }
 
   render() {
+    const options = filterOptionsWithSearch({
+      options: this.props.options,
+      searchFilter: this.state.searchFilter
+    });
+    const promotedOptions = filterOptionsWithSearch({
+      options: this.props.promotedOptions,
+      searchFilter: this.state.searchFilter
+    });
+
     return (
       <Wrapper
         tabIndex={0}
@@ -244,7 +271,7 @@ class Select extends React.Component {
         onKeyDown={handleKeyDown({
           setState: this.setState,
           wrapperElement: this.wrapperElement,
-          options: [...(this.props.promotedOptions || []), ...this.props.options],
+          options: [...(promotedOptions || []), ...options],
           isMultiSelect: this.props.multiSelect,
           onChange: this.props.onChange,
           focusedOption: this.state.focusedOption,
@@ -282,8 +309,8 @@ class Select extends React.Component {
           })}
           isOpen={this.state.isOpen}
           isMultiSelect={this.props.multiSelect}
-          options={this.props.options}
-          promotedOptions={(this.props.promotedOptions || [])}
+          options={options}
+          promotedOptions={(promotedOptions || [])}
           focusedOption={this.state.focusedOption}
           selectedOptions={this.props.value}
         />
