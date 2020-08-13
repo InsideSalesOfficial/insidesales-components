@@ -15,7 +15,10 @@ const Wrapper = styled.div`
 
 const OptionLabel = styled.span`
   padding: 22px 26px 0 16px;
-  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 })};
+  color: ${(props) =>
+    props.error
+      ? renderThemeKeyOrDefaultValue({ props, key: "warning04", defaultValue: colors.red, })
+      : renderThemeKeyOrDefaultValue({ props, key: "white90", defaultValue: colors.white90, })};
 `;
 
 const SelectToggle = styled.div`
@@ -37,6 +40,9 @@ const SelectToggle = styled.div`
   border-bottom-style: solid;
   border-radius: 2px;
   border-bottom-color: ${props => {
+    if (props.error) {
+      return renderThemeKeyOrDefaultValue({ props, key: 'warning 04', defaultValue: colors.red });
+    }
     if (props.isFocused) {
       return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
     }
@@ -206,7 +212,9 @@ function SelectedOption(props) {
   }
 
   return (
-    <OptionLabel>
+    <OptionLabel
+      error={props.error}
+    >
       {label()}
     </OptionLabel>
   )
@@ -280,16 +288,22 @@ class Select extends React.Component {
         tabIndex={0}
       >
         <SelectToggle
+          error={this.props.error}
           isFocused={this.state.isFocused}
           onClick={handleButtonClick(this.setState)}
           tabIndex={-1}
         >
           <Label
+            error={this.props.error}
             isOptionSelected={isValued(this.props.value)}
             label={this.props.label}
           />
-          <Caret isOpen={this.state.isOpen} />
+          <Caret
+            error={this.props.error}
+            isOpen={this.state.isOpen}
+          />
           <SelectedOption
+            error={this.props.error}
             isMultiSelect={this.props.multiSelect}
             options={[...(this.props.promotedOptions || []), ...this.props.options]}
             selectedOptions={this.props.value}

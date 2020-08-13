@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {renderThemeKeyOrDefaultValue } from "../styles";
+import {renderThemeKeyOrDefaultValue, colors } from "../styles";
 
 const caretStyles = `
 position: absolute;
@@ -26,7 +26,9 @@ ${caretStyles}
 &::after {
   border-top:
     5px
-    ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor })}
+    ${props => props.error
+      ? renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red })
+      : renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor })}
     solid;
 }
 `;
@@ -36,20 +38,24 @@ ${caretStyles}
 &::after {
   border-bottom:
     5px
-    ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor })}
+    ${props => props.error
+      ? renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red })
+      : renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor })}
     solid;
 }
 `;
 
+
 class Caret extends React.Component {
   render() {
-    return (
-      this.props.isOpen ? <CaretDown /> : <CaretUp />
-    );
+    return this.props.isOpen
+      ? <CaretDown error={this.props.error} />
+      : <CaretUp error={this.props.error} />;
   }
 }
 
 Caret.propTypes = {
+  error: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired
 };
 
