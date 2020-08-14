@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import _ from 'lodash';
+import { RequiredText } from '../RequiredText/RequiredText';
 import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
 
 import Dropdown from './Dropdown';
@@ -280,7 +281,7 @@ class Select extends React.Component {
 
     return (
       <Wrapper
-        innerRef={wrapperElement => this.wrapperElement = wrapperElement}
+        innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown({
@@ -313,11 +314,17 @@ class Select extends React.Component {
             isDisabled={this.props.isDisabled}
             isOpen={this.state.isOpen}
           />
+          {!this.props.value && !this.state.isOpen && this.props.required && (
+            <RequiredText error={this.props.error}>Required</RequiredText>
+          )}
           <SelectedOption
             error={this.props.error}
             isDisabled={this.props.isDisabled}
             isMultiSelect={this.props.multiSelect}
-            options={[...(this.props.promotedOptions || []), ...this.props.options]}
+            options={[
+              ...(this.props.promotedOptions || []),
+              ...this.props.options,
+            ]}
             selectedOptions={this.props.value}
           />
         </SelectToggle>
@@ -335,7 +342,7 @@ class Select extends React.Component {
           })}
           options={options}
           optionsWidth={this.props.optionsWidth}
-          promotedOptions={(promotedOptions || [])}
+          promotedOptions={promotedOptions || []}
           searchable={this.props.searchable}
           selectedOptions={this.props.value}
         />
