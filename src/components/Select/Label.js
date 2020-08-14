@@ -14,9 +14,9 @@ const Wrapper = styled.label`
 `;
 
 function labelColor(props) {
-  return props.error
-    ? `color: ${renderThemeKeyOrDefaultValue({ props, key: "warning04", defaultValue: colors.red, })};`
-    : `color: ${renderThemeKeyOrDefaultValue({ props, key: "white90", defaultValue: colors.white90, })};`;
+  if (props.isDisabled) return `color: ${renderThemeKeyOrDefaultValue({ props, key: "white40", defaultValue: colors.white40 })};`
+  if (props.error) return `color: ${renderThemeKeyOrDefaultValue({ props, key: "warning04", defaultValue: colors.red })};`
+  return `color: ${renderThemeKeyOrDefaultValue({ props, key: "white90", defaultValue: colors.white90 })};`;
 }
 
 class Label extends React.Component {
@@ -24,6 +24,7 @@ class Label extends React.Component {
     return (
       <Wrapper
         error={this.props.error}
+        isDisabled={this.props.isDisabled}
         isOptionSelected={this.props.isOptionSelected}
       >
         {this.props.label}
@@ -34,6 +35,7 @@ class Label extends React.Component {
 
 Label.propTypes = {
   error: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   isOptionSelected: PropTypes.bool.isRequired,
   label: PropTypes.any,
 };

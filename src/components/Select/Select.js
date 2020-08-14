@@ -15,10 +15,11 @@ const Wrapper = styled.div`
 
 const OptionLabel = styled.span`
   padding: 22px 26px 0 16px;
-  color: ${(props) =>
-    props.error
-      ? renderThemeKeyOrDefaultValue({ props, key: "warning04", defaultValue: colors.red, })
-      : renderThemeKeyOrDefaultValue({ props, key: "white90", defaultValue: colors.white90, })};
+  color: ${(props) => {
+    if (props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: "white40", defaultValue: colors.white40, });
+    if (props.error) return renderThemeKeyOrDefaultValue({ props, key: "warning04", defaultValue: colors.red, });
+    return renderThemeKeyOrDefaultValue({ props, key: "white90", defaultValue: colors.white90, });
+  }}
 `;
 
 const SelectToggle = styled.div`
@@ -54,10 +55,6 @@ const SelectToggle = styled.div`
     }
     return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
   }};
-
-  ${props => props.isDisabled && `
-    opacity: 0.6;
-  `}
 
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
 
@@ -224,6 +221,7 @@ function SelectedOption(props) {
   return (
     <OptionLabel
       error={props.error}
+      isDisabled={props.isDisabled}
     >
       {label()}
     </OptionLabel>
@@ -306,15 +304,18 @@ class Select extends React.Component {
         >
           <Label
             error={this.props.error}
+            isDisabled={this.props.isDisabled}
             isOptionSelected={isValued(this.props.value)}
             label={this.props.label}
           />
           <Caret
             error={this.props.error}
+            isDisabled={this.props.isDisabled}
             isOpen={this.state.isOpen}
           />
           <SelectedOption
             error={this.props.error}
+            isDisabled={this.props.isDisabled}
             isMultiSelect={this.props.multiSelect}
             options={[...(this.props.promotedOptions || []), ...this.props.options]}
             selectedOptions={this.props.value}

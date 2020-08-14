@@ -21,26 +21,29 @@ cursor: pointer;
 }
 `;
 
-const CaretUp = styled.div`
+const CaretDown = styled.div`
 ${caretStyles}
 &::after {
   border-top:
     5px
-    ${props => props.error
-      ? renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red })
-      : renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor })}
+    ${props => {
+      if (props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: colors.white10 });
+      if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red });
+      return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor });
+    }}
     solid;
 }
 `;
 
-const CaretDown = styled.div`
+const CaretUp = styled.div`
 ${caretStyles}
 &::after {
   border-bottom:
     5px
-    ${props => props.error
-      ? renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red })
-      : renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor })}
+    ${props => {
+      if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red });
+      return renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor });
+    }}
     solid;
 }
 `;
@@ -49,13 +52,14 @@ ${caretStyles}
 class Caret extends React.Component {
   render() {
     return this.props.isOpen
-      ? <CaretDown error={this.props.error} />
-      : <CaretUp error={this.props.error} />;
+      ? <CaretUp error={this.props.error} />
+      : <CaretDown error={this.props.error} isDisabled={this.props.isDisabled} />;
   }
 }
 
 Caret.propTypes = {
   error: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired
 };
 
