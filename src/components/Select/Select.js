@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { RequiredText } from '../RequiredText/RequiredText';
 import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
+import { singleCharacter } from '../../utils/regexp';
 
 import Dropdown from './Dropdown';
 import Label from './Label';
@@ -162,8 +163,7 @@ function handleKeyDown({
       return;
     }
 
-    const alphanumericCharacter = RegExp(/^([a-zA-Z0-9_-\u0600-\u065f\u066a-\u06EF\u06fa-\u06ff\ufb8a\u067e\u0686\u06af\u0750-\u077f\ufb50-\ufbc1\ufbd3-\ufd3f\ufd50-\ufd8f\ufd92-\ufdc7\ufe70-\ufefc\uFDF0-\uFDFD]){1}$/);
-    if (event.key.match(alphanumericCharacter)) { // if alphanumeric key is pressed
+    if (event.key.match(singleCharacter)) { // if alphanumeric key is pressed
       const key = event.key;
       event.preventDefault();
       setState(prevState => {
