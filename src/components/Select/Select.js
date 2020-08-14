@@ -106,8 +106,6 @@ function handleFocus(event) {
   }
 }
 
-const validKeys = [' ', 'Enter', 'ArrowDown', 'ArrowUp'];
-
 function handleKeyDown({
   setState,
   wrapperElement,
@@ -119,7 +117,6 @@ function handleKeyDown({
   currentOption
 }) {
   return function (event) {
-    if (!validKeys.includes(event.key)) return;
     if (!isOpen) {
       setState({ isOpen: true });
       return;
@@ -163,6 +160,16 @@ function handleKeyDown({
         })
       });
       return;
+    }
+
+    const alphanumericCharacter = RegExp(/^([a-zA-Z0-9_-\u0600-\u065f\u066a-\u06EF\u06fa-\u06ff\ufb8a\u067e\u0686\u06af\u0750-\u077f\ufb50-\ufbc1\ufbd3-\ufd3f\ufd50-\ufd8f\ufd92-\ufdc7\ufe70-\ufefc\uFDF0-\uFDFD]){1}$/);
+    if (event.key.match(alphanumericCharacter)) { // if alphanumeric key is pressed
+      const key = event.key;
+      event.preventDefault();
+      setState(prevState => {
+        return { softSearchFilter: `${prevState.softSearchFilter}${key}` }
+      });
+      return
     }
 
   }
@@ -248,7 +255,8 @@ class Select extends React.Component {
       isFocused: false,
       isOpen: false,
       focusedOption: undefined,
-      searchFilter: ""
+      searchFilter: '',
+      softSearchFilter: '',
     }
     this.setState = this.setState.bind(this);
   }
@@ -309,6 +317,7 @@ class Select extends React.Component {
             isOptionSelected={isValued(this.props.value)}
             label={this.props.label}
           />
+          {this.state.softSearchFilter}
           <Caret
             error={this.props.error}
             isDisabled={this.props.isDisabled}
