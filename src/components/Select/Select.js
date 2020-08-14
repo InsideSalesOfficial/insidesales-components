@@ -40,14 +40,24 @@ const SelectToggle = styled.div`
   border-bottom-style: solid;
   border-radius: 2px;
   border-bottom-color: ${props => {
+    if (props.isDisabled) {
+      return 'transparent';
+    }
     if (props.error) {
       return renderThemeKeyOrDefaultValue({ props, key: 'warning 04', defaultValue: colors.red });
     }
     if (props.isFocused) {
       return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
     }
+    if (props.theme.borderColor) {
+      return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor });
+    }
     return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
   }};
+
+  ${props => props.isDisabled && `
+    opacity: 0.6;
+  `}
 
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
 
@@ -289,8 +299,9 @@ class Select extends React.Component {
       >
         <SelectToggle
           error={this.props.error}
+          isDisabled={this.props.isDisabled}
           isFocused={this.state.isFocused}
-          onClick={handleButtonClick(this.setState)}
+          onClick={!this.props.isDisabled && handleButtonClick(this.setState)}
           tabIndex={-1}
         >
           <Label
