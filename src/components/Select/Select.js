@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { RequiredText } from '../RequiredText/RequiredText';
 import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
-import { singleCharacter } from '../../utils/regexp';
+import * as regexp from '../../utils/regexp';
 
 import Dropdown from './Dropdown';
 import Label from './Label';
@@ -108,14 +108,15 @@ function handleFocus(event) {
 }
 
 function handleKeyDown({
-  setState,
-  wrapperElement,
-  options,
-  isMultiSelect,
-  onChange,
+  currentOption,
   focusedOption,
+  isMultiSelect,
   isOpen,
-  currentOption
+  onChange,
+  options,
+  setState,
+  setStateDebounced,
+  wrapperElement,
 }) {
   return function (event) {
     if (!isOpen) {
@@ -163,15 +164,15 @@ function handleKeyDown({
       return;
     }
 
-    if (event.key.match(singleCharacter)) { // if alphanumeric key is pressed
+    if (event.key.match(regexp.singleCharacter)) {
       const key = event.key;
       event.preventDefault();
       setState(prevState => {
-        return { softSearchFilter: `${prevState.softSearchFilter}${key}` }
+        return { softSearchFilter: `${prevState.softSearchFilter}${key.toLowerCase()}` }
       });
+      setStateDebounced({ softSearchFilter: '' });
       return
     }
-
   }
 }
 
@@ -259,6 +260,7 @@ class Select extends React.Component {
       softSearchFilter: '',
     }
     this.setState = this.setState.bind(this);
+    this.setStateDebounced = _.debounce(this.setState, 1500).bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -300,6 +302,7 @@ class Select extends React.Component {
           onChange: this.props.onChange,
           options: [...(promotedOptions || []), ...options],
           setState: this.setState,
+          setStateDebounced: this.setStateDebounced,
           wrapperElement: this.wrapperElement,
         })}
         tabIndex={0}
