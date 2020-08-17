@@ -66,7 +66,7 @@ const SelectToggle = styled.div`
   ${typography.subhead1};
 `;
 
-function focusOption({ isOpen, options, direction }) {
+function focusNextOption({ isOpen, options, direction }) {
   if (!isOpen) return options;
   if (typeof options.focusedOption !== 'number') return { ...options, focusedOption: 0 };
   const optionsLength = _.filter(options.options, 'focusIndex').length;
@@ -152,7 +152,7 @@ function handleKeyDown({
       event.preventDefault();
       setState({
         isOpen: true,
-        options: focusOption({
+        options: focusNextOption({
           isOpen: isOpen,
           options: options,
           direction: 'next'
@@ -165,7 +165,7 @@ function handleKeyDown({
       event.preventDefault();
       setState({
         isOpen: true,
-        options: focusOption({
+        options: focusNextOption({
           isOpen: isOpen,
           options: options,
           direction: 'previous'
@@ -178,7 +178,14 @@ function handleKeyDown({
       const key = event.key;
       event.preventDefault();
       setState(prevState => {
-        return { softSearchFilter: `${prevState.softSearchFilter}${key.toLowerCase()}` }
+        return {
+          softSearchFilter: `${prevState.softSearchFilter}${key.toLowerCase()}`,
+          options: focusNextOption({
+            isOpen: isOpen,
+            options: options,
+            direction: 'previous'
+          })
+        }
       });
       setStateDebounced({ softSearchFilter: '' });
       return
@@ -227,7 +234,7 @@ function isValued(value) {
   else if (typeof value === 'number') return true;
   else if (typeof value === 'string' && value.length > 0) return true;
   else if (Array.isArray(value) && value.length > 0) return true;
-  else if (typeof x === 'symbol') return true;
+  else if (typeof value === 'symbol') return true;
 
   return typeof value === 'object' && Object.keys(value).length > 0;
 }
