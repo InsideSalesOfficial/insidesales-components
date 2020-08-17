@@ -66,17 +66,26 @@ const SelectToggle = styled.div`
   ${typography.subhead1};
 `;
 
-function getNextFocusedOption({ isOpen, focusedOption, optionsLength, direction }) {
-  if (!isOpen) return focusedOption;
-  if (typeof focusedOption !== 'number') return 0;
-  if (direction === 'next') {
-    return (focusedOption + 1) % optionsLength;
-  } else {
-    if (focusedOption === 0) {
-      return optionsLength - 1;
-    }
-    return (focusedOption - 1);
-  }
+function focusOption({ isOpen, options, direction }) {
+  if (!isOpen) return options;
+  if (typeof options.focusedOption !== 'number') return { ...options, focusedOption: 0 };
+  const optionsLength = _.filter(options.options, 'focusIndex').length;
+  const focusedOption = nextOption({
+    direction,
+    focusedOption: options.focusedOption,
+    optionsLength
+  });
+  console.log('>>', 'optionsLength', optionsLength, { ...options, focusedOption });
+  return { ...options, focusedOption };
+}
+
+function nextOption({ direction, focusedOption, optionsLength }) {
+  const newFocusedOption = direction === 'next'
+    ? (focusedOption + 1)
+    : (focusedOption - 1);
+  if (newFocusedOption < 1) return newFocusedOption + optionsLength;
+  if (newFocusedOption > optionsLength) return newFocusedOption - optionsLength;
+  return newFocusedOption;
 }
 
 function handleButtonClick(setState) {
@@ -109,7 +118,6 @@ function handleFocus(event) {
 
 function handleKeyDown({
   currentOption,
-  focusedOption,
   isMultiSelect,
   isOpen,
   onChange,
@@ -132,7 +140,7 @@ function handleKeyDown({
         isMultiSelect: isMultiSelect,
         onChangeFunction: onChange,
         currentOption: currentOption
-      })(options[focusedOption]);
+      })(options.focusedOption);
       return;
     }
 
@@ -140,10 +148,9 @@ function handleKeyDown({
       event.preventDefault();
       setState({
         isOpen: true,
-        focusedOption: getNextFocusedOption({
+        options: focusOption({
           isOpen: isOpen,
-          focusedOption: focusedOption,
-          optionsLength: options.length,
+          options: options,
           direction: 'next'
         })
       });
@@ -154,10 +161,9 @@ function handleKeyDown({
       event.preventDefault();
       setState({
         isOpen: true,
-        focusedOption: getNextFocusedOption({
+        options: focusOption({
           isOpen: isOpen,
-          focusedOption: focusedOption,
-          optionsLength: options.length,
+          options: options,
           direction: 'previous'
         })
       });
@@ -255,7 +261,7 @@ class Select extends React.Component {
     this.state = {
       isFocused: false,
       isOpen: false,
-      focusedOption: undefined,
+      options: testOptions(),
       searchFilter: '',
       softSearchFilter: '',
     }
@@ -296,11 +302,10 @@ class Select extends React.Component {
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown({
           currentOption: this.props.value,
-          focusedOption: this.state.focusedOption,
           isMultiSelect: this.props.multiSelect,
           isOpen: this.state.isOpen,
           onChange: this.props.onChange,
-          options: [...(promotedOptions || []), ...options],
+          options: this.state.options,
           setState: this.setState,
           setStateDebounced: this.setStateDebounced,
           wrapperElement: this.wrapperElement,
@@ -351,7 +356,7 @@ class Select extends React.Component {
             setState: this.setState,
             wrapperElement: this.wrapperElement,
           })}
-          options={testOptions()}
+          options={this.state.options}
           optionsWidth={this.props.optionsWidth}
           searchable={this.props.searchable}
           selectedOptions={this.props.value}
@@ -365,15 +370,16 @@ function testOptions() {
   return {
     focusedOption: 0,
     options: [
-      { type: 'search', focusIndex: 0 },
-      { type: 'option', focusIndex: 1, option: {label: 'Promoted Option 1', value: 'p1'}, selected: true },
-      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 2', value: 'p2'}, selected: false },
+      { type: 'search', focusIndex: 1 },
       { type: 'divider' },
-      { type: 'option', focusIndex: 3, option: {label: 'Option 1', value: '1'}, selected: false },
-      { type: 'option', focusIndex: 4, option: {label: 'Option 2', value: '2'}, selected: false },
-      { type: 'option', focusIndex: 5, option: {label: 'Option 3', value: '3'}, selected: false },
+      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 1', value: 'p1'}, selected: true },
+      { type: 'option', focusIndex: 3, option: {label: 'Promoted Option 2', value: 'p2'}, selected: false },
       { type: 'divider' },
-      { type: 'option', focusIndex: 6, option: {label: 'Option 4', value: '4'}, selected: false },
+      { type: 'option', focusIndex: 4, option: {label: 'Option 1', value: '1'}, selected: false },
+      { type: 'option', focusIndex: 5, option: {label: 'Option 2', value: '2'}, selected: false },
+      { type: 'option', focusIndex: 6, option: {label: 'Option 3', value: '3'}, selected: false },
+      { type: 'divider' },
+      { type: 'option', focusIndex: 7, option: {label: 'Option 4', value: '4'}, selected: false },
     ]
   }
 }

@@ -68,7 +68,6 @@ function renderOptions({
   onSearch,
   isMultiSelect,
 }) {
-  console.log('>>', 'options', options);
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
       return (
@@ -101,7 +100,7 @@ function renderOptions({
 
     return null;
   });
-  console.log('>>', 'combinedOptions', combinedOptions);
+
   return combinedOptions;
 }
 class Dropdown extends React.Component {
