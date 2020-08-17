@@ -178,13 +178,15 @@ function handleKeyDown({
       const key = event.key;
       event.preventDefault();
       setState(prevState => {
+        const softSearchFilter = `${prevState.softSearchFilter}${key.toLowerCase()}`;
+        const focusedOption = _.filter(prevState.options.options, (option) => option.type === 'option')
+          .find((option) => option.option.label.toLowerCase().replace(regexp.whitespace, '').startsWith(softSearchFilter));
         return {
-          softSearchFilter: `${prevState.softSearchFilter}${key.toLowerCase()}`,
-          options: focusNextOption({
-            isOpen: isOpen,
-            options: options,
-            direction: 'previous'
-          })
+          softSearchFilter,
+          options: {
+            focusedOption: (focusedOption && focusedOption.focusIndex), // TODO: Stay on last focused option if no match
+            options: prevState.options.options
+          }
         }
       });
       setStateDebounced({ softSearchFilter: '' });
@@ -283,7 +285,7 @@ class Select extends React.Component {
       softSearchFilter: '',
     }
     this.setState = this.setState.bind(this);
-    this.setStateDebounced = _.debounce(this.setState, 1500).bind(this);
+    this.setStateDebounced = _.debounce(this.setState, 1000).bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -342,7 +344,6 @@ class Select extends React.Component {
             isOptionSelected={isValued(this.props.value)}
             label={this.props.label}
           />
-          {this.state.softSearchFilter}
           <Caret
             error={this.props.error}
             isDisabled={this.props.isDisabled}
@@ -383,6 +384,7 @@ class Select extends React.Component {
   }
 }
 
+// TODO: Build this structure from the props
 function testOptions() {
   return {
     focusedOption: 0,
