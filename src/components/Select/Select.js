@@ -341,7 +341,6 @@ class Select extends React.Component {
           />
         </SelectToggle>
         <Dropdown
-          focusedOption={this.state.focusedOption}
           isMultiSelect={this.props.multiSelect}
           isOpen={this.state.isOpen}
           onSearch={handleSearch({ setState: this.setState })}
@@ -352,14 +351,30 @@ class Select extends React.Component {
             setState: this.setState,
             wrapperElement: this.wrapperElement,
           })}
-          options={options}
+          options={testOptions()}
           optionsWidth={this.props.optionsWidth}
-          promotedOptions={promotedOptions || []}
           searchable={this.props.searchable}
           selectedOptions={this.props.value}
         />
       </Wrapper>
     );
+  }
+}
+
+function testOptions() {
+  return {
+    focusedOption: 0,
+    options: [
+      { type: 'search', focusIndex: 0 },
+      { type: 'option', focusIndex: 1, option: {label: 'Promoted Option 1', value: 'p1'}, selected: true },
+      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 2', value: 'p2'}, selected: false },
+      { type: 'divider' },
+      { type: 'option', focusIndex: 3, option: {label: 'Option 1', value: '1'}, selected: false },
+      { type: 'option', focusIndex: 4, option: {label: 'Option 2', value: '2'}, selected: false },
+      { type: 'option', focusIndex: 5, option: {label: 'Option 3', value: '3'}, selected: false },
+      { type: 'divider' },
+      { type: 'option', focusIndex: 6, option: {label: 'Option 4', value: '4'}, selected: false },
+    ]
   }
 }
 

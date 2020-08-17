@@ -62,43 +62,46 @@ const SearchWrapper = styled.div`
   padding: 0 24px;
 `;
 
-function renderSearch({onSearch}) {
-  return (
-    <SearchWrapper tabIndex={-1}>
-      <StyledSearchInput
-        tabIndex={-1}
-        label='Search'
-        name='selectSearch'
-        onChange={(searchText) => onSearch(searchText)}
-        search
-      />
-    </SearchWrapper>
-  );
-}
-
 function renderOptions({
   options,
-  promotedOptions,
   onSelect,
-  focusedOption,
-  selectedOptions,
+  onSearch,
   isMultiSelect,
 }) {
-  const combinedOptions = [...promotedOptions, ...options].map((option, index) => {
-    return (
-      <Option
-        key={`select-${option.value}`}
-        onClick={onSelect}
-        option={option}
-        isFocused={focusedOption === index}
-        isMultiSelect={isMultiSelect}
-        isSelected={isMultiSelect && _.includes(selectedOptions, option.value)}
-      />
-    )
+  console.log('>>', 'options', options);
+  const combinedOptions = options.options.map((option, index) => {
+    if (option.type === 'search') {
+      return (
+        <SearchWrapper tabIndex={-1}>
+          <StyledSearchInput
+            tabIndex={-1}
+            label='Search'
+            name='selectSearch'
+            onChange={(searchText) => onSearch(searchText)}
+            search
+          />
+        </SearchWrapper>
+      );
+    }
+
+    if (option.type === 'option') {
+      return (
+        <Option
+          key={`select-${option.option.value}-index`}
+          onClick={onSelect}
+          option={option.option}
+          isFocused={option.focusIndex === options.focusedOption}
+          isMultiSelect={isMultiSelect}
+          isSelected={isMultiSelect && option.selected}
+        />
+      );
+    }
+
+    if (option.type === 'divider') return <Spacer />;
+
+    return null;
   });
-  if (promotedOptions.length > 0){
-    combinedOptions.splice(promotedOptions.length, 0, <Spacer/>)
-  }
+  console.log('>>', 'combinedOptions', combinedOptions);
   return combinedOptions;
 }
 class Dropdown extends React.Component {
@@ -108,15 +111,10 @@ class Dropdown extends React.Component {
         optionsWidth={this.props.optionsWidth}
         isOpen={this.props.isOpen}
       >
-        {this.props.searchable && renderSearch({
-          onSearch: this.props.onSearch
-        })}
         {renderOptions({
           options: this.props.options,
-          promotedOptions: this.props.promotedOptions,
           onSelect: this.props.onSelect,
-          focusedOption: this.props.focusedOption,
-          selectedOptions: this.props.selectedOptions,
+          onSearch: this.props.onSearch,
           isMultiSelect: this.props.isMultiSelect
         })}
       </Options>
@@ -132,15 +130,12 @@ Dropdown.defaultProps = {
 }
 
 Dropdown.propTypes = {
-  focusedOption: PropTypes.number,
   isMultiSelect: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onSearch: PropTypes.func,
   onSelect: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })).isRequired,
+  options: PropTypes.any.isRequired,
   optionsWidth: PropTypes.number,
-  promotedOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })).isRequired,
-  searchable: PropTypes.bool,
   selectedOptions: PropTypes.any,
 };
 
