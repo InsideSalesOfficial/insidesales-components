@@ -63,10 +63,11 @@ const SearchWrapper = styled.div`
 `;
 
 function renderOptions({
-  options,
-  onSelect,
-  onSearch,
   isMultiSelect,
+  onSearch,
+  onSelect,
+  options,
+  selectedOptions,
 }) {
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
@@ -84,6 +85,8 @@ function renderOptions({
     }
 
     if (option.type === 'option') {
+      if (!option || !option.option || !option.option.value) return null;
+      const isSelected = _.some(selectedOptions, (selectedOption) => selectedOption === option.option.value);
       return (
         <Option
           key={`select-${option.option.value}-index`}
@@ -91,7 +94,7 @@ function renderOptions({
           option={option.option}
           isFocused={option.focusIndex === options.focusedOption}
           isMultiSelect={isMultiSelect}
-          isSelected={isMultiSelect && option.selected}
+          isSelected={isMultiSelect && isSelected}
         />
       );
     }
@@ -111,10 +114,11 @@ class Dropdown extends React.Component {
         isOpen={this.props.isOpen}
       >
         {renderOptions({
-          options: this.props.options,
-          onSelect: this.props.onSelect,
+          isMultiSelect: this.props.isMultiSelect,
           onSearch: this.props.onSearch,
-          isMultiSelect: this.props.isMultiSelect
+          onSelect: this.props.onSelect,
+          options: this.props.options,
+          selectedOptions: this.props.selectedOptions,
         })}
       </Options>
     );
