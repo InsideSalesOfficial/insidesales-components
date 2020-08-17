@@ -75,7 +75,6 @@ function focusOption({ isOpen, options, direction }) {
     focusedOption: options.focusedOption,
     optionsLength
   });
-  console.log('>>', 'optionsLength', optionsLength, { ...options, focusedOption });
   return { ...options, focusedOption };
 }
 
@@ -116,6 +115,11 @@ function handleFocus(event) {
   }
 }
 
+function getFocusedOptionValue(options) {
+  const option = _.find(options.options, { focusIndex: options.focusedOption } )
+  return option.option;
+}
+
 function handleKeyDown({
   currentOption,
   isMultiSelect,
@@ -135,12 +139,12 @@ function handleKeyDown({
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       handleOptionSelected({
-        setState: setState,
-        wrapperElement: wrapperElement,
+        currentOption: currentOption,
         isMultiSelect: isMultiSelect,
         onChangeFunction: onChange,
-        currentOption: currentOption
-      })(options.focusedOption);
+        setState: setState,
+        wrapperElement: wrapperElement,
+      })(getFocusedOptionValue(options));
       return;
     }
 
@@ -182,25 +186,31 @@ function handleKeyDown({
   }
 }
 
-function handleOptionSelected({ setState, wrapperElement, isMultiSelect, onChangeFunction, currentOption }) {
+function handleOptionSelected({
+  currentOption,
+  isMultiSelect,
+  onChangeFunction,
+  setState,
+  wrapperElement,
+}) {
   return function (option) {
     wrapperElement.focus();
     setState({
-      isOpen: !!isMultiSelect
+      isOpen: !!isMultiSelect,
     });
 
     if (isMultiSelect) {
       if (!Array.isArray(currentOption)) {
         onChangeFunction([option.value]);
       } else if (currentOption.includes(option.value)) {
-        onChangeFunction(_.without(currentOption, option.value))
+        onChangeFunction(_.without(currentOption, option.value));
       } else {
         onChangeFunction([...currentOption, option.value]);
       }
     } else {
       onChangeFunction(option.value);
     }
-  }
+  };
 }
 
 function handleSearch({ setState }) {
@@ -222,25 +232,25 @@ function isValued(value) {
   return typeof value === 'object' && Object.keys(value).length > 0;
 }
 
-function SelectedOption(props) {
-  const label = () => {
-    if (Array.isArray(props.selectedOptions) && props.selectedOptions.length > 0) {
-      return `${props.selectedOptions.length} Selected`;
-    }
-    return props.options.reduce((label, option) => {
-      if (props.selectedOptions === option.value) return option.label;
-      return label;
-    }, props.selectedOptions);
-  }
-
+function SelectedOption({ selectedOptions, options, error, isDisabled }) {
   return (
     <OptionLabel
-      error={props.error}
-      isDisabled={props.isDisabled}
+      error={error}
+      isDisabled={isDisabled}
     >
-      {label()}
+      {getLabel({ selectedOptions, options })}
     </OptionLabel>
   )
+}
+
+function getLabel({ selectedOptions, options }) {
+  if (Array.isArray(selectedOptions) && selectedOptions.length > 0) {
+    return `${selectedOptions.length} Selected`;
+  }
+  return options.reduce((label, option) => {
+    if (selectedOptions === option.value) return option.label;
+    return label;
+  }, selectedOptions);
 }
 
 function filterOptionsWithSearch({ options, searchFilter = '' }) {
@@ -372,14 +382,14 @@ function testOptions() {
     options: [
       { type: 'search', focusIndex: 1 },
       { type: 'divider' },
-      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 1', value: 'p1'}, selected: true },
-      { type: 'option', focusIndex: 3, option: {label: 'Promoted Option 2', value: 'p2'}, selected: false },
+      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 1', value: 'p1'} },
+      { type: 'option', focusIndex: 3, option: {label: 'Promoted Option 2', value: 'p2'} },
       { type: 'divider' },
-      { type: 'option', focusIndex: 4, option: {label: 'Option 1', value: '1'}, selected: false },
-      { type: 'option', focusIndex: 5, option: {label: 'Option 2', value: '2'}, selected: false },
-      { type: 'option', focusIndex: 6, option: {label: 'Option 3', value: '3'}, selected: false },
+      { type: 'option', focusIndex: 4, option: {label: 'Option 1', value: '1'} },
+      { type: 'option', focusIndex: 5, option: {label: 'Option 2', value: '2'} },
+      { type: 'option', focusIndex: 6, option: {label: 'Option 3', value: '3'} },
       { type: 'divider' },
-      { type: 'option', focusIndex: 7, option: {label: 'Option 4', value: '4'}, selected: false },
+      { type: 'option', focusIndex: 7, option: {label: 'Option 4', value: '4'} },
     ]
   }
 }
