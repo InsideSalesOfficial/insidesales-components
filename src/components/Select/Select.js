@@ -79,6 +79,7 @@ function focusNextOption({ isOpen, options, direction }) {
 }
 
 function nextOption({ direction, focusedOption, optionsLength }) {
+  console.log('>>', direction, focusedOption, optionsLength);
   const newFocusedOption = direction === 'next'
     ? (focusedOption + 1)
     : (focusedOption - 1);
@@ -150,27 +151,27 @@ function handleKeyDown({
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      setState({
+      setState(prevState => ({
         isOpen: true,
         options: focusNextOption({
           isOpen: isOpen,
           options: options,
           direction: 'next'
         })
-      });
+      }));
       return;
     }
 
     if (event.key === 'ArrowUp') {
       event.preventDefault();
-      setState({
+      setState(prevState => ({
         isOpen: true,
         options: focusNextOption({
           isOpen: isOpen,
           options: options,
           direction: 'previous'
         })
-      });
+      }));
       return;
     }
 
@@ -184,7 +185,7 @@ function handleKeyDown({
         return {
           softSearchFilter,
           options: {
-            focusedOption: (focusedOption && focusedOption.focusIndex), // TODO: Stay on last focused option if no match
+            focusedOption: (focusedOption && focusedOption.focusIndex) || prevState.options.focusedOption, // TODO: Stay on last focused option if no match
             options: prevState.options.options
           }
         }
@@ -389,16 +390,13 @@ function testOptions() {
   return {
     focusedOption: 0,
     options: [
-      { type: 'search', focusIndex: 1 },
+      { type: 'option', focusIndex: 1, option: {label: 'Promoted Option 1', value: 'p1'} },
+      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 2', value: 'p2'} },
       { type: 'divider' },
-      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 1', value: 'p1'} },
-      { type: 'option', focusIndex: 3, option: {label: 'Promoted Option 2', value: 'p2'} },
-      { type: 'divider' },
-      { type: 'option', focusIndex: 4, option: {label: 'Option 1', value: '1'} },
-      { type: 'option', focusIndex: 5, option: {label: 'Option 2', value: '2'} },
-      { type: 'option', focusIndex: 6, option: {label: 'Option 3', value: '3'} },
-      { type: 'divider' },
-      { type: 'option', focusIndex: 7, option: {label: 'Option 4', value: '4'} },
+      { type: 'option', focusIndex: 3, option: {label: 'Option One', value: '1'} },
+      { type: 'option', focusIndex: 4, option: {label: 'Option Two', value: '2'} },
+      { type: 'option', focusIndex: 5, option: {label: 'Option Three', value: '3'} },
+      { type: 'option', focusIndex: 6, option: {label: 'Option Four', value: '4'} },
     ]
   }
 }

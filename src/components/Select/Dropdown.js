@@ -83,7 +83,7 @@ function renderOptions({
         </SearchWrapper>
       );
     }
-
+    console.log('>>', 'render:', option, options.focusedOption);
     if (option.type === 'option') {
       if (!option || !option.option || !option.option.value) return null;
       const isSelected = _.some(selectedOptions, (selectedOption) => selectedOption === option.option.value);
