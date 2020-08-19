@@ -66,26 +66,16 @@ const SelectToggle = styled.div`
   ${typography.subhead1};
 `;
 
-function focusNextOption({ isOpen, options, direction }) {
-  if (!isOpen) return options;
-  if (typeof options.focusedOption !== 'number') return { ...options, focusedOption: 0 };
-  const optionsLength = _.filter(options.options, 'focusIndex').length;
-  const focusedOption = nextOption({
-    direction,
-    focusedOption: options.focusedOption,
-    optionsLength
-  });
-  return { ...options, focusedOption };
+function focusNextOption({ focusedOption, optionsLength }) {
+  if (typeof focusedOption !== 'number') return 0;
+  return focusedOption >= optionsLength - 1
+    ? 1 : focusedOption + 1;
 }
 
-function nextOption({ direction, focusedOption, optionsLength }) {
-  console.log('>>', direction, focusedOption, optionsLength);
-  const newFocusedOption = direction === 'next'
-    ? (focusedOption + 1)
-    : (focusedOption - 1);
-  if (newFocusedOption < 1) return newFocusedOption + optionsLength;
-  if (newFocusedOption > optionsLength) return newFocusedOption - optionsLength;
-  return newFocusedOption;
+function focusPreviousOption({ focusedOption, optionsLength }) {
+  if (typeof focusedOption !== 'number') return 0;
+  return focusedOption <= 1
+  ? optionsLength - 1: focusedOption - 1;
 }
 
 function handleButtonClick(setState) {
@@ -123,6 +113,7 @@ function getFocusedOptionValue(options) {
 
 function handleKeyDown({
   currentOption,
+  focusedOption,
   isMultiSelect,
   isOpen,
   onChange,
@@ -151,27 +142,25 @@ function handleKeyDown({
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      setState(prevState => ({
+      setState({
         isOpen: true,
-        options: focusNextOption({
-          isOpen: isOpen,
-          options: options,
-          direction: 'next'
-        })
-      }));
+        focusedOption: focusNextOption({
+          focusedOption: focusedOption,
+          optionsLength: options.options.length,
+        }),
+      });
       return;
     }
 
     if (event.key === 'ArrowUp') {
       event.preventDefault();
-      setState(prevState => ({
+      setState({
         isOpen: true,
-        options: focusNextOption({
-          isOpen: isOpen,
-          options: options,
-          direction: 'previous'
-        })
-      }));
+        focusedOption: focusPreviousOption({
+          focusedOption: focusedOption,
+          optionsLength: options.options.length,
+        }),
+      });
       return;
     }
 
@@ -274,14 +263,53 @@ function filterOptionsWithSearch({ options, searchFilter = '' }) {
     return _.includes(labelString.toLowerCase(), searchFilter.toLowerCase());
   });
 }
+// TODO: Build this structure from the props
+function testOptions() {
+  return {
+    focusedOption: 0,
+    options: [
+      { type: 'option', focusIndex: 1, option: {label: 'Promoted Option 1', value: 'p1'} },
+      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 2', value: 'p2'} },
+      { type: 'divider' },
+      { type: 'option', focusIndex: 3, option: {label: 'Option One', value: '1'} },
+      { type: 'option', focusIndex: 4, option: {label: 'Option Two', value: '2'} },
+      { type: 'option', focusIndex: 5, option: {label: 'Option Three', value: '3'} },
+      { type: 'option', focusIndex: 6, option: {label: 'Option Four', value: '4'} },
+    ]
+  }
+}
+
+function prepareOptions({ promotedOptions, options }) {
+  let focusCount = 1;
+  const a = promotedOptions.map( option => {
+    return {
+      type: 'option',
+      focusIndex: focusCount++,
+      option
+    }
+  });
+  const b = options.map( option => {
+    return {
+      type: 'option',
+      focusIndex: focusCount++,
+      option
+    }
+  });
+  const newOptions = [ ...a, ...b ];
+  console.log('>>', 'newOptions', newOptions);
+  return {
+    focusedOption: 0,
+    options: newOptions
+  }
+}
 
 class Select extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isFocused: false,
       isOpen: false,
-      options: testOptions(),
+      focusedOption: 0,
       searchFilter: '',
       softSearchFilter: '',
     }
@@ -315,6 +343,8 @@ class Select extends React.Component {
       searchFilter: this.state.searchFilter
     });
 
+    const preparedOptions = prepareOptions({ promotedOptions, options });
+
     return (
       <Wrapper
         innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
@@ -322,10 +352,11 @@ class Select extends React.Component {
         onFocus={handleFocus.bind(this)}
         onKeyDown={handleKeyDown({
           currentOption: this.props.value,
+          focusedOption: this.state.focusedOption,
           isMultiSelect: this.props.multiSelect,
           isOpen: this.state.isOpen,
           onChange: this.props.onChange,
-          options: this.state.options,
+          options: preparedOptions,
           setState: this.setState,
           setStateDebounced: this.setStateDebounced,
           wrapperElement: this.wrapperElement,
@@ -365,6 +396,7 @@ class Select extends React.Component {
           />
         </SelectToggle>
         <Dropdown
+          focusedOption={this.state.focusedOption}
           isMultiSelect={this.props.multiSelect}
           isOpen={this.state.isOpen}
           onSearch={handleSearch({ setState: this.setState })}
@@ -375,29 +407,13 @@ class Select extends React.Component {
             setState: this.setState,
             wrapperElement: this.wrapperElement,
           })}
-          options={this.state.options}
+          options={preparedOptions}
           optionsWidth={this.props.optionsWidth}
           searchable={this.props.searchable}
           selectedOptions={this.props.value}
         />
       </Wrapper>
     );
-  }
-}
-
-// TODO: Build this structure from the props
-function testOptions() {
-  return {
-    focusedOption: 0,
-    options: [
-      { type: 'option', focusIndex: 1, option: {label: 'Promoted Option 1', value: 'p1'} },
-      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 2', value: 'p2'} },
-      { type: 'divider' },
-      { type: 'option', focusIndex: 3, option: {label: 'Option One', value: '1'} },
-      { type: 'option', focusIndex: 4, option: {label: 'Option Two', value: '2'} },
-      { type: 'option', focusIndex: 5, option: {label: 'Option Three', value: '3'} },
-      { type: 'option', focusIndex: 6, option: {label: 'Option Four', value: '4'} },
-    ]
   }
 }
 
@@ -408,6 +424,8 @@ Select.defaultProps = {
   label: '',
   multiSelect: false,
   onChange: _.noop,
+  options: [],
+  promotedOptions: [],
   required: false,
   theme: {},
   value: '',

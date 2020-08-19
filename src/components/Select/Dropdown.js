@@ -63,6 +63,7 @@ const SearchWrapper = styled.div`
 `;
 
 function renderOptions({
+  focusedOption,
   isMultiSelect,
   onSearch,
   onSelect,
@@ -83,7 +84,6 @@ function renderOptions({
         </SearchWrapper>
       );
     }
-    console.log('>>', 'render:', option, options.focusedOption);
     if (option.type === 'option') {
       if (!option || !option.option || !option.option.value) return null;
       const isSelected = _.some(selectedOptions, (selectedOption) => selectedOption === option.option.value);
@@ -92,7 +92,7 @@ function renderOptions({
           key={`select-${option.option.value}-index`}
           onClick={onSelect}
           option={option.option}
-          isFocused={option.focusIndex === options.focusedOption}
+          isFocused={option.focusIndex === focusedOption}
           isMultiSelect={isMultiSelect}
           isSelected={isMultiSelect && isSelected}
         />
@@ -114,6 +114,7 @@ class Dropdown extends React.Component {
         isOpen={this.props.isOpen}
       >
         {renderOptions({
+          focusedOption: this.props.focusedOption,
           isMultiSelect: this.props.isMultiSelect,
           onSearch: this.props.onSearch,
           onSelect: this.props.onSelect,
@@ -126,6 +127,7 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.defaultProps = {
+  focusedOption: 0,
   onSelect: _.noop,
   onSearch: _.noop,
   isOpen: false,
@@ -133,6 +135,7 @@ Dropdown.defaultProps = {
 }
 
 Dropdown.propTypes = {
+  focusedOption: PropTypes.number,
   isMultiSelect: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onSearch: PropTypes.func,
