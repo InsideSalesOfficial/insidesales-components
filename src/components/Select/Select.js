@@ -67,15 +67,13 @@ const SelectToggle = styled.div`
 `;
 
 function focusNextOption({ focusedOption, optionsLength }) {
-  if (typeof focusedOption !== 'number') return 0;
-  return focusedOption >= optionsLength - 1
-    ? 1 : focusedOption + 1;
+  if (typeof focusedOption !== "number") return 0;
+  return focusedOption >= optionsLength - 1 ? 0 : focusedOption + 1;
 }
 
 function focusPreviousOption({ focusedOption, optionsLength }) {
-  if (typeof focusedOption !== 'number') return 0;
-  return focusedOption <= 1
-  ? optionsLength - 1: focusedOption - 1;
+  if (typeof focusedOption !== "number") return optionsLength - 1;
+  return focusedOption <= 0 ? optionsLength - 1 : focusedOption - 1;
 }
 
 function handleButtonClick(setState) {
@@ -280,7 +278,7 @@ function testOptions() {
 }
 
 function prepareOptions({ promotedOptions, options }) {
-  let focusCount = 1;
+  let focusCount = 0;
   const a = promotedOptions.map( option => {
     return {
       type: 'option',
@@ -296,9 +294,7 @@ function prepareOptions({ promotedOptions, options }) {
     }
   });
   const newOptions = [ ...a, ...b ];
-  console.log('>>', 'newOptions', newOptions);
   return {
-    focusedOption: 0,
     options: newOptions
   }
 }
@@ -309,7 +305,7 @@ class Select extends React.Component {
     this.state = {
       isFocused: false,
       isOpen: false,
-      focusedOption: 0,
+      focusedOption: null,
       searchFilter: '',
       softSearchFilter: '',
     }

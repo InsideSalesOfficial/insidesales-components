@@ -12,11 +12,11 @@ const ListItem = styled.li`
   padding: 0 24px;
   line-height: 36px;
   cursor: pointer;
-  background: ${props => focusedBackground(props)};
+  background: ${optionBackground};
   ${props => props.bottomBorder ? 'border-bottom: 1px solid white' : ''}
 
   &:hover {
-    background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: props.theme.background })};
+    background: ${optionHoverBackground};
   }
 
   &:focus {
@@ -24,10 +24,17 @@ const ListItem = styled.li`
   }
 `;
 
-function focusedBackground(props) {
+function optionBackground(props) {
   if(props.isFocused) {
     return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.background });
   }
+}
+
+function optionHoverBackground(props) {
+  if(props.isFocused) {
+    return renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.background });
+  }
+  return renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: props.theme.background });
 }
 
 class Option extends React.Component {

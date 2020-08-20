@@ -85,7 +85,7 @@ function renderOptions({
       );
     }
     if (option.type === 'option') {
-      if (!option || !option.option || !option.option.value) return null;
+      if (!option || !option.option) return null;
       const isSelected = _.some(selectedOptions, (selectedOption) => selectedOption === option.option.value);
       return (
         <Option
@@ -103,7 +103,6 @@ function renderOptions({
 
     return null;
   });
-
   return combinedOptions;
 }
 class Dropdown extends React.Component {
