@@ -164,9 +164,9 @@ function handleKeyDown({
       return;
     }
 
-    if (isOpen && event.key.match(regexp.singleCharacter)) {
+    const isKeyModifierActive = event.altKey || event.ctrlKey || event.metaKey;
+    if (!isKeyModifierActive && isOpen && event.key.match(regexp.singleCharacter)) {
       const key = event.key;
-      console.log(">>", "key", key);
       event.preventDefault();
       setState((prevState) => {
         const softSearchFilter = `${
