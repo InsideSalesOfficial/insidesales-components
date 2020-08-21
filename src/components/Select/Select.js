@@ -123,7 +123,7 @@ function handleKeyDown({
   wrapperElement,
 }) {
   return function (event) {
-    if (!isOpen && _.some(validOpeningKeys, event.key)) {
+    if (!isOpen && _.some(validOpeningKeys, (key) => key === event.key)) {
       setState({ isOpen: true });
       return;
     }
@@ -169,19 +169,26 @@ function handleKeyDown({
       console.log(">>", "key", key);
       event.preventDefault();
       setState((prevState) => {
-        const softSearchFilter = `${prevState.softSearchFilter}${key.toLowerCase()}`;
-        const r = new RegExp('^' + softSearchFilter);
-        const x = _.find(options.options, option => {
+        const softSearchFilter = `${
+          prevState.softSearchFilter
+        }${key.toLowerCase()}`;
+        const beginsWithSoftSearch = new RegExp("^" + softSearchFilter);
+        const newFocusedOption = _.find(options.options, (option) => {
           if (!_.isString(option.option.label)) return false;
-          if (r.test(option.option.label.toLowerCase().replace(regexp.whitespace, ''))) return true;
+          if (
+            beginsWithSoftSearch.test(
+              option.option.label.toLowerCase().replace(regexp.whitespace, "")
+            )
+          )
+            return true;
           return false;
-        })
-        const y = (x && _.isNumber(x.focusIndex) ? x.focusIndex : prevState.focusedOption);
-        console.log(">>", "x", x);
-        console.log(">>", "softSearchFilter", softSearchFilter);
+        });
         return {
           softSearchFilter,
-          focusedOption: y,
+          focusedOption:
+            newFocusedOption && _.isNumber(newFocusedOption.focusIndex)
+              ? newFocusedOption.focusIndex
+              : prevState.focusedOption,
         };
       });
       setStateDebounced({ softSearchFilter: "" });
