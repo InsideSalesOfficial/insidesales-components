@@ -104,10 +104,12 @@ function handleFocus(event) {
   }
 }
 
-function getFocusedOptionValue(options) {
-  const option = _.find(options.options, { focusIndex: options.focusedOption } )
+function getFocusedOptionValue({ options, focusedOption }) {
+  const option = _.find(options.options, { focusIndex: focusedOption } )
   return option.option;
 }
+
+const validOpeningKeys = ['Enter', ' ', 'ArrowDown', 'ArrowUp'];
 
 function handleKeyDown({
   currentOption,
@@ -121,12 +123,12 @@ function handleKeyDown({
   wrapperElement,
 }) {
   return function (event) {
-    if (!isOpen) {
+    if (!isOpen && _.some(validOpeningKeys, event.key)) {
       setState({ isOpen: true });
       return;
     }
 
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handleOptionSelected({
         currentOption: currentOption,
@@ -134,11 +136,11 @@ function handleKeyDown({
         onChangeFunction: onChange,
         setState: setState,
         wrapperElement: wrapperElement,
-      })(getFocusedOptionValue(options));
+      })(getFocusedOptionValue({ options, focusedOption }));
       return;
     }
 
-    if (event.key === 'ArrowDown') {
+    if (event.key === "ArrowDown") {
       event.preventDefault();
       setState({
         isOpen: true,
@@ -150,7 +152,7 @@ function handleKeyDown({
       return;
     }
 
-    if (event.key === 'ArrowUp') {
+    if (event.key === "ArrowUp") {
       event.preventDefault();
       setState({
         isOpen: true,
@@ -162,25 +164,30 @@ function handleKeyDown({
       return;
     }
 
-    if (event.key.match(regexp.singleCharacter)) {
+    if (isOpen && event.key.match(regexp.singleCharacter)) {
       const key = event.key;
+      console.log(">>", "key", key);
       event.preventDefault();
-      setState(prevState => {
+      setState((prevState) => {
         const softSearchFilter = `${prevState.softSearchFilter}${key.toLowerCase()}`;
-        const focusedOption = _.filter(prevState.options.options, (option) => option.type === 'option')
-          .find((option) => option.option.label.toLowerCase().replace(regexp.whitespace, '').startsWith(softSearchFilter));
+        const r = new RegExp('^' + softSearchFilter);
+        const x = _.find(options.options, option => {
+          if (!_.isString(option.option.label)) return false;
+          if (r.test(option.option.label.toLowerCase().replace(regexp.whitespace, ''))) return true;
+          return false;
+        })
+        const y = (x && _.isNumber(x.focusIndex) ? x.focusIndex : prevState.focusedOption);
+        console.log(">>", "x", x);
+        console.log(">>", "softSearchFilter", softSearchFilter);
         return {
           softSearchFilter,
-          options: {
-            focusedOption: (focusedOption && focusedOption.focusIndex) || prevState.options.focusedOption, // TODO: Stay on last focused option if no match
-            options: prevState.options.options
-          }
-        }
+          focusedOption: y,
+        };
       });
-      setStateDebounced({ softSearchFilter: '' });
-      return
+      setStateDebounced({ softSearchFilter: "" });
+      return;
     }
-  }
+  };
 }
 
 function handleOptionSelected({
@@ -305,7 +312,7 @@ class Select extends React.Component {
     this.state = {
       isFocused: false,
       isOpen: false,
-      focusedOption: null,
+      focusedOption: 0,
       searchFilter: '',
       softSearchFilter: '',
     }
