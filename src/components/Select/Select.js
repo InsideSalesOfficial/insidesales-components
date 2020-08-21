@@ -106,6 +106,7 @@ function handleFocus(event) {
 
 function getFocusedOptionValue({ options, focusedOption }) {
   const option = _.find(options.options, { focusIndex: focusedOption } )
+  if (!option || !option.option) return null;
   return option.option;
 }
 
@@ -205,6 +206,7 @@ function handleOptionSelected({
   wrapperElement,
 }) {
   return function (option) {
+    if (!_.isObject(option)) return;
     wrapperElement.focus();
     setState({
       isOpen: !!isMultiSelect,
@@ -332,7 +334,7 @@ class Select extends React.Component {
     if (nextProps.options !== this.props.options || nextProps.promotedOptions !== this.props.promotedOptions) {
       this.setState({
         isOpen: false,
-        focusedOption: undefined
+        focusedOption: 0,
       })
     }
     // If search prop is updated, reset search filter
@@ -360,7 +362,7 @@ class Select extends React.Component {
         innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
         onBlur={handleBlur.bind(this)}
         onFocus={handleFocus.bind(this)}
-        onKeyDown={handleKeyDown({
+        onKeyDown={!this.props.isDisabled && handleKeyDown({
           currentOption: this.props.value,
           focusedOption: this.state.focusedOption,
           isMultiSelect: this.props.multiSelect,
