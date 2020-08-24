@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeProvider }  from 'styled-components';
 import _ from 'lodash';
 import { RequiredText } from '../RequiredText/RequiredText';
 import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
-import * as regexp from '../../utils/regexp';
 
 import Dropdown from './Dropdown';
 import Label from './Label';
 import Caret from './Caret';
+
+const regexp = {
+  singleCharacter: /^([^\x00-\x7F]|[^\u0000-\u007F]|[\w-_]){1}$/,
+  whitespace: /\s/g
+}
 
 const Wrapper = styled.div`
   outline: none;
@@ -309,9 +313,9 @@ function prepareOptions({ promotedOptions, options, searchable }) {
   }
 }
 
-class Select extends React.Component {
-  constructor(props) {
-    super(props);
+export default class Select extends React.Component {
+  constructor() {
+    super();
     this.state = {
       isFocused: false,
       isOpen: false,
@@ -352,74 +356,76 @@ class Select extends React.Component {
     const preparedOptions = prepareOptions({ promotedOptions, options, searchable: this.props.searchable });
 
     return (
-      <Wrapper
-        innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
-        onBlur={handleBlur.bind(this)}
-        onFocus={handleFocus.bind(this)}
-        onKeyDown={!this.props.isDisabled && handleKeyDown({
-          currentOption: this.props.value,
-          focusedOption: this.state.focusedOption,
-          isMultiSelect: this.props.multiSelect,
-          isOpen: this.state.isOpen,
-          onChange: this.props.onChange,
-          options: preparedOptions,
-          searchable: this.props.searchable,
-          setState: this.setState,
-          setStateDebounced: this.setStateDebounced,
-          wrapperElement: this.wrapperElement,
-        })}
-        tabIndex={0}
-      >
-        <SelectToggle
-          error={this.props.error}
-          isDisabled={this.props.isDisabled}
-          isFocused={this.state.isFocused}
-          onClick={!this.props.isDisabled && handleButtonClick(this.setState)}
-          tabIndex={-1}
-        >
-          <Label
-            error={this.props.error}
-            isDisabled={this.props.isDisabled}
-            isOptionSelected={isValued(this.props.value)}
-            label={this.props.label}
-          />
-          <Caret
-            error={this.props.error}
-            isDisabled={this.props.isDisabled}
-            isOpen={this.state.isOpen}
-          />
-          {!this.props.value && !this.state.isOpen && this.props.required && (
-            <RequiredText error={this.props.error}>Required</RequiredText>
-          )}
-          <SelectedOption
-            error={this.props.error}
-            isDisabled={this.props.isDisabled}
-            isMultiSelect={this.props.multiSelect}
-            options={[
-              ...(this.props.promotedOptions || []),
-              ...this.props.options,
-            ]}
-            selectedOptions={this.props.value}
-          />
-        </SelectToggle>
-        <Dropdown
-          focusedOption={this.state.focusedOption}
-          isMultiSelect={this.props.multiSelect}
-          isOpen={this.state.isOpen}
-          onSearch={handleSearch({ setState: this.setState })}
-          onSelect={handleOptionSelected({
+      <ThemeProvider theme={this.props.theme}>
+        <Wrapper
+          innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
+          onBlur={handleBlur.bind(this)}
+          onFocus={handleFocus.bind(this)}
+          onKeyDown={!this.props.isDisabled && handleKeyDown({
             currentOption: this.props.value,
+            focusedOption: this.state.focusedOption,
             isMultiSelect: this.props.multiSelect,
-            onChangeFunction: this.props.onChange,
+            isOpen: this.state.isOpen,
+            onChange: this.props.onChange,
+            options: preparedOptions,
+            searchable: this.props.searchable,
             setState: this.setState,
+            setStateDebounced: this.setStateDebounced,
             wrapperElement: this.wrapperElement,
           })}
-          options={preparedOptions}
-          optionsWidth={this.props.optionsWidth}
-          searchable={this.props.searchable}
-          selectedOptions={this.props.value}
-        />
-      </Wrapper>
+          tabIndex={0}
+        >
+          <SelectToggle
+            error={this.props.error}
+            isDisabled={this.props.isDisabled}
+            isFocused={this.state.isFocused}
+            onClick={!this.props.isDisabled && handleButtonClick(this.setState)}
+            tabIndex={-1}
+          >
+            <Label
+              error={this.props.error}
+              isDisabled={this.props.isDisabled}
+              isOptionSelected={isValued(this.props.value)}
+              label={this.props.label}
+            />
+            <Caret
+              error={this.props.error}
+              isDisabled={this.props.isDisabled}
+              isOpen={this.state.isOpen}
+            />
+            {!this.props.value && !this.state.isOpen && this.props.required && (
+              <RequiredText error={this.props.error}>Required</RequiredText>
+            )}
+            <SelectedOption
+              error={this.props.error}
+              isDisabled={this.props.isDisabled}
+              isMultiSelect={this.props.multiSelect}
+              options={[
+                ...(this.props.promotedOptions || []),
+                ...this.props.options,
+              ]}
+              selectedOptions={this.props.value}
+            />
+          </SelectToggle>
+          <Dropdown
+            focusedOption={this.state.focusedOption}
+            isMultiSelect={this.props.multiSelect}
+            isOpen={this.state.isOpen}
+            onSearch={handleSearch({ setState: this.setState })}
+            onSelect={handleOptionSelected({
+              currentOption: this.props.value,
+              isMultiSelect: this.props.multiSelect,
+              onChangeFunction: this.props.onChange,
+              setState: this.setState,
+              wrapperElement: this.wrapperElement,
+            })}
+            options={preparedOptions}
+            optionsWidth={this.props.optionsWidth}
+            searchable={this.props.searchable}
+            selectedOptions={this.props.value}
+          />
+        </Wrapper>
+      </ThemeProvider>
     );
   }
 }
@@ -452,5 +458,3 @@ Select.propTypes = {
   searchable: PropTypes.bool,
   value: PropTypes.any,
 }
-
-export default Select;

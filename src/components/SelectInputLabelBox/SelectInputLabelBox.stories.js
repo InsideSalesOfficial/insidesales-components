@@ -88,7 +88,6 @@ class WrapperComponent extends React.Component {
     super();
     this.state = {
       value: "",
-
     };
   }
 

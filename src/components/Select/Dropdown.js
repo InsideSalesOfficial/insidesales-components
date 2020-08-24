@@ -7,9 +7,9 @@ import Option from './Option';
 import _ from 'lodash';
 
 const Options = styled.ul`
-  max-width: ${props => props.optionsWidth}px
-  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })}
-  display: ${props => props.isOpen ? 'block' : 'none'}
+  max-width: ${props => props.optionsWidth + 'px'};
+  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
+  display: ${props => props.isOpen ? 'block' : 'none'};
   width: 100%;
   max-height: 240px;
   margin: 0;
@@ -144,7 +144,7 @@ Dropdown.propTypes = {
   onSearch: PropTypes.func,
   onSelect: PropTypes.func,
   options: PropTypes.any.isRequired,
-  optionsWidth: PropTypes.number,
+  optionsWidth: PropTypes.string,
   selectedOptions: PropTypes.any,
 };
 
