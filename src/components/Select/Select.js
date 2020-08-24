@@ -119,6 +119,7 @@ function handleKeyDown({
   isOpen,
   onChange,
   options,
+  searchable,
   setState,
   setStateDebounced,
   wrapperElement,
@@ -166,7 +167,12 @@ function handleKeyDown({
     }
 
     const isKeyModifierActive = event.altKey || event.ctrlKey || event.metaKey;
-    if (!isKeyModifierActive && isOpen && event.key.match(regexp.singleCharacter)) {
+    if (
+      !isKeyModifierActive &&
+      isOpen &&
+      !(searchable && focusedOption === 0) &&
+      event.key.match(regexp.singleCharacter)
+    ) {
       const key = event.key;
       event.preventDefault();
       setState((prevState) => {
@@ -175,6 +181,7 @@ function handleKeyDown({
         }${key.toLowerCase()}`;
         const beginsWithSoftSearch = new RegExp("^" + softSearchFilter);
         const newFocusedOption = _.find(options.options, (option) => {
+          if (!option.option) return false;
           if (!_.isString(option.option.label)) return false;
           if (
             beginsWithSoftSearch.test(
@@ -228,9 +235,7 @@ function handleOptionSelected({
 
 function handleSearch({ setState }) {
   return function (searchFilter) {
-    setState({
-      searchFilter
-    });
+    setState({ searchFilter });
   }
 }
 
@@ -277,24 +282,13 @@ function filterOptionsWithSearch({ options, searchFilter = '' }) {
     return _.includes(labelString.toLowerCase(), searchFilter.toLowerCase());
   });
 }
-// TODO: Build this structure from the props
-function testOptions() {
-  return {
-    focusedOption: 0,
-    options: [
-      { type: 'option', focusIndex: 1, option: {label: 'Promoted Option 1', value: 'p1'} },
-      { type: 'option', focusIndex: 2, option: {label: 'Promoted Option 2', value: 'p2'} },
-      { type: 'divider' },
-      { type: 'option', focusIndex: 3, option: {label: 'Option One', value: '1'} },
-      { type: 'option', focusIndex: 4, option: {label: 'Option Two', value: '2'} },
-      { type: 'option', focusIndex: 5, option: {label: 'Option Three', value: '3'} },
-      { type: 'option', focusIndex: 6, option: {label: 'Option Four', value: '4'} },
-    ]
-  }
-}
 
-function prepareOptions({ promotedOptions, options }) {
+function prepareOptions({ promotedOptions, options, searchable }) {
   let focusCount = 0;
+  const searchInput = searchable ? [{
+    type: 'search',
+    focusIndex: focusCount++,
+  }] : [];
   const a = promotedOptions.map( option => {
     return {
       type: 'option',
@@ -309,7 +303,7 @@ function prepareOptions({ promotedOptions, options }) {
       option
     }
   });
-  const newOptions = [ ...a, ...b ];
+  const newOptions = [ ...searchInput, ...a, ...b ];
   return {
     options: newOptions
   }
@@ -355,7 +349,7 @@ class Select extends React.Component {
       searchFilter: this.state.searchFilter
     });
 
-    const preparedOptions = prepareOptions({ promotedOptions, options });
+    const preparedOptions = prepareOptions({ promotedOptions, options, searchable: this.props.searchable });
 
     return (
       <Wrapper
@@ -369,6 +363,7 @@ class Select extends React.Component {
           isOpen: this.state.isOpen,
           onChange: this.props.onChange,
           options: preparedOptions,
+          searchable: this.props.searchable,
           setState: this.setState,
           setStateDebounced: this.setStateDebounced,
           wrapperElement: this.wrapperElement,

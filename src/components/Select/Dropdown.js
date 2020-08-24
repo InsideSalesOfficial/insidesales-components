@@ -73,12 +73,16 @@ function renderOptions({
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
       return (
-        <SearchWrapper tabIndex={-1}>
+        <SearchWrapper
+          tabIndex={-1}
+          key={`select-search-${index}`}
+          isFocused={option.focusIndex === focusedOption}
+        >
           <StyledSearchInput
             tabIndex={-1}
             label='Search'
             name='selectSearch'
-            onChange={(searchText) => onSearch(searchText)}
+            onChange={onSearch}
             search
           />
         </SearchWrapper>
