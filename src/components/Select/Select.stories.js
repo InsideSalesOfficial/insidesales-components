@@ -151,10 +151,16 @@ function renderChapterWithTheme(theme) {
             sectionFn: () =>
               wrapComponentWithContainerAndTheme(
                 theme,
-                <WrapperComponent
-                  label="Input Label"
-                  options={genericOptions}
-                />
+                <div>
+                  <WrapperComponent
+                    label="Input Label"
+                    options={genericOptions}
+                  />
+                  <WrapperComponent
+                    label="Input Label"
+                    options={genericOptions}
+                  />
+                </div>
               )
 
           },

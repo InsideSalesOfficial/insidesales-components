@@ -10,6 +10,8 @@ const Options = styled.ul`
   max-width: ${props => props.optionsWidth + 'px'};
   background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
   display: ${props => props.isOpen ? 'block' : 'none'};
+  position: absolute;
+  z-index: 1;
   width: 100%;
   max-height: 240px;
   margin: 0;
