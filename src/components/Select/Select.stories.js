@@ -1,6 +1,7 @@
 import React from "react";
 import { storiesOf, action } from "@storybook/react";
 import Select from "./Select";
+import SelectInputLabelBox from "../SelectInputLabelBox";
 import Button from "../Button";
 import styled from "styled-components";
 
@@ -129,11 +130,19 @@ class WrapperComponent extends React.Component {
         <StyledButton flat={!this.state.optionsWidth} label="optionsWidth" onClick={() => this.toggleValue("optionsWidth", "240")} />
         <StyledButton flat={!this.state.promotedOptions} label="promotedOptions" onClick={() => this.toggleValue("promotedOptions", promotedOption)} />
       </ButtonWrapper>
-      <Select
-        {...this.props}
-        {...this.state}
-        onChange={this.handleSelectInputChange}
-      />
+      {this.props.old ? (
+        <SelectInputLabelBox
+          {...this.props}
+          {...this.state}
+          onChange={this.handleSelectInputChange}
+        />
+      ) : (
+        <Select
+          {...this.props}
+          {...this.state}
+          onChange={this.handleSelectInputChange}
+        />
+      )}
     </div>
   );
 }
@@ -152,7 +161,7 @@ function renderChapterWithTheme(theme) {
       {
         sections: [
           {
-            title: "Select",
+            title: "New Select",
             options: {
               showSource: false
             },
@@ -163,6 +172,24 @@ function renderChapterWithTheme(theme) {
                   <WrapperComponent
                     label="Input Label"
                     options={genericOptions}
+                  />
+                </div>
+              )
+
+          },
+          {
+            title: "Old Select",
+            options: {
+              showSource: false
+            },
+            sectionFn: () =>
+              wrapComponentWithContainerAndTheme(
+                theme,
+                <div>
+                  <WrapperComponent
+                    label="Input Label"
+                    options={genericOptions}
+                    old
                   />
                 </div>
               )
