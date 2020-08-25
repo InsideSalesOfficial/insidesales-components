@@ -51,11 +51,14 @@ const SelectToggle = styled.div`
     if (props.isDisabled) {
       return 'transparent';
     }
+    if (props.error && props.isFocused) {
+      return renderThemeKeyOrDefaultValue({ props, key: 'warning01', defaultValue: colors.black40 });
+    }
     if (props.error) {
-      return renderThemeKeyOrDefaultValue({ props, key: 'warning 04', defaultValue: colors.red });
+      return renderThemeKeyOrDefaultValue({ props, key: 'warning04', defaultValue: colors.red });
     }
     if (props.isFocused) {
-      return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
+      return renderThemeKeyOrDefaultValue({ props, key: 'brand01', defaultValue: colors.black40 });
     }
     if (props.theme.borderColor) {
       return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor });
@@ -66,7 +69,7 @@ const SelectToggle = styled.div`
   cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
 
   color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.black60 })};
-  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary03', defaultValue: props.theme.background })};
+  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
 
   ${typography.subhead1};
 `;
