@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {renderThemeKeyOrDefaultValue} from "../styles";
 
 import Checkbox from '../Checkbox';
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  10% { opacity: 0; }
+  60% { opacity: 1; }
+`;
+
 
 const ListItem = styled.li`
   display: flex;
@@ -22,6 +31,9 @@ const ListItem = styled.li`
   &:focus {
     outline: none;
   }
+
+  animation: ${fadeIn} 0.5s ease-out 1;
+  transform-origin: top left;
 `;
 
 function optionBackground(props) {

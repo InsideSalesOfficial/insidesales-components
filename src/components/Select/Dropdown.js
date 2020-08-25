@@ -6,14 +6,13 @@ import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, ty
 import Option from './Option';
 import _ from 'lodash';
 
-const rotate = keyframes`
-  from {
+const fadeIn = keyframes`
+  0% {
+    transform: scaleY(0.9);
     opacity: 0;
   }
-
-  to {
-    opacity: 1;
-  }
+  15% { opacity: 1; }
+  40% { transform: scaleY(1); }
 `;
 
 
@@ -62,7 +61,7 @@ const Options = styled.ul`
     return boxShadows.lvl8;
   }};
 
-  animation: ${rotate} 0.1s ease-out 1;
+  animation: ${fadeIn} 0.5s cubic-bezier(0, 0.55, 0.45, 1) 1;
   transform-origin: top left;
 `;
 
@@ -127,6 +126,7 @@ function renderOptions({
       return (
         <Option
           key={`select-${option.option.value}-index`}
+          animationDelay={focusedOption - options.focusIndex}
           onClick={onSelect}
           option={option.option}
           isFocused={option.focusIndex === focusedOption}
