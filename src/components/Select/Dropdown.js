@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextInput, { TextBox } from '../TextInput';
-import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors } from "../styles";
+import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, typography } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
 
@@ -61,7 +61,13 @@ const StyledSearchInput = styled(TextInput)`
 `;
 
 const SearchWrapper = styled.div`
-  padding: 0 24px;
+  padding: 0 24px 12px 24px;
+`;
+
+const SearchEmptyText = styled.div`
+  padding-top: 12px;
+  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.white60 })};
+  ${typography.subhead1}
 `;
 
 function renderOptions({
@@ -72,6 +78,7 @@ function renderOptions({
   options,
   selectedOptions,
 }) {
+  console.log('>>', 'options.options', options.options);
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
       return (
@@ -82,11 +89,16 @@ function renderOptions({
         >
           <StyledSearchInput
             tabIndex={-1}
-            label='Search'
-            name='selectSearch'
+            label="Search"
+            name="selectSearch"
             onChange={onSearch}
             search
           />
+          {options.options.length === 1 && (
+            <SearchEmptyText>
+              No options match that search criteria
+            </SearchEmptyText>
+          )}
         </SearchWrapper>
       );
     }
@@ -104,9 +116,7 @@ function renderOptions({
         />
       );
     }
-
     if (option.type === 'divider') return <Spacer />;
-
     return null;
   });
   return combinedOptions;

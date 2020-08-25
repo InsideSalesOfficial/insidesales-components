@@ -293,17 +293,26 @@ function filterOptionsWithSearch({ options, searchFilter = '' }) {
 
 function prepareOptions({ promotedOptions, options, searchable }) {
   let focusCount = 0;
+
   const searchInput = searchable ? [{
     type: 'search',
     focusIndex: focusCount++,
   }] : [];
-  const preparedPromotedOptions = promotedOptions.map( option => {
-    return {
-      type: 'option',
-      focusIndex: focusCount++,
-      option
-    }
-  });
+
+  const divider = { type: "divider" };
+  const preparedPromotedOptions = _.isEmpty(promotedOptions)
+    ? []
+    : [
+        ...promotedOptions.map((option) => {
+          return {
+            type: "option",
+            focusIndex: focusCount++,
+            option,
+          };
+        }),
+        divider,
+      ];
+
   const preparedOptions = options.map( option => {
     return {
       type: 'option',
@@ -311,11 +320,10 @@ function prepareOptions({ promotedOptions, options, searchable }) {
       option
     }
   });
-  const divider = { type: 'divider' };
+
   const newOptions = [
     ...searchInput,
     ...preparedPromotedOptions,
-    !_.isEmpty(preparedPromotedOptions) && divider,
     ...preparedOptions,
   ];
   return {
