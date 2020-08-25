@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextInput, { TextBox } from '../TextInput';
-import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, typography } from "../styles";
+import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, typography, boxShadows } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
 
@@ -45,6 +45,11 @@ const Options = styled.ul`
   &::-webkit-scrollbar-corner {
     background: transparent;
   }
+
+  box-shadow: ${(props) => {
+    if (props.theme.optionsListShadow) return props.theme.optionsListShadow;
+    return boxShadows.lvl8;
+  }};
 `;
 
 const Spacer = styled.div`
