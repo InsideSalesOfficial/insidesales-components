@@ -18,6 +18,14 @@ const OptionWrapper = styled.div`
   padding-bottom: 6px;
 `;
 
+const StyledButton = styled(Button)`
+  height: 24px;
+  padding: 0 4px;
+  span {
+    font-size: 10px;
+  }
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -112,14 +120,14 @@ class WrapperComponent extends React.Component {
   render = () => (
     <div>
       <ButtonWrapper>
-        <Button flat label="Clear Value" onClick={() => this.setState({ value: "" })} />
-        <Button flat={!this.state.error} label="error" onClick={() => this.toggle("error")} />
-        <Button flat={!this.state.isDisabled} label="isDisabled" onClick={() => this.toggle("isDisabled")} />
-        <Button flat={!this.state.required} label="required" onClick={() => this.toggle("required")} />
-        <Button flat={!this.state.searchable} label="searchable" onClick={() => this.toggle("searchable")} />
-        <Button flat={!this.state.multiSelect} label="multiSelect" onClick={() => this.toggle("multiSelect")} />
-        <Button flat={!this.state.optionsWidth} label="optionsWidth" onClick={() => this.toggleValue("optionsWidth", "240")} />
-        <Button flat={!this.state.promotedOptions} label="promotedOptions" onClick={() => this.toggleValue("promotedOptions", promotedOption)} />
+        <StyledButton flat label="Clear Value" onClick={() => this.setState({ value: "" })} />
+        <StyledButton flat={!this.state.error} label="error" onClick={() => this.toggle("error")} />
+        <StyledButton flat={!this.state.isDisabled} label="isDisabled" onClick={() => this.toggle("isDisabled")} />
+        <StyledButton flat={!this.state.required} label="required" onClick={() => this.toggle("required")} />
+        <StyledButton flat={!this.state.searchable} label="searchable" onClick={() => this.toggle("searchable")} />
+        <StyledButton flat={!this.state.multiSelect} label="multiSelect" onClick={() => this.toggle("multiSelect")} />
+        <StyledButton flat={!this.state.optionsWidth} label="optionsWidth" onClick={() => this.toggleValue("optionsWidth", "240")} />
+        <StyledButton flat={!this.state.promotedOptions} label="promotedOptions" onClick={() => this.toggleValue("promotedOptions", promotedOption)} />
       </ButtonWrapper>
       <Select
         {...this.props}
