@@ -7,7 +7,7 @@ import Option from './Option';
 import _ from 'lodash';
 
 const Options = styled.ul`
-  max-width: ${props => props.optionsWidth + 'px'};
+  max-width: ${props => props.optionsWidth ? `${props.optionsWidth}px` : '100%'};
   background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
   display: ${props => props.isOpen ? 'block' : 'none'};
   position: absolute;

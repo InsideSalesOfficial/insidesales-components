@@ -15,6 +15,7 @@ const regexp = {
 }
 
 const Wrapper = styled.div`
+  position: relative;
   outline: none;
   user-select: none;
 `;
