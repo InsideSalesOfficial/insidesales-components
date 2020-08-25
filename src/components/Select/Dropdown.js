@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import TextInput, { TextBox } from '../TextInput';
 import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, typography, boxShadows } from "../styles";
 import Option from './Option';
 import _ from 'lodash';
+
+const rotate = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
 
 const Options = styled.ul`
   max-width: ${props => props.optionsWidth ? `${props.optionsWidth}px` : '100%'};
@@ -50,6 +61,9 @@ const Options = styled.ul`
     if (props.theme.optionsListShadow) return props.theme.optionsListShadow;
     return boxShadows.lvl8;
   }};
+
+  animation: ${rotate} 0.1s ease-out 1;
+  transform-origin: top left;
 `;
 
 const Spacer = styled.div`
