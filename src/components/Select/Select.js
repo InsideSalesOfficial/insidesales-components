@@ -375,7 +375,7 @@ export default class Select extends React.Component {
             setStateDebounced: this.setStateDebounced,
             wrapperElement: this.wrapperElement,
           })}
-          tabIndex={0}
+          tabIndex={this.props.isDisabled ? -1 : 0}
         >
           <SelectToggle
             error={this.props.error}

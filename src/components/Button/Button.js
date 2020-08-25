@@ -178,7 +178,6 @@ const ButtonBase = styled.button`
 
   height: 36px;
   line-height: 24px;
-  outline: 0;
 
   width: auto;
   min-width: 88px;
@@ -219,6 +218,7 @@ export const Button = withTheme(({ className, label, loading, onClick, ...props 
     className={className ? [buttonSelector, className].join(' ') : buttonSelector}
     onClick={() => { if (!loading && !props.fade && onClick) { debouncedOnClick(); } }}
     loading={loading}
+    tabIndex={props.disabled ? -1 : 0}
     {...props}
   >
     <span>
