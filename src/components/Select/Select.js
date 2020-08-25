@@ -297,21 +297,27 @@ function prepareOptions({ promotedOptions, options, searchable }) {
     type: 'search',
     focusIndex: focusCount++,
   }] : [];
-  const a = promotedOptions.map( option => {
+  const preparedPromotedOptions = promotedOptions.map( option => {
     return {
       type: 'option',
       focusIndex: focusCount++,
       option
     }
   });
-  const b = options.map( option => {
+  const preparedOptions = options.map( option => {
     return {
       type: 'option',
       focusIndex: focusCount++,
       option
     }
   });
-  const newOptions = [ ...searchInput, ...a, ...b ];
+  const divider = { type: 'divider' };
+  const newOptions = [
+    ...searchInput,
+    ...preparedPromotedOptions,
+    !_.isEmpty(preparedPromotedOptions) && divider,
+    ...preparedOptions,
+  ];
   return {
     options: newOptions
   }
