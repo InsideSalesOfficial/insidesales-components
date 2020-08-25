@@ -315,8 +315,8 @@ function prepareOptions({ promotedOptions, options, searchable }) {
 }
 
 export default class Select extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isFocused: false,
       isOpen: false,
@@ -359,6 +359,7 @@ export default class Select extends React.Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <Wrapper
+          className={this.props.className}
           innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
           onBlur={handleBlur.bind(this)}
           onFocus={handleFocus.bind(this)}

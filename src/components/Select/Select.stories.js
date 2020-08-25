@@ -156,10 +156,6 @@ function renderChapterWithTheme(theme) {
                     label="Input Label"
                     options={genericOptions}
                   />
-                  <WrapperComponent
-                    label="Input Label"
-                    options={genericOptions}
-                  />
                 </div>
               )
 
