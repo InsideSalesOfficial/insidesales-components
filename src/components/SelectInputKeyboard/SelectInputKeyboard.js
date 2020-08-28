@@ -121,6 +121,12 @@ function getFocusedOptionValue({ options, focusedOption }) {
 
 const validOpeningKeys = ['Enter', ' ', 'ArrowDown', 'ArrowUp'];
 
+function focusableOptions({ options }) {
+  return options.filter(option => {
+    return _.isNumber(option.focusIndex);
+  });
+}
+
 function handleKeyDown({
   currentOption,
   focusedOption,
@@ -157,7 +163,7 @@ function handleKeyDown({
         isOpen: true,
         focusedOption: focusNextOption({
           focusedOption: focusedOption,
-          optionsLength: options.options.length,
+          optionsLength: focusableOptions({options: options.options}).length,
         }),
       });
       return;
@@ -169,7 +175,7 @@ function handleKeyDown({
         isOpen: true,
         focusedOption: focusPreviousOption({
           focusedOption: focusedOption,
-          optionsLength: options.options.length,
+          optionsLength: focusableOptions({options: options.options}).length,
         }),
       });
       return;
