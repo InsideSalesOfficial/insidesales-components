@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
-import TextInput, { TextBox } from '../TextInput';
-import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, typography, boxShadows } from "../styles";
+import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, boxShadows } from "../styles";
 import Option from './Option';
+import Search from './Search';
 import _ from 'lodash';
 
 const fadeIn = keyframes`
@@ -72,22 +72,6 @@ const Spacer = styled.div`
   margin: 8px 0 8px 0;
 `;
 
-const StyledSearchInput = styled(TextInput)`
-  ${TextBox} {
-    'background-color: transparent;'
-  }
-`;
-
-const SearchWrapper = styled.div`
-  padding: 0 24px 12px 24px;
-`;
-
-const SearchEmptyText = styled.div`
-  padding-top: 12px;
-  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.white60 })};
-  ${typography.subhead1}
-`;
-
 function renderOptions({
   focusedOption,
   isMultiSelect,
@@ -100,24 +84,12 @@ function renderOptions({
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
       return (
-        <SearchWrapper
-          tabIndex={-1}
+        <Search
           key={`select-search-${index}`}
           isFocused={option.focusIndex === focusedOption}
-        >
-          <StyledSearchInput
-            tabIndex={-1}
-            label="Search"
-            name="selectSearch"
-            onChange={onSearch}
-            search
-          />
-          {options.options.length === 1 && (
-            <SearchEmptyText>
-              No options match that search criteria
-            </SearchEmptyText>
-          )}
-        </SearchWrapper>
+          onSearch={onSearch}
+          empty={options.options.length === 1}
+        />
       );
     }
     if (option.type === 'option') {
@@ -126,8 +98,7 @@ function renderOptions({
       return (
         <Option
           key={`select-${option.option.value}-index`}
-          animationDelay={focusedOption - options.focusIndex}
-          onClick={onSelect}
+          onClick={(o) => onSelect(o, option.focusIndex)}
           option={option.option}
           isFocused={option.focusIndex === focusedOption}
           isMultiSelect={isMultiSelect}

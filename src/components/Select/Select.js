@@ -220,11 +220,13 @@ function handleOptionSelected({
   setState,
   wrapperElement,
 }) {
-  return function (option) {
+  return function (option, focusIndex) {
+    console.log('>>', 'focusIndex', focusIndex);
     if (!_.isObject(option)) return;
     wrapperElement.focus();
     setState({
       isOpen: !!isMultiSelect,
+      focusedOption: focusIndex
     });
 
     if (isMultiSelect) {

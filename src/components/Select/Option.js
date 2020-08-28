@@ -52,13 +52,17 @@ function optionHoverBackground(props) {
 class Option extends React.Component {
   componentDidUpdate() {
     if (this.props.isFocused) this.element.scrollIntoViewIfNeeded();
+    if (this.props.isFocused) this.element.focus();
   }
 
   render() {
     return (
       <ListItem
         tabIndex={-1}
-        onClick={(event) => this.props.onClick(this.props.option)}
+        onClick={(event) => {
+          this.element.focus();
+          this.props.onClick(this.props.option);
+        }}
         isFocused={this.props.isFocused}
         innerRef={element => this.element = element}
         bottomBorder={this.props.isPromoted}
