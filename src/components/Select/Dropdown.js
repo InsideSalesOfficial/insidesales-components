@@ -76,6 +76,7 @@ function renderOptions({
   focusedOption,
   isMultiSelect,
   onSearch,
+  onSearchClick,
   onSelect,
   options,
   selectedOptions,
@@ -87,6 +88,7 @@ function renderOptions({
           key={`select-search-${index}`}
           isFocused={option.focusIndex === focusedOption}
           onSearch={onSearch}
+          onClick={onSearchClick}
           empty={options.options.length === 1}
         />
       );
@@ -121,6 +123,7 @@ class Dropdown extends React.Component {
           focusedOption: this.props.focusedOption,
           isMultiSelect: this.props.isMultiSelect,
           onSearch: this.props.onSearch,
+          onSearchClick: this.props.onSearchClick,
           onSelect: this.props.onSelect,
           options: this.props.options,
           selectedOptions: this.props.selectedOptions,
@@ -134,6 +137,7 @@ Dropdown.defaultProps = {
   focusedOption: 0,
   onSelect: _.noop,
   onSearch: _.noop,
+  onSearchClick: _.noop,
   isOpen: false,
   isMultiSelect: false
 }
@@ -143,6 +147,7 @@ Dropdown.propTypes = {
   isMultiSelect: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onSearch: PropTypes.func,
+  onSearchClick: PropTypes.func,
   onSelect: PropTypes.func,
   options: PropTypes.any.isRequired,
   optionsWidth: PropTypes.string,

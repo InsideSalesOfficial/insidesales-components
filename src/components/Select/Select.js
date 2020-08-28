@@ -133,7 +133,6 @@ function handleKeyDown({
   wrapperElement,
 }) {
   return function (event) {
-    console.log('>>', 'focusedOption', focusedOption);
     if (!isOpen && _.some(validOpeningKeys, (key) => key === event.key)) {
       setState({ isOpen: true });
       return;
@@ -222,7 +221,6 @@ function handleOptionSelected({
   wrapperElement,
 }) {
   return function (option, focusIndex) {
-    console.log('>>', 'focusIndex', focusIndex);
     if (!_.isObject(option)) return;
     wrapperElement.focus();
     setState({
@@ -247,6 +245,12 @@ function handleOptionSelected({
 function handleSearch({ setState }) {
   return function (searchFilter) {
     setState({ searchFilter });
+  }
+}
+
+function handleSearchClick({ setState }) {
+  return function (_event) {
+    setState({ focusedOption: 0 });
   }
 }
 
@@ -434,6 +438,7 @@ export default class Select extends React.Component {
             isMultiSelect={this.props.multiSelect}
             isOpen={this.state.isOpen}
             onSearch={handleSearch({ setState: this.setState })}
+            onSearchClick={handleSearchClick({ setState: this.setState })}
             onSelect={handleOptionSelected({
               currentOption: this.props.value,
               isMultiSelect: this.props.multiSelect,

@@ -32,6 +32,7 @@ class Search extends React.Component {
         tabIndex={-1}
         isFocused={this.props.isFocused}
         innerRef={element => this.element = element}
+        onClick={this.props.onClick}
       >
         <StyledSearchInput
           tabIndex={-1}
