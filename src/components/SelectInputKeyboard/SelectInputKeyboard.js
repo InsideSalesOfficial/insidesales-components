@@ -435,6 +435,7 @@ export default class SelectInputKeyboard extends React.Component {
           </SelectToggle>
           <Dropdown
             focusedOption={this.state.focusedOption}
+            selectLabel={this.props.label}
             isMultiSelect={this.props.multiSelect}
             isOpen={this.state.isOpen}
             onSearch={handleSearch({ setState: this.setState })}

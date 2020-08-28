@@ -79,13 +79,14 @@ function renderOptions({
   onSearchClick,
   onSelect,
   options,
+  selectLabel,
   selectedOptions,
 }) {
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
       return (
         <Search
-          key={`select-search-${index}`}
+          key={`select-${selectLabel}__search-${index}`}
           isFocused={option.focusIndex === focusedOption}
           onSearch={onSearch}
           onClick={onSearchClick}
@@ -98,7 +99,7 @@ function renderOptions({
       const isSelected = _.some(selectedOptions, (selectedOption) => selectedOption === option.option.value);
       return (
         <Option
-          key={`select-${option.option.value}-index`}
+          key={`select-${selectLabel}__${option.option.value}-${index}`}
           onClick={(o) => onSelect(o, option.focusIndex)}
           option={option.option}
           isFocused={option.focusIndex === focusedOption}
@@ -107,7 +108,7 @@ function renderOptions({
         />
       );
     }
-    if (option.type === 'divider') return <Spacer />;
+    if (option.type === 'divider') return <Spacer key={`select-${selectLabel}__spacer-${index}`}/>;
     return null;
   });
   return combinedOptions;
@@ -126,6 +127,7 @@ class Dropdown extends React.Component {
           onSearchClick: this.props.onSearchClick,
           onSelect: this.props.onSelect,
           options: this.props.options,
+          selectLabel: this.props.selectLabel,
           selectedOptions: this.props.selectedOptions,
         })}
       </Options>
@@ -151,6 +153,7 @@ Dropdown.propTypes = {
   onSelect: PropTypes.func,
   options: PropTypes.any.isRequired,
   optionsWidth: PropTypes.string,
+  selectLabel: PropTypes.string,
   selectedOptions: PropTypes.any,
 };
 
