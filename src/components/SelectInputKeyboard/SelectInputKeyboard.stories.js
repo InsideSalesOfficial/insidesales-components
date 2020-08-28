@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf, action } from "@storybook/react";
-import Select from "./Select";
+import SelectInputKeyboard from "./SelectInputKeyboard";
 import SelectInputLabelBox from "../SelectInputLabelBox";
 import Button from "../Button";
 import styled from "styled-components";
@@ -137,7 +137,7 @@ class WrapperComponent extends React.Component {
           onChange={this.handleSelectInputChange}
         />
       ) : (
-        <Select
+        <SelectInputKeyboard
           {...this.props}
           {...this.state}
           onChange={this.handleSelectInputChange}

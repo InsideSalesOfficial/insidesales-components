@@ -338,7 +338,7 @@ function prepareOptions({ promotedOptions, options, searchable }) {
   }
 }
 
-export default class Select extends React.Component {
+export default class SelectInputKeyboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -457,7 +457,7 @@ export default class Select extends React.Component {
   }
 }
 
-Select.defaultProps = {
+SelectInputKeyboard.defaultProps = {
   error: false,
   isDisabled: false,
   isPlaceHolder: false,
@@ -471,7 +471,7 @@ Select.defaultProps = {
   value: '',
 }
 
-Select.propTypes = {
+SelectInputKeyboard.propTypes = {
   error: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
