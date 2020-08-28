@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-const OptionLabel = styled.span`
+const SelectedLabel = styled.span`
   padding: 22px 26px 0 16px;
   color: ${(props) => {
     if (props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: "white40", defaultValue: colors.white40, });
@@ -267,12 +267,12 @@ function isValued(value) {
 
 function SelectedOption({ selectedOptions, options, error, isDisabled }) {
   return (
-    <OptionLabel
+    <SelectedLabel
       error={error}
       isDisabled={isDisabled}
     >
       {getLabel({ selectedOptions, options })}
-    </OptionLabel>
+    </SelectedLabel>
   )
 }
 
