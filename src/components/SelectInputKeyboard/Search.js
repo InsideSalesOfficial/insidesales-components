@@ -12,6 +12,7 @@ const StyledSearchInput = styled(TextInput)`
 
 const SearchWrapper = styled.div`
   padding: 0 24px 12px 24px;
+  outline: none;
 `;
 
 const SearchEmptyText = styled.div`
