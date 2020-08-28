@@ -163,20 +163,12 @@ const SelectOption = styled.div`
     border-bottom: none;
   }
 
-  &:focus {
-    outline: none;
-  }
-
   ${(props) => {
     if (!props.disabled) {
       return `&:hover {
         background: ${renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: colors.gray90 })};
         color: ${renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.selectItemColor })};
-      };
-      &:focus {
-        background: ${renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: colors.gray90 })};
-        color: ${renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.selectItemColor })};
-      }`;
+      };`;
     }
   }}
 `;
@@ -233,7 +225,6 @@ class SelectOptions extends React.Component {
 
     return (
       <SelectOption
-        tabIndex={0}
         className={'pb-option'}
         key={option.keyID || keyID}
         visible={this.props.visible}

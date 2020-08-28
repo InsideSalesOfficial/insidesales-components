@@ -141,8 +141,6 @@ export const Value = styled.div`
 
 
 export const Wrapper = styled.div`
-  // outline: none;
-  user-select: none;
   position: relative;
   ${typography.subhead1};
   width: ${(props) => {
@@ -171,10 +169,10 @@ export const SelectToggle = styled.button`
   &:focus ${Value} {
     outline: 0;
     border-color: ${props => {
-      if(props.isFocused) return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
-      if(props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning04', defaultValue: colors.red });
-      if(props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: 'transparent' });
-      return renderThemeKeyOrDefaultValue({ props, key: 'white', defaultValue: colors.green });
+      if (props.error) {
+        return renderThemeKeyOrDefaultValue({ props, key: 'warning04', defaultValue: colors.red });
+      }
+      return props.isDisabled ? renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: 'transparent' }) : renderThemeKeyOrDefaultValue({ props, key: 'white', defaultValue: colors.green })
     }};
   }
 `;
@@ -185,11 +183,7 @@ export default class SelectInputLabelBox extends React.Component {
     super();
     this.state = {
       optionsListVisible: false,
-      searchFilter: '',
-      isFocused: false,
-      isOpen: false,
-      selectedOption: undefined,
-      focusedOption: undefined
+      searchFilter: ''
     }
   }
 
@@ -276,28 +270,6 @@ export default class SelectInputLabelBox extends React.Component {
     return inputLabel || this.props.value;
   }
 
-  handleBlur = (event) => {
-    console.log('>>', 'handleBlur');
-    this.timeoutID = setTimeout(() => {
-      if(this.state.isFocused) {
-        this.setState({
-          isFocused: false,
-          isOpen: false
-        });
-      }
-    }, 0);
-  }
-
-  handleFocus = (event) => {
-    console.log('>>', 'handleFocus');
-    clearTimeout(this.timeoutID);
-    if(!this.state.isFocused) {
-      this.setState({
-        isFocused: true
-      });
-    }
-  }
-
   render() {
     const optionLabel = this.determineLabel();
 
@@ -307,16 +279,12 @@ export default class SelectInputLabelBox extends React.Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <Wrapper
-          tabIndex={0}
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
           className={this.props.className}
-        >
+          ref={(el) => { this.clickEventElement = el }}
+          >
           <SelectToggle
-            tabIndex={-1}
-            onClick={this.toggleOptionsList} isDisabled={this.props.isDisabled}
-            className="pb-test__select-input"
-            isFocused={this.state.isFocused}
+          onClick={this.toggleOptionsList} isDisabled={this.props.isDisabled}
+          className="pb-test__select-input"
           >
             <Caret open={this.state.optionsListVisible} />
             <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
@@ -357,7 +325,6 @@ SelectInputLabelBox.defaultProps = {
   theme: {},
   isPlaceHolder: false,
   error: false,
-  required: false,
   onChange: _.noop
 }
 
@@ -371,7 +338,6 @@ SelectInputLabelBox.propTypes = {
   label: PropTypes.string,
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
-  required: PropTypes.bool,
   multiSelect: PropTypes.bool,
   searchable: PropTypes.bool,
   error: PropTypes.bool
