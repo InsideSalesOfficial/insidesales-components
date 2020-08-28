@@ -80,7 +80,6 @@ function renderOptions({
   options,
   selectedOptions,
 }) {
-  console.log('>>', 'options.options', options.options);
   const combinedOptions = options.options.map((option, index) => {
     if (option.type === 'search') {
       return (

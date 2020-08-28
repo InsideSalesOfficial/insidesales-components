@@ -133,6 +133,7 @@ function handleKeyDown({
   wrapperElement,
 }) {
   return function (event) {
+    console.log('>>', 'focusedOption', focusedOption);
     if (!isOpen && _.some(validOpeningKeys, (key) => key === event.key)) {
       setState({ isOpen: true });
       return;
@@ -146,7 +147,7 @@ function handleKeyDown({
         onChangeFunction: onChange,
         setState: setState,
         wrapperElement: wrapperElement,
-      })(getFocusedOptionValue({ options, focusedOption }));
+      })(getFocusedOptionValue({ options, focusedOption }), focusedOption);
       return;
     }
 
