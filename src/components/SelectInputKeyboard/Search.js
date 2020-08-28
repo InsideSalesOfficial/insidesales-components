@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {renderThemeKeyOrDefaultValue, typography, colors} from "../styles";
 import TextInput, { TextBox } from '../TextInput';
+import _ from 'lodash';
 
 const StyledSearchInput = styled(TextInput)`
   ${TextBox} {
@@ -23,8 +24,9 @@ const SearchEmptyText = styled.div`
 
 class Search extends React.Component {
   componentDidUpdate() {
+
     if (this.props.isFocused) this.element.scrollIntoViewIfNeeded();
-    if (this.props.isFocused) this.element.firstElementChild.firstElementChild.firstElementChild.focus();
+    if (this.props.isFocused) this.element.querySelector('input').focus();
   }
 
   render() {
@@ -51,7 +53,16 @@ class Search extends React.Component {
   }
 }
 
+Search.defaultProps = {
+  isFocused: false,
+  onClick: _.noop,
+  onSearch: _.noop,
+}
+
 Search.propTypes = {
+  isFocused: PropTypes.bool,
+  onClick: PropTypes.func,
+  onSearch: PropTypes.func,
 };
 
 export default Search;
