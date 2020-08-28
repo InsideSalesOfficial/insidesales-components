@@ -10,7 +10,7 @@ import {
   colors,
   typography
 } from "../styles";
-import { SelectInputLabelBoxThemes } from "../index";
+import { SelectInputLabelBoxThemes } from "./index";
 
 const OptionWrapper = styled.div`
   display: flex;

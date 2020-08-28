@@ -1,6 +1,6 @@
 import { darkBlue, white } from '../styles/colors';
 
-export const lineSelectInputBoxTransparentTheme = {
+export const lineSelectInputKeyboardTransparentTheme = {
   background: 'transparent',
   borderRadius: '0',
   borderWidth: '1px',
@@ -18,4 +18,4 @@ export const darkTheme = {
   requiredColor: white.white60,
 };
 
-export default { lineSelectInputBoxTransparentTheme, darkTheme };
+export default { lineSelectInputKeyboardTransparentTheme, darkTheme };
