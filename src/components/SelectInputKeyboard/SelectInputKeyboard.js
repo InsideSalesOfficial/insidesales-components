@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider }  from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import _ from 'lodash';
 import { RequiredText } from '../RequiredText/RequiredText';
-import { typography, colors, renderThemeKeyOrDefaultValue } from "../styles";
+import { typography, colors, renderThemeKeyOrDefaultValue } from '../styles';
 
 import Dropdown from './Dropdown';
 import Label from './Label';
@@ -11,8 +11,8 @@ import Caret from './Caret';
 
 const regexp = {
   singleCharacter: /^([^\x00-\x7F]|[^\u0000-\u007F]|[\w-_]){1}$/,
-  whitespace: /\s/g
-}
+  whitespace: /\s/g,
+};
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,10 +23,10 @@ const Wrapper = styled.div`
 const SelectedLabel = styled.span`
   padding: 22px 26px 0 16px;
   color: ${(props) => {
-    if (props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: "white40", defaultValue: colors.white40, });
-    if (props.error) return renderThemeKeyOrDefaultValue({ props, key: "warning04", defaultValue: colors.red, });
-    return renderThemeKeyOrDefaultValue({ props, key: "white90", defaultValue: colors.white90, });
-  }}
+    if (props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 });
+    if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning04', defaultValue: colors.red });
+    return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.white90 });
+  }};
 `;
 
 const SelectToggle = styled.div`
@@ -47,7 +47,7 @@ const SelectToggle = styled.div`
   border-bottom-width: 2px;
   border-bottom-style: solid;
   border-radius: 2px;
-  border-bottom-color: ${props => {
+  border-bottom-color: ${(props) => {
     if (props.isDisabled) {
       return 'transparent';
     }
@@ -66,30 +66,31 @@ const SelectToggle = styled.div`
     return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.black40 });
   }};
 
-  cursor: ${props => props.isDisabled ? 'auto' : 'pointer'};
+  cursor: ${(props) => (props.isDisabled ? 'auto' : 'pointer')};
 
-  color: ${props => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.black60 })};
-  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
+  color: ${(props) => renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: colors.black60 })};
+  background: ${(props) =>
+    renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
 
   ${typography.subhead1};
 `;
 
 function focusNextOption({ focusedOption, optionsLength }) {
-  if (typeof focusedOption !== "number") return 0;
+  if (typeof focusedOption !== 'number') return 0;
   return focusedOption >= optionsLength - 1 ? 0 : focusedOption + 1;
 }
 
 function focusPreviousOption({ focusedOption, optionsLength }) {
-  if (typeof focusedOption !== "number") return optionsLength - 1;
+  if (typeof focusedOption !== 'number') return optionsLength - 1;
   return focusedOption <= 0 ? optionsLength - 1 : focusedOption - 1;
 }
 
 function handleButtonClick(setState) {
   return function () {
-    setState(prevState => ({
-      isOpen: !prevState.isOpen
+    setState((prevState) => ({
+      isOpen: !prevState.isOpen,
     }));
-  }
+  };
 }
 
 function handleBlur(event) {
@@ -97,7 +98,7 @@ function handleBlur(event) {
     if (this.state.isFocused) {
       this.setState({
         isFocused: false,
-        isOpen: false
+        isOpen: false,
       });
     }
   }, 0);
@@ -107,13 +108,13 @@ function handleFocus(event) {
   clearTimeout(this.timeoutID);
   if (!this.state.isFocused) {
     this.setState({
-      isFocused: true
+      isFocused: true,
     });
   }
 }
 
 function getFocusedOptionValue({ options, focusedOption }) {
-  const option = _.find(options.options, { focusIndex: focusedOption } )
+  const option = _.find(options.options, { focusIndex: focusedOption });
   if (!option || !option.option) return null;
   return option.option;
 }
@@ -138,7 +139,7 @@ function handleKeyDown({
       return;
     }
 
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       handleOptionSelected({
         currentOption: currentOption,
@@ -150,7 +151,7 @@ function handleKeyDown({
       return;
     }
 
-    if (event.key === "ArrowDown") {
+    if (event.key === 'ArrowDown') {
       event.preventDefault();
       setState({
         isOpen: true,
@@ -162,7 +163,7 @@ function handleKeyDown({
       return;
     }
 
-    if (event.key === "ArrowUp") {
+    if (event.key === 'ArrowUp') {
       event.preventDefault();
       setState({
         isOpen: true,
@@ -184,19 +185,12 @@ function handleKeyDown({
       const key = event.key;
       event.preventDefault();
       setState((prevState) => {
-        const softSearchFilter = `${
-          prevState.softSearchFilter
-        }${key.toLowerCase()}`;
-        const beginsWithSoftSearch = new RegExp("^" + softSearchFilter);
+        const softSearchFilter = `${prevState.softSearchFilter}${key.toLowerCase()}`;
+        const beginsWithSoftSearch = new RegExp('^' + softSearchFilter);
         const newFocusedOption = _.find(options.options, (option) => {
           if (!option.option) return false;
           if (!_.isString(option.option.label)) return false;
-          if (
-            beginsWithSoftSearch.test(
-              option.option.label.toLowerCase().replace(regexp.whitespace, "")
-            )
-          )
-            return true;
+          if (beginsWithSoftSearch.test(option.option.label.toLowerCase().replace(regexp.whitespace, ''))) return true;
           return false;
         });
         return {
@@ -207,25 +201,19 @@ function handleKeyDown({
               : prevState.focusedOption,
         };
       });
-      setStateDebounced({ softSearchFilter: "" });
+      setStateDebounced({ softSearchFilter: '' });
       return;
     }
   };
 }
 
-function handleOptionSelected({
-  currentOption,
-  isMultiSelect,
-  onChangeFunction,
-  setState,
-  wrapperElement,
-}) {
+function handleOptionSelected({ currentOption, isMultiSelect, onChangeFunction, setState, wrapperElement }) {
   return function (option, focusIndex) {
     if (!_.isObject(option)) return;
     wrapperElement.focus();
     setState({
       isOpen: !!isMultiSelect,
-      focusedOption: focusIndex
+      focusedOption: focusIndex,
     });
 
     if (isMultiSelect) {
@@ -245,13 +233,13 @@ function handleOptionSelected({
 function handleSearch({ setState }) {
   return function (searchFilter) {
     setState({ searchFilter });
-  }
+  };
 }
 
 function handleSearchClick({ setState }) {
   return function (_event) {
     setState({ focusedOption: 0 });
-  }
+  };
 }
 
 function isValued(value) {
@@ -267,13 +255,10 @@ function isValued(value) {
 
 function SelectedOption({ selectedOptions, options, error, isDisabled }) {
   return (
-    <SelectedLabel
-      error={error}
-      isDisabled={isDisabled}
-    >
+    <SelectedLabel error={error} isDisabled={isDisabled}>
       {getLabel({ selectedOptions, options })}
     </SelectedLabel>
-  )
+  );
 }
 
 function getLabel({ selectedOptions, options }) {
@@ -288,7 +273,7 @@ function getLabel({ selectedOptions, options }) {
 
 function filterOptionsWithSearch({ options, searchFilter = '' }) {
   if (!_.isArray(options) || _.isEmpty(options)) return [];
-  return options.filter(option => {
+  return options.filter((option) => {
     if (!_.isObject(option)) return true;
     if (!(_.isString(option.label) || _.isObject(option.label))) return true;
     if (_.isObject(option.label) && !_.isString(option.optionValue)) return true;
@@ -301,18 +286,22 @@ function filterOptionsWithSearch({ options, searchFilter = '' }) {
 function prepareOptions({ promotedOptions, options, searchable }) {
   let focusCount = 0;
 
-  const searchInput = searchable ? [{
-    type: 'search',
-    focusIndex: focusCount++,
-  }] : [];
+  const searchInput = searchable
+    ? [
+        {
+          type: 'search',
+          focusIndex: focusCount++,
+        },
+      ]
+    : [];
 
-  const divider = { type: "divider" };
+  const divider = { type: 'divider' };
   const preparedPromotedOptions = _.isEmpty(promotedOptions)
     ? []
     : [
         ...promotedOptions.map((option) => {
           return {
-            type: "option",
+            type: 'option',
             focusIndex: focusCount++,
             option,
           };
@@ -320,22 +309,18 @@ function prepareOptions({ promotedOptions, options, searchable }) {
         divider,
       ];
 
-  const preparedOptions = options.map( option => {
+  const preparedOptions = options.map((option) => {
     return {
       type: 'option',
       focusIndex: focusCount++,
-      option
-    }
+      option,
+    };
   });
 
-  const newOptions = [
-    ...searchInput,
-    ...preparedPromotedOptions,
-    ...preparedOptions,
-  ];
+  const newOptions = [...searchInput, ...preparedPromotedOptions, ...preparedOptions];
   return {
-    options: newOptions
-  }
+    options: newOptions,
+  };
 }
 
 export default class SelectInputKeyboard extends React.Component {
@@ -347,7 +332,7 @@ export default class SelectInputKeyboard extends React.Component {
       focusedOption: 0,
       searchFilter: '',
       softSearchFilter: '',
-    }
+    };
     this.setState = this.setState.bind(this);
     this.setStateDebounced = _.debounce(this.setState, 1000).bind(this);
   }
@@ -358,24 +343,24 @@ export default class SelectInputKeyboard extends React.Component {
       this.setState({
         isOpen: false,
         focusedOption: 0,
-      })
+      });
     }
     // If search prop is updated, reset search filter
     if (nextProps.searchable !== this.props.searchable) {
       this.setState({
-        searchFilter: ''
-      })
+        searchFilter: '',
+      });
     }
   }
 
   render() {
     const options = filterOptionsWithSearch({
       options: this.props.options,
-      searchFilter: this.state.searchFilter
+      searchFilter: this.state.searchFilter,
     });
     const promotedOptions = filterOptionsWithSearch({
       options: this.props.promotedOptions,
-      searchFilter: this.state.searchFilter
+      searchFilter: this.state.searchFilter,
     });
 
     const preparedOptions = prepareOptions({ promotedOptions, options, searchable: this.props.searchable });
@@ -387,18 +372,21 @@ export default class SelectInputKeyboard extends React.Component {
           innerRef={(wrapperElement) => (this.wrapperElement = wrapperElement)}
           onBlur={handleBlur.bind(this)}
           onFocus={handleFocus.bind(this)}
-          onKeyDown={!this.props.isDisabled && handleKeyDown({
-            currentOption: this.props.value,
-            focusedOption: this.state.focusedOption,
-            isMultiSelect: this.props.multiSelect,
-            isOpen: this.state.isOpen,
-            onChange: this.props.onChange,
-            options: preparedOptions,
-            searchable: this.props.searchable,
-            setState: this.setState,
-            setStateDebounced: this.setStateDebounced,
-            wrapperElement: this.wrapperElement,
-          })}
+          onKeyDown={
+            !this.props.isDisabled &&
+            handleKeyDown({
+              currentOption: this.props.value,
+              focusedOption: this.state.focusedOption,
+              isMultiSelect: this.props.multiSelect,
+              isOpen: this.state.isOpen,
+              onChange: this.props.onChange,
+              options: preparedOptions,
+              searchable: this.props.searchable,
+              setState: this.setState,
+              setStateDebounced: this.setStateDebounced,
+              wrapperElement: this.wrapperElement,
+            })
+          }
           tabIndex={this.props.isDisabled ? -1 : 0}
         >
           <SelectToggle
@@ -414,11 +402,7 @@ export default class SelectInputKeyboard extends React.Component {
               isOptionSelected={isValued(this.props.value)}
               label={this.props.label}
             />
-            <Caret
-              error={this.props.error}
-              isDisabled={this.props.isDisabled}
-              isOpen={this.state.isOpen}
-            />
+            <Caret error={this.props.error} isDisabled={this.props.isDisabled} isOpen={this.state.isOpen} />
             {!this.props.value && !this.state.isOpen && this.props.required && (
               <RequiredText error={this.props.error}>Required</RequiredText>
             )}
@@ -426,10 +410,7 @@ export default class SelectInputKeyboard extends React.Component {
               error={this.props.error}
               isDisabled={this.props.isDisabled}
               isMultiSelect={this.props.multiSelect}
-              options={[
-                ...(this.props.promotedOptions || []),
-                ...this.props.options,
-              ]}
+              options={[...(this.props.promotedOptions || []), ...this.props.options]}
               selectedOptions={this.props.value}
             />
           </SelectToggle>
@@ -470,7 +451,7 @@ SelectInputKeyboard.defaultProps = {
   required: false,
   theme: {},
   value: '',
-}
+};
 
 SelectInputKeyboard.propTypes = {
   error: PropTypes.bool,
@@ -479,10 +460,10 @@ SelectInputKeyboard.propTypes = {
   label: PropTypes.string,
   multiSelect: PropTypes.bool,
   onChange: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any })).isRequired,
   optionsWidth: PropTypes.number,
-  promotedOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any, })),
+  promotedOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.any })),
   required: PropTypes.bool,
   searchable: PropTypes.bool,
   value: PropTypes.any,
-}
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
-import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, boxShadows } from "../styles";
+import { renderThemeKeyOrDefaultValue, renderThemeIfPresentOrDefault, colors, boxShadows } from '../styles';
 import Option from './Option';
 import Search from './Search';
 import _ from 'lodash';
@@ -15,11 +15,11 @@ const fadeIn = keyframes`
   40% { transform: scaleY(1); }
 `;
 
-
 const Options = styled.ul`
-  max-width: ${props => props.optionsWidth ? `${props.optionsWidth}px` : '100%'};
-  background: ${props => renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
-  display: ${props => props.isOpen ? 'block' : 'none'};
+  max-width: ${(props) => (props.optionsWidth ? `${props.optionsWidth}px` : '100%')};
+  background: ${(props) =>
+    renderThemeKeyOrDefaultValue({ props, key: 'primary05', defaultValue: props.theme.background })};
+  display: ${(props) => (props.isOpen ? 'block' : 'none')};
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -40,7 +40,7 @@ const Options = styled.ul`
     border-left: none;
     margin-right: 10px;
     width: 10px;
-    height: 10px
+    height: 10px;
   }
   &::-webkit-scrollbar-button {
     width: 0px;
@@ -68,7 +68,8 @@ const Options = styled.ul`
 const Spacer = styled.div`
   height: 0;
   width: 100%;
-  border-bottom: 1px solid ${props => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 })};
+  border-bottom: 1px solid
+    ${(props) => renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: colors.white40 })};
   margin: 8px 0 8px 0;
 `;
 
@@ -108,7 +109,7 @@ function renderOptions({
         />
       );
     }
-    if (option.type === 'divider') return <Spacer key={`select-${selectLabel}__spacer-${index}`}/>;
+    if (option.type === 'divider') return <Spacer key={`select-${selectLabel}__spacer-${index}`} />;
     return null;
   });
   return combinedOptions;
@@ -116,10 +117,7 @@ function renderOptions({
 class Dropdown extends React.Component {
   render() {
     return (
-      <Options
-        optionsWidth={this.props.optionsWidth}
-        isOpen={this.props.isOpen}
-      >
+      <Options optionsWidth={this.props.optionsWidth} isOpen={this.props.isOpen}>
         {renderOptions({
           focusedOption: this.props.focusedOption,
           isMultiSelect: this.props.isMultiSelect,
@@ -141,8 +139,8 @@ Dropdown.defaultProps = {
   onSearch: _.noop,
   onSearchClick: _.noop,
   isOpen: false,
-  isMultiSelect: false
-}
+  isMultiSelect: false,
+};
 
 Dropdown.propTypes = {
   focusedOption: PropTypes.number,

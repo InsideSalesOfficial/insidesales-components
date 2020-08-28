@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {renderThemeKeyOrDefaultValue, colors } from "../styles";
+import { renderThemeKeyOrDefaultValue, colors } from '../styles';
 
 const caretStyles = `
 position: absolute;
@@ -22,45 +22,45 @@ cursor: pointer;
 `;
 
 const CaretDown = styled.div`
-${caretStyles}
-&::after {
-  border-top:
-    5px
-    ${props => {
-      if (props.isDisabled) return renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: colors.white10 });
-      if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red });
-      return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor });
-    }}
-    solid;
-}
+  ${caretStyles}
+  &::after {
+    border-top: 5px
+      ${(props) => {
+        if (props.isDisabled)
+          return renderThemeKeyOrDefaultValue({ props, key: 'white10', defaultValue: colors.white10 });
+        if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red });
+        return renderThemeKeyOrDefaultValue({ props, key: 'white40', defaultValue: props.theme.borderColor });
+      }}
+      solid;
+  }
 `;
 
 const CaretUp = styled.div`
-${caretStyles}
-&::after {
-  border-bottom:
-    5px
-    ${props => {
-      if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red });
-      return renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor });
-    }}
-    solid;
-}
+  ${caretStyles}
+  &::after {
+    border-bottom: 5px
+      ${(props) => {
+        if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning', defaultValue: colors.red });
+        return renderThemeKeyOrDefaultValue({ props, key: 'white60', defaultValue: props.theme.borderColor });
+      }}
+      solid;
+  }
 `;
-
 
 class Caret extends React.Component {
   render() {
-    return this.props.isOpen
-      ? <CaretUp error={this.props.error} />
-      : <CaretDown error={this.props.error} isDisabled={this.props.isDisabled} />;
+    return this.props.isOpen ? (
+      <CaretUp error={this.props.error} />
+    ) : (
+      <CaretDown error={this.props.error} isDisabled={this.props.isDisabled} />
+    );
   }
 }
 
 Caret.propTypes = {
   error: PropTypes.bool,
   isDisabled: PropTypes.bool,
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default Caret;

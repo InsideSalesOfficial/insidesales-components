@@ -1,3 +1,3 @@
-export {default} from './SelectInputKeyboard';
+export { default } from './SelectInputKeyboard';
 
-export {default as SelectInputKeyboardThemes} from './SelectInputKeyboardThemes';
+export { default as SelectInputKeyboardThemes } from './SelectInputKeyboardThemes';
