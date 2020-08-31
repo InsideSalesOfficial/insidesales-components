@@ -1,11 +1,13 @@
 import {colors} from '../styles/colors';
 import {typography} from '../styles/typography';
 import styled from 'styled-components';
+import { renderThemeKeyOrDefaultValue } from "../styles";
 
 export const RequiredText = styled.div`
   color: ${(props) => {
-    return props.theme.requiredColor || colors.black40;
-}};
+    if (props.error) return renderThemeKeyOrDefaultValue({ props, key: 'warning04', defaultValue: colors.red });
+    return renderThemeKeyOrDefaultValue({ props, key: 'white90', defaultValue: colors.black40 });
+  }}
   opacity: ${(props) => {
   if (props.open || props.isFocused) {
     return 0;

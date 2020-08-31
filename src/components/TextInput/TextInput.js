@@ -126,7 +126,7 @@ export const InputItem = styled.input`
   text-align: left;
   width: 100%;
   color: ${colors.renderThemeIfPresentOrDefault({key: 'white90', defaultValue: colors.black90 })};
-  
+
   &:focus {
     outline: 0;
   }
@@ -395,7 +395,8 @@ class TextInput extends React.Component {
       labelColor,
       lineColor,
       outlinedSearch,
-      autoFocus
+      autoFocus,
+      tabIndex
     } = this.props;
 
     return (
@@ -429,6 +430,7 @@ class TextInput extends React.Component {
             search={this.props.search}
             placeholder={this.usePlaceholder()}
             autoFocus={autoFocus}
+            tabIndex={tabIndex}
             className="pb-test__text-input" />
           {this.props.search &&
             <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
@@ -463,6 +465,7 @@ TextInput.defaultProps = {
   label: DEFAULT_LABEL,
   onSelectionStartChange: _.noop,
   stateless: false,
+  tabIndex: 0
 };
 
 TextInput.propTypes = {
@@ -489,7 +492,8 @@ TextInput.propTypes = {
     value: PropTypes.any,
     label: PropTypes.string,
     disabled: PropTypes.bool
-  }))
+  })),
+  tabIndex: PropTypes.number
 };
 
 export default TextInput;
