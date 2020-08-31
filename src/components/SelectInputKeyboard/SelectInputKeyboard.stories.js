@@ -188,5 +188,5 @@ function renderChapterWithTheme(theme) {
 }
 
 storiesOf('Form', module)
-  .addWithChapters('Default Select', renderChapterWithTheme({}))
-  .addWithChapters('Select w/ BlueYellow Theme', renderChapterWithTheme(colors.blueYellowTheme));
+  .addWithChapters('Default SelectInputKeyboard', renderChapterWithTheme({}))
+  .addWithChapters('SelectInputKeyboard w/ BlueYellow Theme', renderChapterWithTheme(colors.blueYellowTheme));
