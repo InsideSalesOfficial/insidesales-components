@@ -75,7 +75,7 @@ const Text = styled.label`
   ${typography.subhead1}
 `;
 
-const Checkbox = ({ label, defaultChecked, checked, disabled, name, onChange, className, theme, greenDisabled }) => (
+const Checkbox = ({ label, defaultChecked, checked, disabled, name, onChange, className, theme, greenDisabled, tabIndex }) => (
   <ThemeProvider theme={theme}>
     <div className={className}>
       <CheckboxEl
@@ -88,6 +88,7 @@ const Checkbox = ({ label, defaultChecked, checked, disabled, name, onChange, cl
         checked={checked}
         disabled={disabled}
         className="pb-test__checkbox"
+        tabIndex={tabIndex}
         onClick={ onChange } />
       {label && (
         <Text htmlFor={name}>{label}</Text>
@@ -104,14 +105,16 @@ Checkbox.propTypes = {
   name: PropTypes.name,
   onChange: PropTypes.func,
   className: PropTypes.string,
-  theme: PropTypes.object
+  theme: PropTypes.object,
+  tabIndex: PropTypes.number
 };
 
 Checkbox.defaultProps = {
   defaultChecked: false,
   disabled: false,
   onChange: _.noop,
-  theme: defaultTheme
+  theme: defaultTheme,
+  tabIndex: 0
 };
 
 export default Checkbox;
