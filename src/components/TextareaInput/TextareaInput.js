@@ -244,7 +244,6 @@ export function charLimitExceeded(charLimit, value) {
   }
   return size(value) > charLimit;
 }
-const limit = 2000;
 
 /**
  * Returns the char counter text string
@@ -404,6 +403,7 @@ class TextareaInput extends React.Component {
   setValue = (value) => {
     this.setState({ value });
   };
+
   render() {
     const { className, label, name, error, disabled, collapsed, labelColor, lineColor, placeholder } = this.props;
     const localError = this.determineLocalError();
@@ -426,7 +426,6 @@ class TextareaInput extends React.Component {
               onFocus={this.focused}
               onBlur={this.blurred}
               className="pb-test__textarea-input"
-              charLimit={limit}
               id={name}
               name={name}
               disabled={disabled}
